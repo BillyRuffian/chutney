@@ -1,3 +1,6 @@
+require 'coveralls'
+Coveralls.wear!
+
 require 'rspec'
 require 'chutney'
 require 'chutney/linter/tag_constraint'
