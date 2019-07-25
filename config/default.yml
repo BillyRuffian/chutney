@@ -34,6 +34,8 @@ RequiredTagsStartsWith:
     Enabled: false
 SameTagForAllScenarios:
     Enabled: true
+ScenarioNamesMatch:
+    Enabled: false
 TagUsedMultipleTimes:
     Enabled: true
 TooClumsy:
