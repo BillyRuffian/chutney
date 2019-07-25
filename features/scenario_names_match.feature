@@ -1,5 +1,5 @@
 Feature: Required Tags Starts With
-  As a tester I dont want my scenario names to match a pattern
+  As a tester I want my scenario names to match a pattern
   
   Background: Prepare Testee
     Given a file named ".chutney.yml" with:
