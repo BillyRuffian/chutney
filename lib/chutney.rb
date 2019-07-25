@@ -99,17 +99,16 @@ module Chutney
     def parse(file)
       to_json File.read(file)
     end
-
-    def report
-      issues = @linter.map do |linter|
+    
+    def issues
+      @linter.map do |linter|
         linter.lint_files(@files, disable_tags)
         linter.issues
       end.flatten
+    end
 
+    def report
       print issues
-      return 0 if issues.select { |issue| issue.class == Error }.empty?
-      
-      -1
     end
 
     def disable_tags

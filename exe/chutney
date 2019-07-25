@@ -32,4 +32,8 @@ files.each do |file|
   linter.analyze file
 end
 
-exit linter.report
+linter.report
+
+return 0 if linter.issues.select { |issue| issue.class == Error }.empty?
+      
+-1
