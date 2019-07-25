@@ -50,6 +50,7 @@ This will mount the current directory within the Gherkin Lint Docker Container a
  - [missing test action](https://github.com/BillyRuffian/chutney/blob/master/features/missing_test_action.feature)
  - [missing verification](https://github.com/BillyRuffian/chutney/blob/master/features/missing_verification.feature)
  - [same tag for all scenarios](https://github.com/BillyRuffian/chutney/blob/master/features/same_tag_for_all_scenarios.feature)
+ - [scenario name must match pattern](https://github.com/BillyRuffian/chutney/blob/master/features/scenario_names_match.feature)
  - [tag used multiple times](https://github.com/BillyRuffian/chutney/blob/master/features/tag_used_multiple_times.feature)
  - [too clumsy](https://github.com/BillyRuffian/chutney/blob/master/features/too_clumsy.feature)
  - [too long step](https://github.com/BillyRuffian/chutney/blob/master/features/too_long_step.feature)
