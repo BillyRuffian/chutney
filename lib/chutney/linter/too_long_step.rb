@@ -7,7 +7,7 @@ module Chutney
     
     def lint
       steps do |file, feature, scenario, step|
-        next if step[:text].length < 80
+        next if step[:text].length < 100
         
         references = [reference(file, feature, scenario, step)]
         add_error(references, MESSAGE % step[:text].length)
