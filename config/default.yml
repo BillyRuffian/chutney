@@ -48,6 +48,7 @@ TooManyTags:
     Enabled: true
 TooLongStep:
     Enabled: true
+    MaxLength: 80
 UniqueScenarioNames:
     Enabled: true
 UnknownVariable:
