@@ -47,7 +47,7 @@ Layout/IndentationWidth:
   Exclude:
     - "**/*_spec.rb"
 
-Layout/IndentHeredoc:
+Layout/HeredocIndentation:
   Exclude:
     - "**/*_spec.rb"
 
