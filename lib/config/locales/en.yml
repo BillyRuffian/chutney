@@ -20,6 +20,9 @@ en:
     file_name_differs_feature_name: >-
       The name of the feature should reflect the file name. Consider renaming this feature
       to '%{expected}'.
+    givens_after_background: >-
+      Avoid using the 'Given' keyword in scenarios if you have a background.
+      Instead, setup steps begin your scenario and should start with an 'And' or 'But' keyword.
     invalid_file_name: >-
       Filenames of feature files should be in snake case.
       You should name this file '%{recommended_name}'.
