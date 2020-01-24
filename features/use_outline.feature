@@ -1,24 +1,14 @@
 Feature: Use Outline
+
   As a Business Analyst
   I want to be warned if I'm using a background for just one scenario
   so that I am using background to improve readability
 
-  Background: Prepare Testee
-    Given a file named "lint.rb" with:
-      """
-      $LOAD_PATH << '../../lib'
-      require 'chutney'
-
-      linter = Chutney::ChutneyLint.new
-      linter.enable %w(UseOutline)
-      linter.set_linter
-      linter.analyze 'lint.feature'
-      exit linter.report
-
-      """
+  Background: 
+    Given chutney is configured with the linter "Chutney::UseOutline"
 
   Scenario: Similar Scenarios
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Test
         Background: Preparation
@@ -32,17 +22,18 @@ Feature: Use Outline
           When action 2
           Then verification
       """
-    When I run `ruby lint.rb`
-    Then it should fail with exactly:
+    When I run Chutney
+    Then 1 issue is raised 
+    And the message is: 
       """
-      UseOutline - Scenarios are similar by 97.8 %, use Background steps to simplify
-        lint.feature (5): Test.A
-        lint.feature (9): Test.B
-
+      Scenarios are similar by 97.8%, you should use scenario outlines to simplify.  Scenario: A (5) vs Scenario: B (9)
       """
+    And it is reported on on <line> <column>
+      | line | column |
+      | 1    | 1      |
 
   Scenario: Empty Scenarios
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Test
         Background: Preparation
@@ -52,13 +43,11 @@ Feature: Use Outline
 
         Scenario: B
       """
-    When I run `ruby lint.rb`
-    Then it should pass with exactly:
-      """
-      """
+    When I run Chutney
+    Then 0 issues are raised 
 
   Scenario: Valid Example
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Test
         Background: Preparation
@@ -72,7 +61,5 @@ Feature: Use Outline
           When another action
           Then verification
       """
-    When I run `ruby lint.rb`
-    Then it should pass with exactly:
-      """
-      """
+    When I run Chutney
+    Then 0 issues are raised 

@@ -1,25 +1,14 @@
-@disableUnknownVariable
 Feature: Missing Example Name
+
   As a Customer
   I want examples to be named
   so that I'm able to understand why this example exists
-
-  Background: Prepare Testee
-    Given a file named "lint.rb" with:
-      """
-      $LOAD_PATH << '../../lib'
-      require 'chutney'
-
-      linter = Chutney::ChutneyLint.new
-      linter.enable %w(MissingExampleName)
-      linter.set_linter
-      linter.analyze 'lint.feature'
-      exit linter.report
-
-      """
-
-  Scenario: Missing Example Name
-    Given a file named "lint.feature" with:
+  
+  Background:
+    Given chutney is configured with the linter "Chutney::MissingExampleName"
+  
+  Scenario: Missing example name when more than one example table
+    And a feature file contains:
       """
       Feature: Test
         Scenario Outline: A
@@ -34,18 +23,47 @@ Feature: Missing Example Name
             | value |
             | test  |
       """
-    When I run `ruby lint.rb`
-    Then it should fail with exactly:
+    When I run Chutney
+    Then 2 issues are raised     
+    And the message is: 
       """
-      MissingExampleName - You have an unnamed or ambiguously named example
-        lint.feature (2): Test.A
-      MissingExampleName - You have an unnamed or ambiguously named example
-        lint.feature (2): Test.A
-
+      You have a scenerio with more than one example table, at least one of which is unnamed or has a duplicate name.  You should give your example tables clear and meaningful names when you have more than one.
       """
+    And it is reported on on <line> <column>
+      | line | column |
+      | 6    | 5      |
+      | 10   | 5      |
+    
+    
+  Scenario: Duplicate example name when more than one example table
+    And a feature file contains:
+      """
+      Feature: Test
+        Scenario Outline: A
+          When test
+          Then <value>
 
-  Scenario: Names could be omitted for scenarios with a single example
-    Given a file named "lint.feature" with:
+          Examples: examples
+            | value |
+            | test  |
+
+          Examples: examples
+            | value |
+            | test  |
+      """
+    When I run Chutney
+    Then 2 issues are raised    
+    And the message is: 
+      """
+      You have a scenerio with more than one example table, at least one of which is unnamed or has a duplicate name.  You should give your example tables clear and meaningful names when you have more than one.
+      """
+    And it is reported on on <line> <column>
+      | line | column |
+      | 6    | 5      |
+    
+  
+  Scenario: Example names can be omitted with one example table
+    And a feature file contains:
       """
       Feature: Test
         Scenario Outline: A
@@ -56,13 +74,11 @@ Feature: Missing Example Name
             | value |
             | test  |
       """
-    When I run `ruby lint.rb`
-    Then it should pass with exactly:
-      """
-      """
-
-  Scenario: Valid Example
-    Given a file named "lint.feature" with:
+    When I run Chutney
+    Then 0 issues are raised  
+  
+  Scenario: Valid example
+    And a feature file called "lint.feature" contains:
       """
       Feature: Test
         Scenario Outline: A
@@ -81,7 +97,5 @@ Feature: Missing Example Name
             | ä         |
             | ß         |
       """
-    When I run `ruby lint.rb`
-    Then it should pass with exactly:
-      """
-      """
+    When I run Chutney
+    Then 0 issues are raised

@@ -1,25 +1,14 @@
-@disableUnknownVariable
 Feature: Unknown Variable
+
   As a Business Analyst
   I want to be warned about unknown variables
   so that I can delete them if they are not defined anymore
 
-  Background: Prepare Testee
-    Given a file named "lint.rb" with:
-      """
-      $LOAD_PATH << '../../lib'
-      require 'chutney'
-
-      linter = Chutney::ChutneyLint.new
-      linter.enable %w(UnknownVariable)
-      linter.set_linter
-      linter.analyze 'lint.feature'
-      exit linter.report
-
-      """
+  Background: 
+    Given chutney is configured with the linter "Chutney::UnknownVariable"
 
   Scenario: Unknown Step Variable
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Test
         Scenario Outline: A
@@ -29,33 +18,31 @@ Feature: Unknown Variable
             | bar |
             | 1   |
       """
-    When I run `ruby lint.rb`
-    Then it should fail with exactly:
+    When I run Chutney
+    Then 1 issue is raised 
+    And the message is: 
       """
-      UnknownVariable - Variable '<baz>' is unknown
-        lint.feature (2): Test.A
-
+      The variable 'baz' is referenced in your test but its value is never set.
       """
+    And it is reported on on <line> <column>
+      | line | column |
+      | 2    | 3      |
 
   Scenario: Unknown Step Variable Even For Missing Examples
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Test
         Scenario Outline: A
           When <baz> and <bar>
       """
-    When I run `ruby lint.rb`
-    Then it should fail with exactly:
-      """
-      UnknownVariable - Variable '<baz>' is unknown
-        lint.feature (2): Test.A
-      UnknownVariable - Variable '<bar>' is unknown
-        lint.feature (2): Test.A
-
-      """
+    When I run Chutney
+    Then 2 issues are raised 
+    And it is reported on on <line> <column>
+      | line | column |
+      | 2    | 3      |
 
   Scenario: Unknown Table Variable
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Test
         Scenario Outline: A
@@ -67,16 +54,18 @@ Feature: Unknown Variable
             | bar |
             | 1   |
       """
-    When I run `ruby lint.rb`
-    Then it should fail with exactly:
+    When I run Chutney
+    Then 1 issue is raised 
+    And the message is: 
       """
-      UnknownVariable - Variable '<baz>' is unknown
-        lint.feature (2): Test.A
-
+      The variable 'baz' is referenced in your test but its value is never set.
       """
+    And it is reported on on <line> <column>
+      | line | column |
+      | 2    | 3      |
 
   Scenario: Unknown Pystring Variable
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Test
         Scenario Outline: A
@@ -89,16 +78,18 @@ Feature: Unknown Variable
             | bar |
             | 1   |
       """
-    When I run `ruby lint.rb`
-    Then it should fail with exactly:
+    When I run Chutney
+    Then 1 issue is raised 
+    And the message is: 
       """
-      UnknownVariable - Variable '<baz>' is unknown
-        lint.feature (2): Test.A
-
+      The variable 'baz' is referenced in your test but its value is never set.
       """
+    And it is reported on on <line> <column>
+      | line | column |
+      | 2    | 3      |
 
   Scenario: Valid Example
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Test
         Scenario Outline: A
@@ -114,7 +105,5 @@ Feature: Unknown Variable
             | first      | second | third |
             | used value | used   | also  |
       """
-    When I run `ruby lint.rb`
-    Then it should pass with exactly:
-      """
-      """
+    When I run Chutney
+    Then 0 issues are raised 

@@ -1,15 +1,12 @@
-require 'chutney/linter'
-
 module Chutney
   # service class to lint for missing test actions
   class MissingTestAction < Linter
     def lint
-      filled_scenarios do |file, feature, scenario|
-        when_steps = scenario[:steps].select { |step| step[:keyword] == 'When ' }
+      filled_scenarios do |feature, scenario|
+        when_steps = scenario[:steps].select { |step| when_word?(step[:keyword]) }
         next unless when_steps.empty?
         
-        references = [reference(file, feature, scenario)]
-        add_error(references, 'No \'When\'-Step')
+        add_issue(I18n.t('linters.missing_test_action'), feature, scenario)
       end
     end
   end

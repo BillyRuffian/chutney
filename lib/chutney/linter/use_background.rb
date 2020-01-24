@@ -1,36 +1,18 @@
-require 'chutney/linter'
-
 module Chutney
   # service class to lint for using background
   class UseBackground < Linter
     def lint
-      features do |file, feature|
-        next if scenarios_with_steps(feature) <= 1
-        
-        givens = gather_givens feature
-        next if givens.nil?
-        next if givens.length <= 1
-        next if givens.uniq.length > 1
-        
-        references = [reference(file, feature)]
-        add_error(references, "Step '#{givens.uniq.first}' should be part of background")
-      end
+      return unless filled_scenarios.count > 1
+
+      givens = gather_givens
+      return if givens.nil?
+      return if givens.length <= 1
+      return if givens.uniq.length > 1
+
+      add_issue(I18n.t('linters.use_background', step: givens.uniq.first), feature)
     end
 
-    def scenarios_with_steps(feature)
-      scenarios = 0
-      return 0 unless feature.key? :children
-      
-      feature[:children].each do |scenario|
-        next unless scenario.include? :steps
-        next if scenario[:steps].empty?
-        
-        scenarios += 1
-      end
-      scenarios
-    end
-
-    def gather_givens(feature)
+    def gather_givens
       return unless feature.include? :children
       
       has_non_given_step = false
@@ -38,16 +20,16 @@ module Chutney
         next unless scenario.include? :steps
         next if scenario[:steps].empty?
         
-        has_non_given_step = true unless scenario[:steps].first[:keyword] == 'Given '
+        has_non_given_step = true unless given_word?(scenario[:steps].first[:keyword])
       end
       return if has_non_given_step
 
       result = []
-      expanded_steps(feature) { |given| result.push given }
+      expanded_steps { |given| result.push given }
       result
     end
 
-    def expanded_steps(feature)
+    def expanded_steps
       feature[:children].each do |scenario|
         next unless scenario[:type] != :Background
         next unless scenario.include? :steps

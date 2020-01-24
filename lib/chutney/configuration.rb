@@ -1,13 +1,11 @@
-require 'yaml'
-module Chutney
+module Chutney 
   # gherkin_lint configuration object
-  class Configuration
-    attr_reader :config
-
+  class Configuration < SimpleDelegator
     def initialize(path)
       @path = path
       @config = load_configuration || ''
       load_user_configuration
+      super(@config)
     end
 
     def configuration_path

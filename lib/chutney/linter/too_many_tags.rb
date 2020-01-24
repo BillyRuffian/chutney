@@ -1,19 +1,20 @@
-require 'chutney/linter'
-require 'chutney/linter/tag_collector'
-
 module Chutney
   # service class to lint for too many tags
   class TooManyTags < Linter
-    include TagCollector
-
     def lint
-      scenarios do |file, feature, scenario|
-        tags = gather_tags(feature) + gather_tags(scenario)
-        next unless tags.length >= 3
+      scenarios do |feature, scenario|
+        tags = tags_for(feature) + tags_for(scenario)
+        next unless tags.length > maxcount
         
-        references = [reference(file, feature, scenario)]
-        add_error(references, "Used #{tags.length} Tags")
+        add_issue(
+          I18n.t('linters.too_many_tags', count: tags.length, max: maxcount), 
+          feature
+        )
       end
+    end
+    
+    def maxcount
+      configuration['MaxCount']&.to_i || 3
     end
   end
 end

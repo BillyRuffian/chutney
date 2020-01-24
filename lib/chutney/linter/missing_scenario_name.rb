@@ -1,17 +1,12 @@
-require 'chutney/linter'
-
 module Chutney
   # service class to lint for missing scenario names
-  class MissingScenarioName < Linter
-    MESSAGE = 'All scenarios should have a name'.freeze
-  
+  class MissingScenarioName < Linter  
     def lint
-      scenarios do |file, feature, scenario|
+      scenarios do |feature, scenario|
         name = scenario.key?(:name) ? scenario[:name].strip : ''
-        references = [reference(file, feature, scenario)]
         next unless name.empty?
         
-        add_error(references, MESSAGE)
+        add_issue(I18n.t('linters.missing_scenario_name'), feature, scenario) if name.empty?
       end
     end
   end

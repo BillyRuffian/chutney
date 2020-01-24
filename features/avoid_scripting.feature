@@ -1,24 +1,26 @@
 Feature: Avoid Scripting
+
   As a Business Analyst
   I want to be warned about scripted tests
   so that all my tests follow the guideline of single action per scenario.
-
-  Background: Prepare Testee
-    Given a file named "lint.rb" with:
+  
+  Background:
+    Given chutney is configured with the linter "Chutney::AvoidScripting"
+  
+  Scenario: A valid example
+    And a feature file contains:
       """
-      $LOAD_PATH << '../../lib'
-      require 'chutney'
-
-      linter = Chutney::ChutneyLint.new
-      linter.enable %w(AvoidScripting)
-      linter.set_linter
-      linter.analyze 'lint.feature'
-      exit linter.report
-
+      Feature: Test
+        Scenario: A
+          When I think
+          Then I exist
       """
-
+    When I run Chutney
+    Then 0 issues are raised
+  
+  
   Scenario: Multiple Actions
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Test
         Scenario: A
@@ -27,16 +29,19 @@ Feature: Avoid Scripting
           And something else
           Then verify
       """
-    When I run `ruby lint.rb`
-    Then it should fail with exactly:
+    When I run Chutney
+    Then 1 issue is raised
+    And the message is: 
       """
-      AvoidScripting - You have multiple (2) 'When' actions in your steps - you should only have one
-        lint.feature (2): Test.A
-
+      You have 2 When steps when you should only have one. Be careful not to add And steps following a When.
       """
-
+    And it is reported on on <line> <column>
+      | line | column |
+      | 5    | 5      |
+    
+    
   Scenario: Repeat Action-Verfication Steps
-    Given a file named "lint.feature" with:
+    Given a feature file contains:
       """
       Feature: Test
         Scenario: A
@@ -46,24 +51,12 @@ Feature: Avoid Scripting
           When test
           Then verify
       """
-    When I run `ruby lint.rb`
-    Then it should fail with exactly:
+    When I run Chutney
+    Then 1 issue is raised
+    And the message is: 
       """
-      AvoidScripting - You have multiple (2) 'When' actions in your steps - you should only have one
-        lint.feature (2): Test.A
-
+      You have 2 When steps when you should only have one. Be careful not to add And steps following a When.
       """
-
-  Scenario: Valid Example
-    Given a file named "lint.feature" with:
-      """
-      Feature: Test
-        Scenario: A
-          Given setup
-          When test
-          Then verification
-      """
-    When I run `ruby lint.rb`
-    Then it should pass with exactly:
-      """
-      """
+    And it is reported on on <line> <column>
+      | line | column |
+      | 6    | 5      |

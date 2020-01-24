@@ -1,46 +1,37 @@
-Feature: Background Does More Than Setup
+Feature: Avoid Scripting
+
   As a Business Analyst
   I want to be warned if there is more than setup in background
   so that tests stay understandable
-
-  Background: Prepare Testee
-    Given a file named "lint.rb" with:
+  
+  Background:
+    Given chutney is configured with the linter "Chutney::BackgroundDoesMoreThanSetup"
+  
+  Scenario: A valid example
+    And a feature file contains:
       """
-      $LOAD_PATH << '../../lib'
-      require 'chutney'
-
-      linter = Chutney::ChutneyLint.new
-      linter.enable %w(BackgroundDoesMoreThanSetup)
-      linter.set_linter
-      linter.analyze 'lint.feature'
-      exit linter.report
-
+      Feature: Test
+        Background: Preparation
+          Given setup
       """
-
-  Scenario: Background With Action
-    Given a file named "lint.feature" with:
+    When I run Chutney
+    Then 0 issues are raised
+  
+  
+  Scenario: Action steps in the Background
+    And a feature file contains:
       """
       Feature: Test
         Background: Preparation
           Given setup
           When test
       """
-    When I run `ruby lint.rb`
-    Then it should fail with exactly:
+    When I run Chutney
+    Then 1 issue is raised
+    And the message is: 
       """
-      BackgroundDoesMoreThanSetup - A Feature's Background should just contain 'Given' steps
-        lint.feature (4): Test.Preparation step: test
-
+      The Background does more than setup. It should only contain Given steps.
       """
-
-  Scenario: Valid Example
-    Given a file named "lint.feature" with:
-      """
-      Feature: Test
-        Background: Preparation
-          Given setup
-      """
-    When I run `ruby lint.rb`
-    Then it should pass with exactly:
-      """
-      """
+    And it is reported on on <line> <column>
+      | line | column |
+      | 2    | 3      |

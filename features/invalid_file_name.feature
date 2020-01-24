@@ -1,50 +1,39 @@
 Feature: Invalid File Name
-  As a Business Analyst
-  I want to be warned about invalid file name
-  so that I name all features consistently
 
-  Background: Prepare Testee
-    Given a file named "lint.rb" with:
-      """
-      $LOAD_PATH << '../../lib'
-      require 'chutney'
-      require 'optparse'
-      OptionParser.new { |opts| }.parse!
-
-      linter = Chutney::ChutneyLint.new
-      linter.enable %w(InvalidFileName)
-      linter.set_linter
-      ARGV.each { |file| linter.analyze file }
-      exit linter.report
-
-      """
-
-  Scenario Outline: Invalid File Names
-    Given a file named "<name>.feature" with:
+  As a ruby programmer
+  I want the file to be in snake case
+  so that it follows the conventions of the language
+  
+  Background:
+    Given chutney is configured with the linter "Chutney::InvalidFileName"
+  
+  Scenario Outline: Using upper case in the file name
+    And a feature file called "<name>.feature" contains:
       """
       Feature: Test
       """
-    When I run `ruby lint.rb "<name>.feature"`
-    Then it should fail with exactly:
+    When I run Chutney
+    Then 1 issues are raised  
+    And the message is: 
       """
-      InvalidFileName - Feature files should be snake_cased
-        <name>.feature
-
+      Filenames of feature files should be in snake case. You should name this file '<file>'.
       """
-
-    Examples: Invalid Names
-      | name    |
-      | Lint    |
-      | lintMe  |
-      | lint me |
-      | lint-me |
-
-  Scenario: Valid Example
-    Given a file named "lint.feature" with:
+    And it is reported on on <line> <column>
+      | line | column |
+      | 1    | 1      |
+    
+    Examples: Invalid examples
+      | name    | file            |
+      | Lint    | lint.feature    |
+      | lintMe  | lint_me.feature |
+      | lint me | lint_me.feature |
+      | lint-me | lint_me.feature |
+    
+  
+  Scenario: Valid example
+    And a feature file called "lint.feature" contains:
       """
       Feature: Test
       """
-    When I run `ruby lint.rb lint.feature`
-    Then it should pass with exactly:
-      """
-      """
+    When I run Chutney
+    Then 0 issues are raised

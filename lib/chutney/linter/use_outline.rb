@@ -1,35 +1,40 @@
-require 'amatch'
-require 'chutney/linter'
-
 module Chutney
   # service class to lint for using outline
   class UseOutline < Linter
     def lint
-      features do |file, feature|
-        check_similarity gather_scenarios(file, feature)
-      end
+      check_similarity(gather_scenarios(feature))
     end
 
     def check_similarity(scenarios)
       scenarios.product(scenarios) do |lhs, rhs|
         next if lhs == rhs
-        next if lhs[:reference] > rhs[:reference]
+        next if lhs[:reference][:line] > rhs[:reference][:line]
         
         similarity = determine_similarity(lhs[:text], rhs[:text])
         next unless similarity >= 0.95
         
         similarity_pct = similarity.round(3) * 100
-        references = [lhs[:reference], rhs[:reference]]
-        add_error(references, "Scenarios are similar by #{similarity_pct} %, use Background steps to simplify")
+        
+        add_issue(lhs, rhs, similarity_pct)
       end
+    end
+    
+    def add_issue(lhs, rhs, pct)
+      super(I18n.t('linters.use_outline', 
+                   pct: pct,
+                   lhs_name: lhs[:name],
+                   lhs_line: lhs[:reference][:line],
+                   rhs_name: rhs[:name],
+                   rhs_line: rhs[:reference][:line]),
+                  feature)
     end
 
     def determine_similarity(lhs, rhs)
-      matcher = Amatch::Jaro.new lhs
-      matcher.match rhs
+      matcher = Amatch::Jaro.new(lhs)
+      matcher.match(rhs)
     end
 
-    def gather_scenarios(file, feature)
+    def gather_scenarios(feature)
       scenarios = []
       return scenarios unless feature.include? :children
       
@@ -38,14 +43,15 @@ module Chutney
         next unless scenario.include? :steps
         next if scenario[:steps].empty?
         
-        scenarios.push generate_reference(file, feature, scenario)
+        scenarios.push generate_reference(feature, scenario)
       end
       scenarios
     end
 
-    def generate_reference(file, feature, scenario)
+    def generate_reference(feature, scenario)
       reference = {}
-      reference[:reference] = reference(file, feature, scenario)
+      reference[:reference] = location(feature, scenario, nil)
+      reference[:name] = "#{scenario[:keyword]}: #{scenario[:name]}"
       reference[:text] = scenario[:steps].map { |step| render_step(step) }.join ' '
       reference
     end

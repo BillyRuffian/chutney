@@ -6,12 +6,11 @@ module Chutney
     MESSAGE = 'Avoid using Background steps for just one scenario'.freeze
   
     def lint
-      backgrounds do |file, feature, background|
+      background do |feature, background|
         scenarios = feature[:children].reject { |element| element[:type] == :Background }
         next if scenarios.length >= 2
 
-        references = [reference(file, feature, background)]
-        add_error(references, MESSAGE)
+        add_issue(I18n.t('linters.background_requires_multiple_scenarios'), feature, background)
       end
     end
   end

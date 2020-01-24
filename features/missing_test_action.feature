@@ -1,40 +1,32 @@
 Feature: Missing Test Action
+
   As a Business Analyst
   I want to be warned if I missed an action to test
   so that all my scenarios actually stimulate the system and provoke a behavior
 
-  Background: Prepare Testee
-    Given a file named "lint.rb" with:
-      """
-      $LOAD_PATH << '../../lib'
-      require 'chutney'
-
-      linter = Chutney::ChutneyLint.new
-      linter.enable %w(MissingTestAction)
-      linter.set_linter
-      linter.analyze 'lint.feature'
-      exit linter.report
-
-      """
+  Background: 
+    Given chutney is configured with the linter "Chutney::MissingTestAction"
 
   Scenario: Missing Action
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Test
         Scenario: A
           Given setup
           Then verification
       """
-    When I run `ruby lint.rb`
-    Then it should fail with exactly:
+    When I run Chutney
+    Then 1 issue is raised 
+    And the message is: 
       """
-      MissingTestAction - No 'When'-Step
-        lint.feature (2): Test.A
-
+      Your test has no action step. All scenarios should have a 'When' step indicating the action being taken.
       """
+    And it is reported on on <line> <column>
+      | line | column |
+      | 2    | 3      |
 
   Scenario: Valid Example
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Test
         Scenario: A
@@ -42,18 +34,14 @@ Feature: Missing Test Action
           When action
           Then verification
       """
-    When I run `ruby lint.rb`
-    Then it should pass with exactly:
-      """
-      """
+    When I run Chutney
+    Then 0 issues are raised  
 
   Scenario: Empty Scenario
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Test
         Scenario: A
       """
-    When I run `ruby lint.rb`
-    Then it should pass with exactly:
-      """
-      """
+    When I run Chutney
+    Then 0 issues are raised  

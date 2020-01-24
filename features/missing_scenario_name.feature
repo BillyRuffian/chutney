@@ -1,57 +1,49 @@
 Feature: Missing Scenario Name
+
   As a Customer
   I want named scenarios
   so that I know what this scenario is about without reading it
 
-  Background: Prepare Testee
-    Given a file named "lint.rb" with:
-      """
-      $LOAD_PATH << '../../lib'
-      require 'chutney'
-
-      linter = Chutney::ChutneyLint.new
-      linter.enable %w(MissingScenarioName)
-      linter.set_linter
-      linter.analyze 'lint.feature'
-      exit linter.report
-
-      """
+  Background:
+    Given chutney is configured with the linter "Chutney::MissingScenarioName"
 
   Scenario: Missing Scenario Name
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Test
         Scenario:
       """
-    When I run `ruby lint.rb`
-    Then it should fail with exactly:
+    When I run Chutney
+    Then 1 issue is raised  
+    And the message is: 
       """
-      MissingScenarioName - All scenarios should have a name
-        lint.feature (2): Test
-
+      This scenario is unnamed. You should name all scenarios.
       """
+    And it is reported on on <line> <column>
+      | line | column |
+      | 2    | 3      |
 
   Scenario: Missing Scenario Outline Name
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Test
         Scenario Outline:
       """
-    When I run `ruby lint.rb`
-    Then it should fail with exactly:
+    When I run Chutney
+    Then 1 issue is raised   
+    And the message is: 
       """
-      MissingScenarioName - All scenarios should have a name
-        lint.feature (2): Test
-
+      This scenario is unnamed. You should name all scenarios.
       """
+    And it is reported on on <line> <column>
+      | line | column |
+      | 2    | 3      |
 
   Scenario: Valid Example
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Test
         Scenario: A
       """
-    When I run `ruby lint.rb`
-    Then it should pass with exactly:
-      """
-      """
+    When I run Chutney
+    Then 0 issues are raised  

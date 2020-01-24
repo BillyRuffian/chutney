@@ -1,19 +1,16 @@
-require 'chutney/linter'
-
 module Chutney
   # service class to lint for background that does more than setup
-  class BackgroundDoesMoreThanSetup < Linter
-    MESSAGE = 'A Feature\'s Background should just contain \'Given\' steps'.freeze
-   
+  class BackgroundDoesMoreThanSetup < Linter   
     def lint
-      backgrounds do |file, feature, background|
+      background do |feature, background|
         next unless background.key? :steps
         
-        invalid_steps = background[:steps].select { |step| step[:keyword] == 'When ' || step[:keyword] == 'Then ' }
+        invalid_steps = background[:steps].select do |step| 
+          when_word?(step[:keyword]) || then_word?(step[:keyword])
+        end
         next if invalid_steps.empty?
-        
-        references = [reference(file, feature, background, invalid_steps[0])]
-        add_error(references, MESSAGE)
+
+        add_issue(I18n.t('linters.background_does_more_than_setup'), feature, background)
       end
     end
   end

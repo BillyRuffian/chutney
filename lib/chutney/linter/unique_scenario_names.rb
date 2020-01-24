@@ -1,22 +1,28 @@
-require 'chutney/linter'
-
 module Chutney
   # service class to lint for unique scenario names
   class UniqueScenarioNames < Linter
     def lint
-      references_by_name = Hash.new []
-      scenarios do |file, feature, scenario|
+      references_by_name = {}
+      scenarios do |feature, scenario|
         next unless scenario.key? :name
-        
-        scenario_name = "#{feature[:name]}.#{scenario[:name]}"
-        references_by_name[scenario_name] = references_by_name[scenario_name] + [reference(file, feature, scenario)]
+
+        name = scenario[:name]
+        if references_by_name[name]
+          issue(name, references_by_name[name], scenario)
+        else
+          references_by_name[name] = location(feature, scenario, nil)
+        end
       end
-      
-      references_by_name.each do |name, references|
-        next if references.length <= 1
-        
-        add_error(references, "Scenario name should be unique, '#{name}' used #{references.length} times")
-      end
+    end
+    
+    def issue(name, first_location, scenario)
+      add_issue(
+        I18n.t('linters.unique_scenario_names',
+               name: name,
+               line: first_location[:line],
+               column: first_location[:column]), 
+        feature, scenario
+      )
     end
   end
 end

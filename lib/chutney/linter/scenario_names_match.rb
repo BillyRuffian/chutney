@@ -7,17 +7,15 @@ module Chutney
   
 
     def lint
-      scenarios do |file, feature, scenario|
+      scenarios do |feature, scenario|
         name = scenario.key?(:name) ? scenario[:name].strip : ''
-        references = [reference(file, feature, scenario)]
-        next unless (name =~ /#{@pattern}/).nil?
+        next unless (name =~ /#{configuration['Matcher']}/).nil?
         
-        add_warning(references, MESSAGE)
+        add_issue(
+          I18n.t('linters.scenario_names_match', 
+                 pattern: configuration['Matcher']), feature, scenario
+        )
       end
-    end
-    
-    def matcher(pattern)
-      @pattern = pattern
     end
   end
 end

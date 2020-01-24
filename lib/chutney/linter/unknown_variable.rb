@@ -1,17 +1,16 @@
-require 'chutney/linter'
-
 module Chutney
   # service class to lint for unknown variables
   class UnknownVariable < Linter
     def lint
-      filled_scenarios do |file, feature, scenario|
-        known_vars = Set.new known_variables scenario
+      filled_scenarios do |feature, scenario|
+        known_vars = Set.new(known_variables(scenario))
         scenario[:steps].each do |step|
           step_vars(step).each do |used_var|
             next if known_vars.include? used_var
             
-            references = [reference(file, feature, scenario)]
-            add_error(references, "Variable '<#{used_var}>' is unknown")
+            add_issue(
+              I18n.t('linters.unknown_variable', variable: used_var), feature, scenario
+            )
           end
         end
       end

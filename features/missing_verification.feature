@@ -1,41 +1,32 @@
 Feature: Missing Verification
+
   As a Business Analyst
   I want that each test contains at least one verification
   so that I'm sure that the behavior of the system is tested
 
-  Background: Prepare Testee
-    Given a file named "lint.rb" with:
-      """
-      $LOAD_PATH << '../../lib'
-      require 'chutney'
+  Background:
+    Given chutney is configured with the linter "Chutney::MissingVerification"
 
-      linter = Chutney::ChutneyLint.new
-      linter.enable %w(MissingVerification)
-      linter.set_linter
-      linter.analyze 'lint.feature'
-      exit linter.report
-
-      """
-
-  @disableBadScenarioName
-  Scenario: Missing Verification
-    Given a file named "lint.feature" with:
+  Scenario: Missing assertion step
+    And a feature file contains:
       """
       Feature: Test
         Scenario: A
           Given setup
           When test
       """
-    When I run `ruby lint.rb`
-    Then it should fail with exactly:
+    When I run Chutney
+    Then 1 issue is raised
+    And the message is: 
       """
-      MissingVerification - No 'Then' step
-        lint.feature (2): Test.A
-
+      Your test has no verification step. All scenarios should have a 'Then' step indicating the assertion being tested.
       """
+    And it is reported on on <line> <column>
+      | line | column |
+      | 2    | 3      |
 
   Scenario: Valid Example
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Test
         Scenario: A
@@ -43,18 +34,14 @@ Feature: Missing Verification
           When action
           Then verification
       """
-    When I run `ruby lint.rb`
-    Then it should pass with exactly:
-      """
-      """
+    When I run Chutney
+    Then 0 issues are raised  
 
   Scenario: Empty Scenario
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Test
         Scenario: A
       """
-    When I run `ruby lint.rb`
-    Then it should pass with exactly:
-      """
-      """
+    When I run Chutney
+    Then 0 issues are raised  
