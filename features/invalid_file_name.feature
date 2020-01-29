@@ -18,7 +18,7 @@ Feature: Invalid File Name
       """
       Filenames of feature files should be in snake case. You should name this file '<file>'.
       """
-    And it is reported on on <line> <column>
+    And it is reported on:
       | line | column |
       | 1    | 1      |
     

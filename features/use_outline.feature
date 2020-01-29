@@ -28,7 +28,7 @@ Feature: Use Outline
       """
       Scenarios are similar by 97.8%, you should use scenario outlines to simplify.  Scenario: A (5) vs Scenario: B (9)
       """
-    And it is reported on on <line> <column>
+    And it is reported on:
       | line | column |
       | 1    | 1      |
 

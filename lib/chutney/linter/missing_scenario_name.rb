@@ -1,6 +1,7 @@
 module Chutney
   # service class to lint for missing scenario names
   class MissingScenarioName < Linter  
+  
     def lint
       scenarios do |feature, scenario|
         name = scenario.key?(:name) ? scenario[:name].strip : ''

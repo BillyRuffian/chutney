@@ -31,7 +31,7 @@ Feature: Too Clumsy
       """
       This scenario is too clumsy at 401 characters. Scenarios should be no more than 400 characters long.
       """
-    And it is reported on on <line> <column>
+    And it is reported on:
       | line | column |
       | 2    | 3      |
 

@@ -1,3 +1,4 @@
+@disableUnknownVariable
 Feature: Unused Variable
 
   As a Business Analyst
@@ -24,7 +25,7 @@ Feature: Unused Variable
       """
       The variable 'foo' is declared but never used.
       """
-    And it is reported on on <line> <column>
+    And it is reported on:
       | line | column |
       | 5    | 5      |
 
@@ -47,7 +48,7 @@ Feature: Unused Variable
       """
       The variable 'foo' is declared but never used.
       """
-    And it is reported on on <line> <column>
+    And it is reported on:
       | line | column |
       | 7    | 5      |
 
@@ -71,7 +72,7 @@ Feature: Unused Variable
       """
       The variable 'foo' is declared but never used.
       """
-    And it is reported on on <line> <column>
+    And it is reported on:
       | line | column |
       | 8    | 5      |
 

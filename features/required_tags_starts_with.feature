@@ -25,7 +25,7 @@ Feature: Required Tags Starts With
       """
       You have tags which do not match the required format. Allowed prefixes are 'PB, MCC'.
       """
-    And it is reported on on <line> <column>
+    And it is reported on:
       | line | column |
       | 2    | 3      |
 

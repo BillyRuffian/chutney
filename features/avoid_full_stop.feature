@@ -1,4 +1,4 @@
-Feature: Avoid Period
+Feature: Avoid Full Stop
 
   As a Business Analyst
   I do not want a period at the end of the scenario
@@ -32,7 +32,7 @@ Feature: Avoid Period
       """
       Avoid using a full-stop in steps so that it is easier to re-use them.
       """
-    And it is reported on on <line> <column>
+    And it is reported on:
       | line | column |
       | 3    | 5      |
       | 4    | 5      |

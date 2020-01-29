@@ -21,7 +21,7 @@ Feature: Too Long Step
       """
       This step is too long at 118 characters. It should be no longer than 80  characters.
       """
-    And it is reported on on <line> <column>
+    And it is reported on:
       | line | column |
       | 2    | 3      |
       

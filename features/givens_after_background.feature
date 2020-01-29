@@ -23,7 +23,7 @@ Feature: Givens After Background
       """
       Avoid using the 'Given' keyword in scenarios if you have a background. Instead, setup steps begin your scenario and should start with an 'And' or 'But' keyword.
       """
-    And it is reported on on <line> <column>
+    And it is reported on:
       | line | column |
       | 6    | 5      |
       
@@ -44,7 +44,7 @@ Feature: Givens After Background
       """
       Avoid using the 'Given' keyword in scenarios if you have a background. Instead, setup steps begin your scenario and should start with an 'And' or 'But' keyword.
       """
-    And it is reported on on <line> <column>
+    And it is reported on:
       | line | column |
       | 7    | 5      |
       

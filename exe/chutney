@@ -1,5 +1,8 @@
 #!/usr/bin/env ruby
 require 'chutney'
+require 'chutney/formatter'
+require 'chutney/formatter/pie_formatter'
+require 'chutney/formatter/rainbow_formatter'
 require 'optparse'
 
 options = {}
@@ -19,17 +22,20 @@ OptionParser.new do |opts|
   end
 end.parse!
 
-linter = Chutney::ChutneyLint.new
-linter.disable options[:disable] if options.key? :disable
-linter.enable options[:enable] if options.key? :enable
-linter.set_linter
+# linter.disable options[:disable] if options.key? :disable
+# linter.enable options[:enable] if options.key? :enable
 
 files = ARGV.map { |pattern| Dir.glob(pattern) }.flatten
 files += Dir.glob(options[:files]) if options.key? :files
 files = Dir.glob('features/**/*.feature') if ARGV.empty? && !options.key?(:files)
 
-files.each do |file|
-  linter.analyze file
-end
+# files.each do |file|
+#   linter.analyze file
+# end
 
-exit linter.report
+linter = Chutney::ChutneyLint.new(*files)
+formatter = Chutney::RainbowFormatter.new
+report = linter.analyse
+
+formatter.results = report
+formatter.format

@@ -21,7 +21,7 @@ Feature: Invalid Step Flow
       """
       This scenario is missing an action step -- it does not have a 'When'.
       """
-    And it is reported on on <line> <column>
+    And it is reported on:
       | line | column |
       | 2    | 3      |
 
@@ -40,7 +40,7 @@ Feature: Invalid Step Flow
       """
       You have a 'Given' setup step after a 'When' action step or a 'Then' assertion step. Setup steps should always be the first steps of a scenario.
       """
-    And it is reported on on <line> <column>
+    And it is reported on:
       | line | column |
       | 4    | 5      |
 
@@ -60,7 +60,7 @@ Feature: Invalid Step Flow
       """
       This scenario has the action as the last step of the scenario. A 'Then' assertion step should always follow a 'When' action step.
       """
-    And it is reported on on <line> <column>
+    And it is reported on:
       | line | column |
       | 6    | 5      |
 

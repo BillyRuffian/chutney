@@ -22,7 +22,7 @@ Feature: Same Tag For All Scenarios
       """
       You are using the same tag (A) for all scenarios. Use this tag at the feature level instead.
       """
-    And it is reported on on <line> <column>
+    And it is reported on:
       | line | column |
       | 1    | 1      |
 
@@ -49,7 +49,7 @@ Feature: Same Tag For All Scenarios
       """
       You are using the same tag (A) for all examples in this scenario. Use this tag at the scenario level instead.
       """
-    And it is reported on on <line> <column>
+    And it is reported on:
       | line | column |
       | 2    | 3      |
 

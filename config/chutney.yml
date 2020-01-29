@@ -1,6 +1,6 @@
 AvoidOutlineForSingleExample:
     Enabled: true
-AvoidPeriod:
+AvoidFullStop:
     Enabled: true
 AvoidScripting:
     Enabled: true

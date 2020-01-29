@@ -60,7 +60,7 @@ module Chutney
     def when_word?(word)
       @dialect.when_keywords.include?(word)
     end
-    
+  
     def tags_for(element)
       return [] unless element.include? :tags
 
@@ -105,11 +105,31 @@ module Chutney
     def elements
       if block_given? 
         feature[:children].each do |child|
+          next if off_switch?(child)
+        
           yield(feature, child)
         end
       else
         feature[:children]
       end
+    end
+    
+    def off_switch?(element = feature)
+      #       thing = element[:tags]
+      #               .then { |tags| tags || [] }
+      #               .filter { |tag| tag[:type] == :Tag }
+      #               .filter { |tag| tag[:name] == "@disable#{linter_name}" }
+      #               .count
+      #               .positive?
+      #       puts "#{linter_name} #{element[:type]} #{thing}"
+      off_switch = element[:tags]
+                   .then { |tags| tags || [] }
+                   .filter { |tag| tag[:type] == :Tag }
+                   .filter { |tag| tag[:name] == "@disable#{linter_name}" }
+                   .count
+                   .positive?
+      off_switch ||= off_switch?(feature) unless element == feature
+      off_switch
     end
     
     def background

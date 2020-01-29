@@ -53,7 +53,7 @@ module Chutney
 
     def initialize(*files)
       @files = files
-      @results = Hash.new { |h, k| h[k] = {} }
+      @results = Hash.new { |h, k| h[k] = [] }
       I18n.load_path << Dir[File.expand_path(File.join(__dir__, 'config/locales')) + '/*.yml']
       I18n.default_locale = :en # (note that `en` is already the default!)
     end
@@ -121,7 +121,7 @@ module Chutney
     #     end
 
     def analyse
-      files.map do |f|
+      files.each do |f|
         lint(f)
       end
       @results
@@ -131,7 +131,7 @@ module Chutney
     alias analyze analyse
     
     def linters
-      @linters ||= [Chutney::AvoidFullStop]
+      @linters ||= Linter.descendants.filter { |l| !!configuration.dig(l.linter_name, 'Enabled') }
     end
     
     def linters=(*linters)
@@ -151,7 +151,7 @@ module Chutney
       linters.each do |linter_class|
         linter = linter_class.new(file, parsed, configuration[linter_class.linter_name])
         linter.lint
-        @results[file] = { linter: linter.linter_name, issues: linter.issues }
+        @results[file] << { linter: linter.linter_name, issues: linter.issues }
       end
     end
 

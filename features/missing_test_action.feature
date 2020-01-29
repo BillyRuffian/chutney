@@ -21,7 +21,7 @@ Feature: Missing Test Action
       """
       Your test has no action step. All scenarios should have a 'When' step indicating the action being taken.
       """
-    And it is reported on on <line> <column>
+    And it is reported on:
       | line | column |
       | 2    | 3      |
 

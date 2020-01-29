@@ -1,4 +1,4 @@
-Feature: Avoid Scripting
+Feature: Background Does More Than Setup
 
   As a Business Analyst
   I want to be warned if there is more than setup in background
@@ -32,6 +32,6 @@ Feature: Avoid Scripting
       """
       The Background does more than setup. It should only contain Given steps.
       """
-    And it is reported on on <line> <column>
+    And it is reported on:
       | line | column |
       | 2    | 3      |

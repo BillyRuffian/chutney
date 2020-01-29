@@ -35,13 +35,13 @@ Feature: Avoid Scripting
       """
       You have 2 When steps when you should only have one. Be careful not to add And steps following a When.
       """
-    And it is reported on on <line> <column>
+    And it is reported on:
       | line | column |
       | 5    | 5      |
     
     
   Scenario: Repeat Action-Verfication Steps
-    Given a feature file contains:
+    And a feature file contains:
       """
       Feature: Test
         Scenario: A
@@ -57,6 +57,6 @@ Feature: Avoid Scripting
       """
       You have 2 When steps when you should only have one. Be careful not to add And steps following a When.
       """
-    And it is reported on on <line> <column>
+    And it is reported on:
       | line | column |
       | 6    | 5      |

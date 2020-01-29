@@ -18,7 +18,7 @@ Feature: Missing Feature Name
       """
       This feature is unnamed. You should name all features.
       """
-    And it is reported on on <line> <column>
+    And it is reported on:
       | line | column |
       | 1    | 1      |
 

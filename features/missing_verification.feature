@@ -21,7 +21,7 @@ Feature: Missing Verification
       """
       Your test has no verification step. All scenarios should have a 'Then' step indicating the assertion being tested.
       """
-    And it is reported on on <line> <column>
+    And it is reported on:
       | line | column |
       | 2    | 3      |
 

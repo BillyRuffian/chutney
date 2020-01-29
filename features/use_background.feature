@@ -27,10 +27,11 @@ Feature: Use Background
       """
       The step 'Given setup' is used in all the scenarios of this feature. It should be moved to the background steps.
       """
-    And it is reported on on <line> <column>
+    And it is reported on:
       | line | column |
       | 1    | 1      |
 
+  @disableUnknownVariable
   Scenario: Same Given in Outlines
     And a feature file contains:
       """
@@ -59,7 +60,7 @@ Feature: Use Background
       """
       The step 'Given A' is used in all the scenarios of this feature. It should be moved to the background steps.
       """
-    And it is reported on on <line> <column>
+    And it is reported on:
       | line | column |
       | 1    | 1      |
 
@@ -80,7 +81,7 @@ Feature: Use Background
     When I run Chutney
     Then 0 issues are raised 
 
-
+  @disableUnknownVariable
   Scenario: Valid Single Scenario
     And a feature file contains:
       """

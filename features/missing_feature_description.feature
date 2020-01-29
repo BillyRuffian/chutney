@@ -18,7 +18,7 @@ Feature: Missing Feature Description
       """
       Features should have a description / value statement so that the importance of the feature is well understood.
       """
-    And it is reported on on <line> <column>
+    And it is reported on:
       | line | column |
       | 1    | 1      |
 

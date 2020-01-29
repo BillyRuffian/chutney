@@ -1,4 +1,5 @@
-Feature: Avoid Outline for a single example
+@disableUnknownVariable
+Feature: Avoid Outline for single example
 
   As a Business Analyst
   I do not want a Scenario Outline to be used for a single example
@@ -41,6 +42,6 @@ Feature: Avoid Outline for a single example
       """
       Avoid using Scenario Outlines when you only have a single example. Use a Scenario instead.
       """
-    And it is reported on on <line> <column>
+    And it is reported on:
       | line | column |
       | 2    | 3      |

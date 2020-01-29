@@ -44,13 +44,11 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
   
   spec.add_runtime_dependency 'amatch', '~> 0.4.0'
-#   spec.add_runtime_dependency 'engtagger', '~> 0.2'
   spec.add_runtime_dependency 'gherkin', '~> 5.1.0'
   spec.add_runtime_dependency 'i18n', '~> 1.8.2'
-#   spec.add_runtime_dependency 'multi_json', '~> 1.0'
-#   spec.add_runtime_dependency 'term-ansicolor', '1.7.1'
-#   
-#   spec.add_development_dependency 'aruba', '~> 0.14.0'
+  spec.add_runtime_dependency 'pastel', '~> 0.7'
+  spec.add_runtime_dependency 'tty-pie', '~> 0.3'
+
   spec.add_development_dependency 'cucumber', '~> 3.0'
   spec.add_development_dependency 'rake', '~> 13.0'
   spec.add_development_dependency 'rerun', '~> 0.13'

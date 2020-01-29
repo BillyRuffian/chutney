@@ -43,7 +43,7 @@ Feature: Too Many Steps
       """
       There are too many steps in this feature. There are 12 and the maximum is 10.
       """
-    And it is reported on on <line> <column>
+    And it is reported on:
       | line | column |
       | 1    | 1      |
 
@@ -71,6 +71,6 @@ Feature: Too Many Steps
       """
       There are too many steps in this feature. There are 4 and the maximum is 2.
       """
-    And it is reported on on <line> <column>
+    And it is reported on:
       | line | column |
       | 1    | 1      |

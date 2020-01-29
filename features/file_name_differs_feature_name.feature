@@ -33,7 +33,7 @@ Feature: File Name Differs Feature Name
       """
       The name of the feature should reflect the file name. Consider renaming this feature to 'Lint Me'.
       """
-    And it is reported on on <line> <column>
+    And it is reported on:
       | line | column |
       | 1    | 1      |
 

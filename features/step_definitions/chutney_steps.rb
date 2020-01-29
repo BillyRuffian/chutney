@@ -21,8 +21,7 @@ When('I run Chutney') do
 end
 
 Then('{int} issue(s) is/are raised') do |expected_number_of_issues|
-  @result = @chutney.analyse[@feature_file.path]
-  
+  @result = @chutney.analyse[@feature_file.path].first
   expect(@result[:linter]).to eq @linter_name.split('::').last
   expect(@result[:issues]&.count).to eq expected_number_of_issues if expected_number_of_issues.positive?
   expect(@result[:issues]&.count).to eq 0 if expected_number_of_issues.zero?
@@ -36,7 +35,7 @@ Then('the message is:') do |message|
   @result[:issues].each { |i| expect(i[:message]).to eq message }
 end
 
-Then('it is reported on on <line> <column>') do |table|
+Then('it is reported on:') do |table|
   locations = @result[:issues].map { |i| i[:location] }
   table.symbolic_hashes.each do |row|
     expect(locations).to include(line: row[:line].to_i, column: row[:column].to_i)

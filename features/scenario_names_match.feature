@@ -1,4 +1,4 @@
-Feature: Required Tags Starts With
+Feature: Scenario Names Match
 
   As a tester 
   I want my scenario names to match a pattern
@@ -28,7 +28,7 @@ Feature: Required Tags Starts With
       """
       You have scenario name which do not match the required format.  Allowed patterns are '^AC.*'.
       """
-    And it is reported on on <line> <column>
+    And it is reported on:
       | line | column |
       | 2    | 3      |
       

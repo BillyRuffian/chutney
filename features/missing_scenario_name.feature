@@ -19,7 +19,7 @@ Feature: Missing Scenario Name
       """
       This scenario is unnamed. You should name all scenarios.
       """
-    And it is reported on on <line> <column>
+    And it is reported on:
       | line | column |
       | 2    | 3      |
 
@@ -35,7 +35,7 @@ Feature: Missing Scenario Name
       """
       This scenario is unnamed. You should name all scenarios.
       """
-    And it is reported on on <line> <column>
+    And it is reported on:
       | line | column |
       | 2    | 3      |
 

@@ -1,3 +1,4 @@
+@disableUnknownVariable
 Feature: Missing Example Name
 
   As a Customer
@@ -29,7 +30,7 @@ Feature: Missing Example Name
       """
       You have a scenerio with more than one example table, at least one of which is unnamed or has a duplicate name.  You should give your example tables clear and meaningful names when you have more than one.
       """
-    And it is reported on on <line> <column>
+    And it is reported on:
       | line | column |
       | 6    | 5      |
       | 10   | 5      |
@@ -57,7 +58,7 @@ Feature: Missing Example Name
       """
       You have a scenerio with more than one example table, at least one of which is unnamed or has a duplicate name.  You should give your example tables clear and meaningful names when you have more than one.
       """
-    And it is reported on on <line> <column>
+    And it is reported on:
       | line | column |
       | 6    | 5      |
     

@@ -31,7 +31,7 @@ Feature: Bad Scenario Name
       """
       You should avoid using words like '<bad word>' in your scenario names.
       """
-    And it is reported on on <line> <column>
+    And it is reported on:
       | line | column |
       | 2    | 3      |
 

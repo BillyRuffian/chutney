@@ -1,3 +1,4 @@
+@disableUnknownVariable
 Feature: Unknown Variable
 
   As a Business Analyst
@@ -24,7 +25,7 @@ Feature: Unknown Variable
       """
       The variable 'baz' is referenced in your test but its value is never set.
       """
-    And it is reported on on <line> <column>
+    And it is reported on:
       | line | column |
       | 2    | 3      |
 
@@ -37,7 +38,7 @@ Feature: Unknown Variable
       """
     When I run Chutney
     Then 2 issues are raised 
-    And it is reported on on <line> <column>
+    And it is reported on:
       | line | column |
       | 2    | 3      |
 
@@ -60,7 +61,7 @@ Feature: Unknown Variable
       """
       The variable 'baz' is referenced in your test but its value is never set.
       """
-    And it is reported on on <line> <column>
+    And it is reported on:
       | line | column |
       | 2    | 3      |
 
@@ -84,7 +85,7 @@ Feature: Unknown Variable
       """
       The variable 'baz' is referenced in your test but its value is never set.
       """
-    And it is reported on on <line> <column>
+    And it is reported on:
       | line | column |
       | 2    | 3      |
 

@@ -10,9 +10,10 @@ module Chutney
     end
     
     def filter_when_steps(steps)
-      steps = steps.drop_while { |step| !when_word?(step[:keyword]) }
-      steps = steps.reverse.drop_while { |step| then_word?(step[:keyword]) }.reverse
-      steps.reject { |step| then_word?(step[:keyword]) }
+      steps
+        .drop_while { |step| !when_word?(step[:keyword]) }
+        .then { |s| s.reverse.drop_while { |step| !then_word?(step[:keyword]) }.reverse }
+        .then { |s| s.reject { |step| then_word?(step[:keyword]) } }
     end
   end
 end

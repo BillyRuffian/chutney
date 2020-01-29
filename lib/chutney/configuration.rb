@@ -1,3 +1,4 @@
+require 'delegate'
 module Chutney 
   # gherkin_lint configuration object
   class Configuration < SimpleDelegator

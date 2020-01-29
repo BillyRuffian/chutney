@@ -21,7 +21,7 @@ Feature: Too Many Tags
       """
       There are too many tags in this feature. There are 4 and the maximum is 3.
       """
-    And it is reported on on <line> <column>
+    And it is reported on:
       | line | column |
       | 2    | 1      |
 
@@ -57,6 +57,6 @@ Feature: Too Many Tags
       """
       There are too many tags in this feature. There are 3 and the maximum is 2.
       """
-    And it is reported on on <line> <column>
+    And it is reported on:
       | line | column |
       | 2    | 1      |

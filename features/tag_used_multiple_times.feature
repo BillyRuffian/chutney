@@ -21,7 +21,7 @@ Feature: Tag Used Multiple Times
       """
       Avoid repeating tags at the feature and scenario level. These tags were used in both: tag.
       """
-    And it is reported on on <line> <column>
+    And it is reported on:
       | line | column |
       | 2    | 1      |
      

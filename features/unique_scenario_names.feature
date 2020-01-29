@@ -20,7 +20,7 @@ Feature: Unique Scenario Names
       """
       The scenario name 'A' is duplicated, first used at line 2, column 3.
       """
-    And it is reported on on <line> <column>
+    And it is reported on:
       | line | column |
       | 3    | 3      |
 

@@ -1,4 +1,5 @@
-Feature: Background Requires Scenario
+@disableTooLongStep
+Feature: Background Requires Multiple Scenarios
 
   As a Business Analyst
   I want to be warned if I'm using a background for just one scenario
@@ -43,6 +44,6 @@ Feature: Background Requires Scenario
       """
       Avoid using Background if you only have a single scenario.
       """
-    And it is reported on on <line> <column>
+    And it is reported on:
       | line | column |
       | 2    | 3      |
