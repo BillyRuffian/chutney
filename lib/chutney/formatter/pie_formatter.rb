@@ -17,6 +17,10 @@ module Chutney
           fill: char_loop
         }
       end
+      print_report(data)
+    end
+    
+    def print_report(data)
       unless data.empty?
         print TTY::Pie.new(data: data, radius: 8, legend: { format: '%<label>s %<name>s %<value>i' })
         puts

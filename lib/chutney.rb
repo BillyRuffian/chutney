@@ -131,7 +131,7 @@ module Chutney
     alias analyze analyse
     
     def linters
-      @linters ||= Linter.descendants.filter { |l| !!configuration.dig(l.linter_name, 'Enabled') }
+      @linters ||= Linter.descendants.filter { |l| configuration.dig(l.linter_name, 'Enabled') }
     end
     
     def linters=(*linters)
