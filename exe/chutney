@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 require 'chutney'
 require 'chutney/formatter'
+require 'chutney/formatter/json_formatter'
 require 'chutney/formatter/pie_formatter'
 require 'chutney/formatter/rainbow_formatter'
 require 'optparse'
@@ -34,7 +35,7 @@ files = Dir.glob('features/**/*.feature') if ARGV.empty? && !options.key?(:files
 # end
 
 linter = Chutney::ChutneyLint.new(*files)
-formatter = Chutney::RainbowFormatter.new
+formatter = Chutney::JSONFormatter.new
 report = linter.analyse
 
 formatter.results = report
