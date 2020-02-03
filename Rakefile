@@ -26,8 +26,12 @@ task :rubocop do
   end
 end
 
+task :spec do
+  sh 'rspec'
+end
+
 task :cucumber do
   sh 'cucumber --tags "not @skip" --guess -f progress'
 end
 
-task test: %i[rubocop cucumber]
+task test: %i[rubocop spec cucumber]

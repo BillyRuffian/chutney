@@ -1,71 +1,63 @@
-require 'coveralls'
-Coveralls.wear!
-
-require 'rspec'
 require 'chutney'
-require 'chutney/linter/tag_constraint'
-require 'shared_contexts/file_exists'
 
 describe Chutney::ChutneyLint do
-  it 'should have the constant set' do
-    expect(Chutney::ChutneyLint.const_defined?(:LINTER)).to be true
-  end
-
   subject { Chutney::ChutneyLint.new }
 
+  it 'has a version number' do
+    expect(Chutney::VERSION).not_to be nil
+  end
+  
   describe '#initialize' do
-    it 'sets the files instance variable to empty' do
-      expect(subject.instance_variable_get(:@files)).to eq({})
+    it 'creates an instance' do
+      expect(subject).not_to be_nil
+    end
+    
+    it 'has an empty list of files if none are given' do
+      expect(subject.files).to eq []
+    end
+    
+    it 'has a list of files given on initialization' do
+      alt_subject = Chutney::ChutneyLint.new('a', 'b')
+      expect(alt_subject.files).to eq %w[a b]
+    end
+    
+    it 'initializes a results hash' do
+      expect(subject.results).to eq({})
+    end
+    
+    it 'sets the load path for I18n' do
+      expect(I18n.load_path).not_to eq []
     end
 
-    it 'sets the linter instance variable to empty' do
-      expect(subject.instance_variable_get(:@linter).size).to eq(0)
+    context 'configuration' do
+      it 'loads the configuration from a file' do
+        expect(subject.configuration).not_to be_nil
+        expect(subject.configuration).to respond_to :[]
+      end
+      
+      it 'allows the configuration to be set explicitly' do
+        config = { 'BackgroundDoesMoreThanSetup' => { 'Enabled' => true } }
+        subject.configuration = config
+        expect(subject.configuration).to be config
+      end
+      
+      it 'controls the available linters' do
+        subject.configuration = {}
+        expect(subject.linters).to be_empty
+      end
+      
+      it 'enables linters to be activated' do
+        config = { 'BackgroundDoesMoreThanSetup' => { 'Enabled' => true } }
+        subject.configuration = config
+        expect(subject.linters).to eq [Chutney::BackgroundDoesMoreThanSetup]
+      end
     end
-  end
-
-  describe '#enable' do
-    it 'enables the linter passed in' do
-      subject.enable ['RequiredTagsStartsWith']
-      expect(subject.instance_variable_get(:@config).config).to include('RequiredTagsStartsWith' => { 'Enabled' => true })
-    end
-  end
-
-  context 'when user configuration is not present' do
-    let(:file) { 'config/default.yml' }
-    it 'should load the expected values from the config file' do
-      expect(subject.instance_variable_get(:@config).config).to include('AvoidOutlineForSingleExample' => { 'Enabled' => true })
-    end
-  end
-
-  context 'when user provided YAML is present' do
-    include_context 'a file exists'
-    let(:file) { '.chutney.yml' }
-    let(:file_content) do
-      <<-CONTENT
----
-AvoidOutlineForSingleExample:
-    Enabled: false
-      CONTENT
-    end
-    it 'should load and merge the expected values from the user config file' do
-      expect(subject.instance_variable_get(:@config).config).to include('AvoidOutlineForSingleExample' => { 'Enabled' => false })
-    end
-  end
-
-  context 'when linter member value is passed by the user' do
-    include_context 'a file exists'
-    let(:file) { '.chutney.yml' }
-    let(:file_content) do
-      <<-CONTENT
----
-RequiredTags:
-    Enabled: true
-    Member: Value
-      CONTENT
-    end
-
-    it 'updates the member in the config' do
-      expect(subject.instance_variable_get(:@config).config).to include('RequiredTags' => { 'Enabled' => true, 'Member' => 'Value' })
+    
+    context 'linting' do
+      it 'aliases analyse and analyze' do
+        expect(subject).to respond_to :analyse
+        expect(subject).to respond_to :analyze
+      end
     end
   end
 end
