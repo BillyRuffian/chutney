@@ -12,6 +12,8 @@ BadScenarioName:
     Enabled: true
 FileNameDiffersFeatureName:
     Enabled: true
+GivensAfterBackground:
+    Enabled: true
 MissingExampleName:
     Enabled: true
 MissingFeatureDescription:
