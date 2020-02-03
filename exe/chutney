@@ -6,37 +6,36 @@ require 'chutney/formatter/pie_formatter'
 require 'chutney/formatter/rainbow_formatter'
 require 'optparse'
 
-options = {}
+formatters = Set.new
+
 OptionParser.new do |opts|
-  opts.banner = 'Usage: gherkin_language [files]'
-  opts.on('-v', '--[no-]verbose', 'Run verbosely') do |verbose|
-    options[:verbose] = verbose
-  end
-  opts.on('--enable [CHECKS]', 'Enabled checks. Separated by ","') do |checks|
-    options[:enable] = checks.split(',')
-  end
-  opts.on('--disable [CHECKS]', 'Disabled checks. Separated by ","') do |checks|
-    options[:disable] = checks.split(',')
-  end
-  opts.on('-f', '--filepath [file/s]', 'File path where features are located') do |file|
-    options[:files] = file
+  opts.banner = 'Usage: chutney [files]'
+  opts.on('-f', '--format [formatter]', 'Formatter for presenting the results. One of JSONFormatter, PieFormatter or RainbowFormatter (default). Can be specified more than once') do |formatter|
+    raise 'No Such Formatter' unless %w[JSONFormatter PieFormatter RainbowFormatter].include? formatter
+
+    formatters << formatter
   end
 end.parse!
 
-# linter.disable options[:disable] if options.key? :disable
-# linter.enable options[:enable] if options.key? :enable
+formatters << 'RainbowFormatter' if formatters.empty?
 
 files = ARGV.map { |pattern| Dir.glob(pattern) }.flatten
-files += Dir.glob(options[:files]) if options.key? :files
-files = Dir.glob('features/**/*.feature') if ARGV.empty? && !options.key?(:files)
-
-# files.each do |file|
-#   linter.analyze file
-# end
+files = Dir.glob('features/**/*.feature') if ARGV.empty? 
 
 linter = Chutney::ChutneyLint.new(*files)
-formatter = Chutney::JSONFormatter.new
 report = linter.analyse
 
-formatter.results = report
-formatter.format
+formatters.each do |formatter|
+  f = Object.const_get("Chutney::#{formatter}").new
+  f.results = report
+  f.format
+end
+
+basic_formatter = Chutney::Formatter.new
+basic_formatter.results = report
+
+if basic_formatter.files_with_issues.empty?
+  exit(true)
+else
+  exit(false)
+end
