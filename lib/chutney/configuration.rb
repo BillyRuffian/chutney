@@ -4,7 +4,7 @@ module Chutney
   class Configuration < SimpleDelegator
     def initialize(path)
       @path = path
-      @config = load_configuration || ''
+      @config = load_configuration || {}
       load_user_configuration
       super(@config)
     end
@@ -14,7 +14,7 @@ module Chutney
     end
 
     def load_configuration
-      YAML.load_file configuration_path || '' if File.exist? configuration_path
+      YAML.load_file configuration_path || '' if configuration_path
     end
 
     def load_user_configuration
