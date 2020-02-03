@@ -10,7 +10,9 @@ formatters = Set.new
 
 OptionParser.new do |opts|
   opts.banner = 'Usage: chutney [files]'
-  opts.on('-f', '--format [formatter]', 'Formatter for presenting the results. One of JSONFormatter, PieFormatter or RainbowFormatter (default). Can be specified more than once') do |formatter|
+  opts.on('-f', 
+          '--format [formatter]', 
+          'One of JSONFormatter, PieFormatter or RainbowFormatter (default).') do |formatter|
     raise 'No Such Formatter' unless %w[JSONFormatter PieFormatter RainbowFormatter].include? formatter
 
     formatters << formatter

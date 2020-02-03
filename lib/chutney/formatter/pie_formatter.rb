@@ -21,11 +21,10 @@ module Chutney
     end
     
     def print_report(data)
-      unless data.empty?
-        print TTY::Pie.new(data: data, radius: 8, legend: { format: '%<label>s %<name>s %<value>i' })
-        puts
-      end
-      #       put_summary
+      return unless data.empty?
+
+      print TTY::Pie.new(data: data, radius: 8, legend: { format: '%<label>s %<name>s %<value>i' })
+      puts
     end
     
     def top_offences
