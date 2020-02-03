@@ -10,8 +10,6 @@ BackgroundRequiresMultipleScenarios:
     Enabled: true
 BadScenarioName:
     Enabled: true
-BeDeclarative:
-    Enabled: true
 FileNameDiffersFeatureName:
     Enabled: true
 MissingExampleName:
