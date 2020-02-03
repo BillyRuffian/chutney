@@ -31,9 +31,28 @@ Under the covers, Chutney uses Cucumber v3 and supports any spoken language that
 
 run `chutney` on a list of files
 
-    chutney '<wild_card_path>' #default is `features/**/*.feature`
+```
+chutney '<wild_card_path>' #default is `features/**/*.feature`
+```
 
 Checks could be disabled using tags within Feature Files and the Feature or Scenario level. To do so, add `@disableCHECK`, e.g. `@disableTooManyTags`.
+
+## Formatters
+
+The output is rendered by formatters. Currently there are:
+
+- RainbowFormatter (default)
+- PieFormatter
+- JSONFormatter
+
+You can specify which with the `-f` flag
+
+```
+chutney f PieFormatter -f RainbowFormatter
+```
+
+![screenshot](/img/formatters.png?raw=true)
+
 
 ## Checks
 
