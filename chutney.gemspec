@@ -16,7 +16,7 @@ Gem::Specification.new do |spec|
   spec.description = 'A linter for your Cucumber features. '  \
                       'It supports any spoken language Cucumber v3 supports.'
 
-  spec.homepage    = 'https://billyruffian.github.io/faker_maker/'
+  spec.homepage    = 'https://billyruffian.github.io/chutney/'
   spec.license     = 'MIT'
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
