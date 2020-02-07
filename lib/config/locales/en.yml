@@ -55,7 +55,7 @@ en:
     required_tags_starts_with: >-
       You have tags which do not match the required format. Allowed prefixes are '%{allowed}'.
     scenario_names_match: >-
-      You have scenario name which do not match the required format.
+      You have a scenario name which does not match the required format.
       Allowed patterns are '%{pattern}'.
     same_tag_for_all_scenarios:
       feature_level: >-

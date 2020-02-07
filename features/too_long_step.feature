@@ -19,7 +19,7 @@ Feature: Too Long Step
     Then 1 issue is raised
     And the message is: 
       """
-      This step is too long at 118 characters. It should be no longer than 80  characters.
+      This step is too long at 118 characters. It should be no longer than 80 characters.
       """
     And it is reported on:
       | line | column |

@@ -26,7 +26,7 @@ Feature: Scenario Names Match
     Then 1 issue is raised  
     And the message is: 
       """
-      You have scenario name which do not match the required format.  Allowed patterns are '^AC.*'.
+      You have a scenario name which does not match the required format. Allowed patterns are '^AC.*'.
       """
     And it is reported on:
       | line | column |

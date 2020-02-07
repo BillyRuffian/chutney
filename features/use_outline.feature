@@ -26,7 +26,7 @@ Feature: Use Outline
     Then 1 issue is raised 
     And the message is: 
       """
-      Scenarios are similar by 97.8%, you should use scenario outlines to simplify.  Scenario: A (5) vs Scenario: B (9)
+      Scenarios are similar by 97.8%, you should use scenario outlines to simplify. Scenario: A (5) vs Scenario: B (9)
       """
     And it is reported on:
       | line | column |
