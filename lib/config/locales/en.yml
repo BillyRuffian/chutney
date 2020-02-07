@@ -37,7 +37,7 @@ en:
         This scenario is missing an action step -- it does not have a 'When'.
     missing_example_name: >-
       You have a scenerio with more than one example table, at least one of which is
-      unnamed or has a duplicate name. 
+      unnamed or has a duplicate name.
       You should give your example tables clear and meaningful names when you have more than one.
     missing_feature_description: >-
       Features should have a description / value statement so that the importance of the feature
@@ -55,7 +55,7 @@ en:
     required_tags_starts_with: >-
       You have tags which do not match the required format. Allowed prefixes are '%{allowed}'.
     scenario_names_match: >-
-      You have scenario name which do not match the required format. 
+      You have scenario name which do not match the required format.
       Allowed patterns are '%{pattern}'.
     same_tag_for_all_scenarios:
       feature_level: >-
@@ -71,7 +71,7 @@ en:
       This scenario is too clumsy at %{length} characters. Scenarios should be no more than
       400 characters long.
     too_long_step: >-
-      This step is too long at %{length} characters. It should be no longer than %{max} 
+      This step is too long at %{length} characters. It should be no longer than %{max}
       characters.
     too_many_different_tags: >-
       There are too many tags in this feature. There are %{count} and the maximum is %{max}.
@@ -89,5 +89,5 @@ en:
       The step '%{step}' is used in all the scenarios of this feature. It should be moved
       to the background steps.
     use_outline: >-
-      Scenarios are similar by %{pct}%, you should use scenario outlines to simplify. 
+      Scenarios are similar by %{pct}%, you should use scenario outlines to simplify.
       %{lhs_name} (%{lhs_line}) vs %{rhs_name} (%{rhs_line})
