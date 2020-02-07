@@ -1,46 +1,35 @@
 Feature: Unique Scenario Names
+
   As a Customer
   I want unique scenario names
   so that I can refer to them in case of issues
 
-  Background: Prepare Testee
-    Given a file named "lint.rb" with:
-      """
-      $LOAD_PATH << '../../lib'
-      require 'chutney'
-
-      linter = Chutney::ChutneyLint.new
-      linter.enable %w(UniqueScenarioNames)
-      linter.set_linter
-      linter.analyze 'lint.feature'
-      exit linter.report
-
-      """
+  Background: 
+    Given chutney is configured with the linter "Chutney::UniqueScenarioNames"
 
   Scenario: Unique Scenario Name for empty scenarios
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Unique Scenario Names
         Scenario: A
         Scenario: A
       """
-    When I run `ruby lint.rb`
-    Then it should fail with exactly:
+    When I run Chutney
+    Then 1 issue is raised 
+    And the message is: 
       """
-      UniqueScenarioNames - Scenario name should be unique, 'Unique Scenario Names.A' used 2 times
-        lint.feature (2): Unique Scenario Names.A
-        lint.feature (3): Unique Scenario Names.A
-
+      The scenario name 'A' is duplicated, first used at line 2, column 3.
       """
+    And it is reported on:
+      | line | column |
+      | 3    | 3      |
 
   Scenario: Valid Example
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Unique Scenario Names
         Scenario: A
         Scenario: B
       """
-    When I run `ruby lint.rb`
-    Then it should pass with exactly:
-      """
-      """
+    When I run Chutney
+    Then 0 issues are raised 

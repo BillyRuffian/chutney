@@ -1,6 +1,6 @@
 AvoidOutlineForSingleExample:
     Enabled: true
-AvoidPeriod:
+AvoidFullStop:
     Enabled: true
 AvoidScripting:
     Enabled: true
@@ -10,9 +10,9 @@ BackgroundRequiresMultipleScenarios:
     Enabled: true
 BadScenarioName:
     Enabled: true
-BeDeclarative:
-    Enabled: true
 FileNameDiffersFeatureName:
+    Enabled: true
+GivensAfterBackground:
     Enabled: true
 MissingExampleName:
     Enabled: true
@@ -42,10 +42,13 @@ TooClumsy:
     Enabled: true
 TooManyDifferentTags:
     Enabled: true
+    MaxCount: 3
 TooManySteps:
     Enabled: true
+    MaxCount: 10
 TooManyTags:
     Enabled: true
+    MaxCount: 3
 TooLongStep:
     Enabled: true
     MaxLength: 80

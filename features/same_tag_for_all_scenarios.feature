@@ -1,24 +1,14 @@
 Feature: Same Tag For All Scenarios
+
   As a Business Analyst
   I want that tags are at the level where they belong to
   so that readers are not flooded by tags
 
-  Background: Prepare Testee
-    Given a file named "lint.rb" with:
-      """
-      $LOAD_PATH << '../../lib'
-      require 'chutney'
-
-      linter = Chutney::ChutneyLint.new
-      linter.enable %w(SameTagForAllScenarios)
-      linter.set_linter
-      linter.analyze 'lint.feature'
-      exit linter.report
-
-      """
+  Background: 
+    Given chutney is configured with the linter "Chutney::SameTagForAllScenarios"
 
   Scenario: Tags used multiple times for scenario
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Test
         @A
@@ -26,16 +16,18 @@ Feature: Same Tag For All Scenarios
         @A
         Scenario: B
       """
-    When I run `ruby lint.rb`
-    Then it should fail with exactly:
+    When I run Chutney
+    Then 1 issue is raised
+    And the message is: 
       """
-      SameTagForAllScenarios - Tag '@A' should be used at Feature level
-        lint.feature (1): Test
-
+      You are using the same tag (A) for all scenarios. Use this tag at the feature level instead.
       """
+    And it is reported on:
+      | line | column |
+      | 1    | 1      |
 
   Scenario: Tags used multiple times for example
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Test
         Scenario Outline: A
@@ -51,16 +43,18 @@ Feature: Same Tag For All Scenarios
             | field |
             | value |
       """
-    When I run `ruby lint.rb`
-    Then it should fail with exactly:
+    When I run Chutney
+    Then 1 issue is raised
+    And the message is: 
       """
-      SameTagForAllScenarios - Tag '@A' should be used at Scenario Outline level
-        lint.feature (2): Test.A
-
+      You are using the same tag (A) for all examples in this scenario. Use this tag at the scenario level instead.
       """
+    And it is reported on:
+      | line | column |
+      | 2    | 3      |
 
   Scenario: @skip is an exception
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Test
         @skip
@@ -68,13 +62,11 @@ Feature: Same Tag For All Scenarios
         @skip
         Scenario: B
       """
-    When I run `ruby lint.rb`
-    Then it should pass with exactly:
-      """
-      """
+    When I run Chutney
+    Then 0 issues are raised  
 
   Scenario: Valid Example with different Tags
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Test
         @A
@@ -82,13 +74,11 @@ Feature: Same Tag For All Scenarios
         @B
         Scenario: B
       """
-    When I run `ruby lint.rb`
-    Then it should pass with exactly:
-      """
-      """
+    When I run Chutney
+    Then 0 issues are raised  
 
   Scenario: Valid Example with single Tag
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Test
         @A
@@ -96,25 +86,21 @@ Feature: Same Tag For All Scenarios
 
         Scenario: B
       """
-    When I run `ruby lint.rb`
-    Then it should pass with exactly:
-      """
-      """
+    When I run Chutney
+    Then 0 issues are raised  
 
   Scenario: Tags for features with single scenario
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Test
         @A
         Scenario: A
       """
-    When I run `ruby lint.rb`
-    Then it should pass with exactly:
-      """
-      """
+    When I run Chutney
+    Then 0 issues are raised  
 
   Scenario: Outline even without Examples
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Test
         Scenario Outline: A
@@ -123,7 +109,5 @@ Feature: Same Tag For All Scenarios
         Scenario: B
           When test
       """
-    When I run `ruby lint.rb`
-    Then it should pass with exactly:
-      """
-      """
+    When I run Chutney
+    Then 0 issues are raised  

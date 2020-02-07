@@ -1,24 +1,26 @@
 Feature: Too Many Steps
+
   As a Business Analyst
   I want to write short scenarios
   so that they are attractive enough to read
 
-  Background: Prepare Testee
-    Given a file named "lint.rb" with:
-      """
-      $LOAD_PATH << '../../lib'
-      require 'chutney'
+  Background:
+    Given chutney is configured with the linter "Chutney::TooManySteps"
 
-      linter = Chutney::ChutneyLint.new
-      linter.enable %w(TooManySteps)
-      linter.set_linter
-      linter.analyze 'lint.feature'
-      exit linter.report
 
+  Scenario: Valid Example
+    And a feature file contains:
       """
+      Feature: Test
+        Scenario: A
+          When action
+          Then verification
+      """
+    When I run Chutney
+    Then 0 issues are raised 
 
   Scenario: Long Scenario
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Test
         Scenario: A
@@ -35,23 +37,40 @@ Feature: Too Many Steps
           And also not 42
           And probably also not 1337
       """
-    When I run `ruby lint.rb`
-    Then it should fail with exactly:
+    When I run Chutney
+    Then 1 issue is raised  
+    And the message is: 
       """
-      TooManySteps - Scenario is too long at 12 steps
-        lint.feature (2): Test.A
-
+      There are too many steps in this feature. There are 12 and the maximum is 10.
       """
+    And it is reported on:
+      | line | column |
+      | 1    | 1      |
 
-  Scenario: Valid Example
-    Given a file named "lint.feature" with:
+
+  Scenario: Configurable maximum tag count
+    And has the settings:
+      """
+      ---
+      TooManySteps:
+        Enabled: true
+        MaxCount: 2
+      """
+    And a feature file contains:
       """
       Feature: Test
         Scenario: A
-          When action
-          Then verification
+          Given something
+          And another thing
+          And maybe still something
+          But not that this
       """
-    When I run `ruby lint.rb`
-    Then it should pass with exactly:
+    When I run Chutney
+    Then 1 issue is raised 
+    And the message is: 
       """
+      There are too many steps in this feature. There are 4 and the maximum is 2.
       """
+    And it is reported on:
+      | line | column |
+      | 1    | 1      |

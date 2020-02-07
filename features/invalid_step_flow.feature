@@ -1,40 +1,32 @@
 Feature: Invalid Step Flow
+  
   As a Business Analyst
   I want to be warned about invalid step flow
   so that all my tests make sense
 
-  Background: Prepare Testee
-    Given a file named "lint.rb" with:
-      """
-      $LOAD_PATH << '../../lib'
-      require 'chutney'
-
-      linter = Chutney::ChutneyLint.new
-      linter.enable %w(InvalidStepFlow)
-      linter.set_linter
-      linter.analyze 'lint.feature'
-      exit linter.report
-
-      """
+  Background:
+    Given chutney is configured with the linter "Chutney::InvalidStepFlow"
 
   Scenario: Missing Action
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Test
         Scenario: A
           Given setup
           Then verify
       """
-    When I run `ruby lint.rb`
-    Then it should fail with exactly:
+    When I run Chutney
+    Then 1 issue is raised  
+    And the message is: 
       """
-      InvalidStepFlow - Missing Action step
-        lint.feature (4): Test.A step: verify
-
+      This scenario is missing an action step -- it does not have a 'When'.
       """
+    And it is reported on:
+      | line | column |
+      | 2    | 3      |
 
   Scenario: Setup After Action
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Test
         Scenario: A
@@ -42,16 +34,18 @@ Feature: Invalid Step Flow
           Given setup
           Then verify
       """
-    When I run `ruby lint.rb`
-    Then it should fail with exactly:
+    When I run Chutney
+    Then 1 issue is raised  
+    And the message is: 
       """
-      InvalidStepFlow - Given after Action or Verification
-        lint.feature (4): Test.A step: setup
-
+      You have a 'Given' setup step after a 'When' action step or a 'Then' assertion step. Setup steps should always be the first steps of a scenario.
       """
+    And it is reported on:
+      | line | column |
+      | 4    | 5      |
 
   Scenario: Action As Last Step
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Test
         Scenario: A
@@ -60,16 +54,18 @@ Feature: Invalid Step Flow
           Then verify
           When test
       """
-    When I run `ruby lint.rb`
-    Then it should fail with exactly:
+    When I run Chutney
+    Then 1 issue is raised   
+    And the message is: 
       """
-      InvalidStepFlow - Last step is an action
-        lint.feature (6): Test.A step: test
-
+      This scenario has the action as the last step of the scenario. A 'Then' assertion step should always follow a 'When' action step.
       """
+    And it is reported on:
+      | line | column |
+      | 6    | 5      |
 
   Scenario: Valid Example
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Test
         Scenario: A
@@ -79,7 +75,5 @@ Feature: Invalid Step Flow
           When test
           Then verification
       """
-    When I run `ruby lint.rb`
-    Then it should pass with exactly:
-      """
-      """
+    When I run Chutney
+    Then 0 issues are raised  

@@ -1,24 +1,14 @@
 Feature: Use Background
+
   As a Business Analyst
   I want to be warned if I'm using a background for just one scenario
   so that I am using background to improve readability
 
-  Background: Prepare Testee
-    Given a file named "lint.rb" with:
-      """
-      $LOAD_PATH << '../../lib'
-      require 'chutney'
-
-      linter = Chutney::ChutneyLint.new
-      linter.enable %w(UseBackground)
-      linter.set_linter
-      linter.analyze 'lint.feature'
-      exit linter.report
-
-      """
+  Background:
+    Given chutney is configured with the linter "Chutney::UseBackground"
 
   Scenario: Redundant Given Steps
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Test
         Scenario: A
@@ -31,17 +21,19 @@ Feature: Use Background
           When another action
           Then verification
       """
-    When I run `ruby lint.rb`
-    Then it should fail with exactly:
+    When I run Chutney
+    Then 1 issue is raised 
+    And the message is: 
       """
-      UseBackground - Step 'Given setup' should be part of background
-        lint.feature (1): Test
-
+      The step 'Given setup' is used in all the scenarios of this feature. It should be moved to the background steps.
       """
+    And it is reported on:
+      | line | column |
+      | 1    | 1      |
 
   @disableUnknownVariable
   Scenario: Same Given in Outlines
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Test
         Scenario Outline: A
@@ -62,16 +54,18 @@ Feature: Use Background
             | setup |
             | A     |
       """
-    When I run `ruby lint.rb`
-    Then it should fail with exactly:
+    When I run Chutney
+    Then 1 issue is raised 
+    And the message is: 
       """
-      UseBackground - Step 'Given A' should be part of background
-        lint.feature (1): Test
-
+      The step 'Given A' is used in all the scenarios of this feature. It should be moved to the background steps.
       """
+    And it is reported on:
+      | line | column |
+      | 1    | 1      |
 
   Scenario: Valid Example
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Test
         Scenario: A
@@ -84,14 +78,12 @@ Feature: Use Background
           When another action
           Then verification
       """
-    When I run `ruby lint.rb`
-    Then it should pass with exactly:
-      """
-      """
+    When I run Chutney
+    Then 0 issues are raised 
 
   @disableUnknownVariable
   Scenario: Valid Single Scenario
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Test
         Scenario Outline: A
@@ -104,7 +96,6 @@ Feature: Use Background
             | A      |
             | B      |
       """
-    When I run `ruby lint.rb`
-    Then it should pass with exactly:
-      """
-      """
+    When I run Chutney
+    Then 0 issues are raised 
+

@@ -2,44 +2,35 @@ Feature: Required Tags Starts With
   As a tester I dont want to miss certain tags on my scenarios
 
   Background: Prepare Testee
-    Given a file named ".chutney.yml" with:
+    Given chutney is configured with the linter "Chutney::RequiredTagsStartsWith"
+    And has the settings:
       """
       ---
       RequiredTagsStartsWith:
           Enabled: true
           Matcher: ['PB','MCC']
       """
-    And a file named "lint.rb" with:
-      """
-      $LOAD_PATH << '../../lib'
-      require 'chutney'
 
-      linter = Chutney::ChutneyLint.new
-      linter.disable_all
-      linter.enable %w(RequiredTagsStartsWith)
-      linter.set_linter
-      linter.analyze 'lint.feature'
-      exit linter.report
-
-      """
     Scenario: Scenario without required tags
-      Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Test
         Scenario: A
           When action
           Then verification
       """
-      When I run `ruby lint.rb`
-      Then it should fail with exactly:
+    When I run Chutney
+    Then 1 issue is raised 
+    And the message is: 
       """
-      RequiredTagsStartsWith - Required Tag not found
-        lint.feature (2): Test.A
-
+      You have tags which do not match the required format. Allowed prefixes are 'PB, MCC'.
       """
+    And it is reported on:
+      | line | column |
+      | 2    | 3      |
 
   Scenario: Scenario with PB Feature Tag
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       @PB-1234
       Feature: Test
@@ -47,13 +38,11 @@ Feature: Required Tags Starts With
           When action
           Then verification
       """
-    When I run `ruby lint.rb`
-    Then it should pass with exactly:
-      """
-      """
+    When I run Chutney
+    Then 0 issues are raised  
 
   Scenario: Scenario with MCC feature tag
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       @MCC-1234
       Feature: Test
@@ -61,13 +50,11 @@ Feature: Required Tags Starts With
           When action
           Then verification
       """
-    When I run `ruby lint.rb`
-    Then it should pass with exactly:
-      """
-      """
+    When I run Chutney
+    Then 0 issues are raised  
 
   Scenario: Scenario with PR Scenario tag
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Test
         @PB-1234
@@ -75,13 +62,11 @@ Feature: Required Tags Starts With
           When action
           Then verification
       """
-    When I run `ruby lint.rb`
-    Then it should pass with exactly:
-      """
-      """
+    When I run Chutney
+    Then 0 issues are raised  
 
   Scenario: Scenario with MCC tags
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Test
         @MCC-1234
@@ -89,7 +74,5 @@ Feature: Required Tags Starts With
           When action
           Then verification
       """
-    When I run `ruby lint.rb`
-    Then it should pass with exactly:
-      """
-      """
+    When I run Chutney
+    Then 0 issues are raised  

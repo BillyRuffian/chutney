@@ -1,18 +1,17 @@
-require 'chutney/linter'
-
 module Chutney
   # service class to lint for unused variables
   class UnusedVariable < Linter
     def lint
-      scenarios do |file, feature, scenario|
-        next unless scenario.key? :examples
+      scenarios do |feature, scenario|
+        next unless scenario.key?(:examples)
         
         scenario[:examples].each do |example|
-          next unless example.key? :tableHeader
+          next unless example.key?(:tableHeader)
           
           example[:tableHeader][:cells].map { |cell| cell[:value] }.each do |variable|
-            references = [reference(file, feature, scenario)]
-            add_error(references, "Variable '<#{variable}>' is unused") unless used?(variable, scenario)
+            next if used?(variable, scenario)
+
+            add_issue(I18n.t('linters.unused_variable', variable: variable), feature, scenario, example)
           end
         end
       end

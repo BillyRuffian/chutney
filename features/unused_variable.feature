@@ -1,25 +1,15 @@
 @disableUnknownVariable
 Feature: Unused Variable
+
   As a Business Analyst
   I want to be warned about unused variables
   so that I can delete them if they are not used anymore or refer them again
 
-  Background: Prepare Testee
-    Given a file named "lint.rb" with:
-      """
-      $LOAD_PATH << '../../lib'
-      require 'chutney'
-
-      linter = Chutney::ChutneyLint.new
-      linter.enable %w(UnusedVariable)
-      linter.set_linter
-      linter.analyze 'lint.feature'
-      exit linter.report
-
-      """
+  Background: 
+    Given chutney is configured with the linter "Chutney::UnusedVariable"
 
   Scenario: Unused Step Variable
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Test
         Scenario Outline: A
@@ -29,16 +19,18 @@ Feature: Unused Variable
             | bar | foo |
             | 1   | 2   |
       """
-    When I run `ruby lint.rb`
-    Then it should fail with exactly:
+    When I run Chutney
+    Then 1 issue is raised 
+    And the message is: 
       """
-      UnusedVariable - Variable '<foo>' is unused
-        lint.feature (2): Test.A
-
+      The variable 'foo' is declared but never used.
       """
+    And it is reported on:
+      | line | column |
+      | 5    | 5      |
 
   Scenario: Unused Table Variable
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Test
         Scenario Outline: A
@@ -50,16 +42,18 @@ Feature: Unused Variable
             | bar | foo |
             | 1   | 2   |
       """
-    When I run `ruby lint.rb`
-    Then it should fail with exactly:
+    When I run Chutney
+    Then 1 issue is raised 
+    And the message is: 
       """
-      UnusedVariable - Variable '<foo>' is unused
-        lint.feature (2): Test.A
-
+      The variable 'foo' is declared but never used.
       """
+    And it is reported on:
+      | line | column |
+      | 7    | 5      |
 
   Scenario: Unused Pystring Variable
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Test
         Scenario Outline: A
@@ -72,16 +66,18 @@ Feature: Unused Variable
             | bar | foo |
             | 1   | 2   |
       """
-    When I run `ruby lint.rb`
-    Then it should fail with exactly:
+    When I run Chutney
+    Then 1 issue is raised 
+    And the message is: 
       """
-      UnusedVariable - Variable '<foo>' is unused
-        lint.feature (2): Test.A
-
+      The variable 'foo' is declared but never used.
       """
+    And it is reported on:
+      | line | column |
+      | 8    | 5      |
 
   Scenario: Valid Example
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Test
         Scenario Outline: A
@@ -97,7 +93,5 @@ Feature: Unused Variable
             | first      | second | third |
             | used value | used   | also  |
       """
-    When I run `ruby lint.rb`
-    Then it should pass with exactly:
-      """
-      """
+    When I run Chutney
+    Then 0 issues are raised 

@@ -1,41 +1,31 @@
 Feature: Missing Feature Name
+
   As a Customer
   I want named features
   so that I know what the feature is about just by reading the name
 
-  Background: Prepare Testee
-    Given a file named "lint.rb" with:
-      """
-      $LOAD_PATH << '../../lib'
-      require 'chutney'
-
-      linter = Chutney::ChutneyLint.new
-      linter.enable %w(MissingFeatureName)
-      linter.set_linter
-      linter.analyze 'lint.feature'
-      exit linter.report
-
-      """
+  Background: 
+    Given chutney is configured with the linter "Chutney::MissingFeatureName"
 
   Scenario: Missing Feature Name
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature:
       """
-    When I run `ruby lint.rb`
-    Then it should fail with exactly:
+    When I run Chutney
+    Then 1 issue is raised
+    And the message is: 
       """
-      MissingFeatureName - All features should have a name
-        lint.feature
-
+      This feature is unnamed. You should name all features.
       """
+    And it is reported on:
+      | line | column |
+      | 1    | 1      |
 
   Scenario: Valid Example
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Test
       """
-    When I run `ruby lint.rb`
-    Then it should pass with exactly:
-      """
-      """
+    When I run Chutney
+    Then 0 issues are raised  

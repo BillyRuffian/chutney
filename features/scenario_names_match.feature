@@ -1,53 +1,44 @@
-Feature: Required Tags Starts With
-  As a tester I want my scenario names to match a pattern
+Feature: Scenario Names Match
+
+  As a tester 
+  I want my scenario names to match a pattern
+  So that I link acceptance criteria to scenarios
   
   Background: Prepare Testee
-    Given a file named ".chutney.yml" with:
+    Given chutney is configured with the linter "Chutney::ScenarioNamesMatch"
+    And has the settings:
       """
       ---
       ScenarioNamesMatch:
           Enabled: true
           Matcher: ^AC.*
       """
-    And a file named "lint.rb" with:
-      """
-      $LOAD_PATH << '../../lib'
-      require 'chutney'
-
-      linter = Chutney::ChutneyLint.new
-      linter.disable_all
-      linter.enable %w(ScenarioNamesMatch)
-      linter.set_linter
-      linter.analyze 'lint.feature'
-      exit linter.report
-
-      """
       
     Scenario: Scenario without required name
-      Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Test
         Scenario: A
           When action
           Then verification
       """
-      When I run `ruby lint.rb`
-      Then it should pass with exactly:
+    When I run Chutney
+    Then 1 issue is raised  
+    And the message is: 
       """
-      ScenarioNamesMatch (Warning) - Scenario Name does not match pattern
-        lint.feature (2): Test.A
-
+      You have a scenario name which does not match the required format. Allowed patterns are '^AC.*'.
       """
+    And it is reported on:
+      | line | column |
+      | 2    | 3      |
       
     Scenario: Scenario with name starting AC
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Test
         Scenario: AC - scenario
           When action
           Then verification
       """
-    When I run `ruby lint.rb`
-    Then it should pass with exactly:
-      """
-      """
+    When I run Chutney
+    Then 0 issues are raised  

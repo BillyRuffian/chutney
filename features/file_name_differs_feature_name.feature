@@ -1,75 +1,53 @@
 Feature: File Name Differs Feature Name
+
   As a Business Analyst
-  I want to be if file and feature names differ
-  so that reader understand the feature just by the file name
-
-  Background: Prepare Testee
-    Given a file named "lint.rb" with:
+  I want the file to named after the feature
+  so that feature files can be easily found
+  
+  Background:
+    Given chutney is configured with the linter "Chutney::FileNameDiffersFeatureName"
+  
+  Scenario Outline: A valid example
+    And a feature file called "test.feature" contains:
       """
-      $LOAD_PATH << '../../lib'
-      require 'chutney'
-
-      linter = Chutney::ChutneyLint.new
-      linter.enable %w(FileNameDiffersFeatureName)
-      linter.set_linter
-      linter.analyze 'lint.feature'
-      exit linter.report
-
+      Feature: <name>
       """
-
+    When I run Chutney
+    Then 0 issues are raised  
+    
+    Examples: Valid examples
+      | name |
+      | test |
+      | Test |
+      | TEST |
+    
+  
   Scenario: File Name and Feature Name Differ
-    Given a file named "lint.feature" with:
+    And a feature file called "lint_me.feature" contains:
       """
       Feature: Test
       """
-    When I run `ruby lint.rb "lint.feature"`
-    Then it should fail with exactly:
+    When I run Chutney
+    Then 1 issue is raised
+    And the message is: 
       """
-      FileNameDiffersFeatureName - Feature name should be 'Lint'
-        lint.feature (1): Test
-
+      The name of the feature should reflect the file name. Consider renaming this feature to 'Lint Me'.
       """
+    And it is reported on:
+      | line | column |
+      | 1    | 1      |
 
-  Scenario Outline: Valid Example
-    Given a file named "lint.feature" with:
+
+  Scenario Outline: Hyphens and underscores are whitespace
+    And a feature file called "lint_test.feature" contains:
       """
       Feature: <name>
       """
-    When I run `ruby lint.rb lint.feature`
-    Then it should pass with exactly:
-      """
-      """
-
-    Examples: Valid Names
-      | name |
-      | lint |
-      | Lint |
-      | LINT |
-
-  Scenario Outline: Valid Example for Snake Case
-    Given a file named "lint.rb" with:
-      """
-      $LOAD_PATH << '../../lib'
-      require 'chutney'
-
-      linter = Chutney::ChutneyLint.new
-      linter.enable %w(FileNameDiffersFeatureName)
-      linter.set_linter
-      linter.analyze 'lint_test.feature'
-      exit linter.report
-
-      """
-    Given a file named "lint_test.feature" with:
-      """
-      Feature: <name>
-      """
-    When I run `ruby lint.rb lint_test.feature`
-    Then it should pass with exactly:
-      """
-      """
-
-    Examples: Valid Names
+    When I run Chutney
+    Then 0 issues are raised  
+    
+    Examples: Valid examples
       | name      |
-      | lint_test |
-      | lint-test |
       | lint test |
+      | lint-test |
+      | lint_test |

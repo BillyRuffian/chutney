@@ -1,18 +1,9 @@
-require 'chutney/linter'
-
 module Chutney
   # service class to lint for missing feature names
-  class MissingFeatureName < Linter
-    MESSAGE = 'All features should have a name'.freeze
-    
+  class MissingFeatureName < Linter    
     def lint
-      features do |file, feature|
-        name = feature.key?(:name) ? feature[:name].strip : ''
-        next unless name.empty?
-        
-        references = [reference(file, feature)]
-        add_error(references, MESSAGE)
-      end
+      name = feature.key?(:name) ? feature[:name].strip : ''
+      add_issue(I18n.t('linters.missing_feature_name'), feature) if name.empty?
     end
   end
 end

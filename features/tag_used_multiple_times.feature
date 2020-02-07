@@ -1,37 +1,29 @@
 Feature: Tag Used Multiple Times
+
   As a Business Analyst
   I want to use tags just once
   so that redundancy is minimized.
 
   Background: Prepare Testee
-    Given a file named "lint.rb" with:
-      """
-      $LOAD_PATH << '../../lib'
-      require 'chutney'
-
-      linter = Chutney::ChutneyLint.new
-      linter.enable %w(TagUsedMultipleTimes)
-      linter.set_linter
-      linter.analyze 'lint.feature'
-      exit linter.report
-
-      """
+    Given chutney is configured with the linter "Chutney::TagUsedMultipleTimes"
 
   Scenario Outline: Tag used twice
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       <feature tag>
       Feature: Test
         @tag <scenario tag>
         Scenario: A
       """
-    When I run `ruby lint.rb`
-    Then it should fail with exactly:
+    When I run Chutney
+    Then 1 issue is raised
+    And the message is: 
       """
-      TagUsedMultipleTimes - Tag @tag used multiple times
-        lint.feature (4): Test.A
-
+      Avoid repeating tags at the feature and scenario level. These tags were used in both: tag.
       """
+    And it is reported on:
+      | line | column |
+      | 2    | 1      |
      
     Examples: Invalid Tag Combinations
       | feature tag | scenario tag |
@@ -39,13 +31,11 @@ Feature: Tag Used Multiple Times
       |             | @tag         |
 
   Scenario: Just unique tags
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Test
         @tag_a @tag_b
         Scenario: A
       """
-    When I run `ruby lint.rb`
-    Then it should pass with exactly:
-      """
-      """
+    When I run Chutney
+    Then 0 issues are raised  

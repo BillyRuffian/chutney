@@ -13,11 +13,10 @@ Gem::Specification.new do |spec|
   spec.email       = ['nigel@brookes-thomas.co.uk']
 
   spec.summary     = 'A linter for English language Gherkin'
-  spec.description = 'A fork of gherkin_lint (https://github.com/funkwerk/gherkin_lint) '  \
-                      '(which is no-longer being actively maintained), brought up to date '\
-                      'with the Cucumber 3 monogem.'
+  spec.description = 'A linter for your Cucumber features. '  \
+                      'It supports any spoken language Cucumber v3 supports.'
 
-  spec.homepage    = 'https://github.com/BillyRuffian/chutney'
+  spec.homepage    = 'https://billyruffian.github.io/faker_maker/'
   spec.license     = 'MIT'
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
@@ -25,9 +24,9 @@ Gem::Specification.new do |spec|
   if spec.respond_to?(:metadata)
     # spec.metadata['allowed_push_host'] = 'TODO: Set to 'http://mygemserver.com''
 
-    # spec.metadata['homepage_uri'] = spec.homepage
+    spec.metadata['homepage_uri'] = spec.homepage
     spec.metadata['source_code_uri'] = 'https://github.com/BillyRuffian/chutney'
-    # spec.metadata['changelog_uri'] = 'TODO: Put your gem's CHANGELOG.md URL here.'
+    spec.metadata['changelog_uri'] = 'https://github.com/BillyRuffian/chutney/releases'
   else
     raise 'RubyGems 2.0 or newer is required to protect against ' \
       'public gem pushes.'
@@ -44,15 +43,18 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
   
   spec.add_runtime_dependency 'amatch', '~> 0.4.0'
-  spec.add_runtime_dependency 'engtagger', '~> 0.2'
-  spec.add_runtime_dependency 'cucumber', '~> 3.0'
-  spec.add_runtime_dependency 'multi_json', '~> 1.0'
-  spec.add_runtime_dependency 'term-ansicolor', '1.7.1'
-  
-  spec.add_development_dependency 'aruba', '~> 0.14.0'
+  spec.add_runtime_dependency 'gherkin', '~> 5.1.0'
+  spec.add_runtime_dependency 'i18n', '~> 1.8.2'
+  spec.add_runtime_dependency 'pastel', '~> 0.7'
+  spec.add_runtime_dependency 'tty-pie', '~> 0.3'
+
+
+  spec.add_development_dependency 'coveralls', '~> 0.8'
+  spec.add_development_dependency 'cucumber', '~> 3.0'
   spec.add_development_dependency 'rake', '~> 13.0'
+  spec.add_development_dependency 'rerun', '~> 0.13'
+  spec.add_development_dependency 'rspec-expectations', '~> 3.0'
   spec.add_development_dependency 'rubocop', '~> 0.79.0'
   spec.add_development_dependency 'rspec', '~> 3.8'
-  spec.add_development_dependency 'coveralls', '~> 0.8'
   
 end

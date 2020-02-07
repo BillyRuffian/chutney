@@ -1,45 +1,24 @@
-require 'chutney/linter'
-require 'chutney/linter/tag_collector'
-
 module Chutney
   # service class to lint for too many different tags
   class TooManyDifferentTags < Linter
-    include TagCollector
-
     def lint
-      overall_tags = []
-      overall_references = []
-      features do |file, feature|
-        tags = tags_for_feature(feature)
-        overall_tags += tags
-        references = [reference(file, feature)]
-        overall_references += references unless tags.empty?
-        
-        warn_single_feature(references, tags)
-      end
-      warn_across_all_features(overall_references, overall_tags)
-    end
-
-    def warn_single_feature(references, tags)
-      tags.uniq!
-      references.uniq!
-      return false unless tags.length >= 3
+      tags = all_tags
+      return if tags.length <= maxcount
       
-      add_error(references, "Used #{tags.length} Tags within single Feature")
+      add_issue(
+        I18n.t('linters.too_many_different_tags', count: tags.length, max: maxcount), 
+        feature
+      )
     end
-
-    def warn_across_all_features(references, tags)
-      tags.uniq!
-      references.uniq!
-      return false unless tags.length >= 10
-      
-      add_error(references, "Used #{tags.length} Tags across all Features")
+    
+    def maxcount 
+      configuration['MaxCount']&.to_i || 3
     end
-
-    def tags_for_feature(feature)
-      return [] unless feature.include? :children
+    
+    def all_tags
+      return [] unless feature.include?(:children)
       
-      gather_tags(feature) + feature[:children].map { |scenario| gather_tags(scenario) }.flatten
+      tags_for(feature) + feature[:children].map { |scenario| tags_for(scenario) }.flatten
     end
   end
 end

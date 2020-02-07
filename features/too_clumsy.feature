@@ -1,24 +1,14 @@
 Feature: Too Clumsy
+
   As a Business Analyst
   I want to write readable scenarios
   so that they are attractive enough to read
 
-  Background: Prepare Testee
-    Given a file named "lint.rb" with:
-      """
-      $LOAD_PATH << '../../lib'
-      require 'chutney'
-
-      linter = Chutney::ChutneyLint.new
-      linter.enable %w(TooClumsy)
-      linter.set_linter
-      linter.analyze 'lint.feature'
-      exit linter.report
-
-      """
+  Background:
+    Given chutney is configured with the linter "Chutney::TooClumsy"
 
   Scenario: Long Scenario
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Test
         Scenario: A
@@ -35,23 +25,23 @@ Feature: Too Clumsy
           And also not 42
           And probably also not 1337
       """
-    When I run `ruby lint.rb`
-    Then it should fail with exactly:
+    When I run Chutney
+    Then 1 issue is raised  
+    And the message is: 
       """
-      TooClumsy - This scenario is too long at 401 characters
-        lint.feature (2): Test.A
-
+      This scenario is too clumsy at 401 characters. Scenarios should be no more than 400 characters long.
       """
+    And it is reported on:
+      | line | column |
+      | 2    | 3      |
 
   Scenario: Valid Example
-    Given a file named "lint.feature" with:
+    And a feature file contains:
       """
       Feature: Test
         Scenario: A
           When action
           Then verification
       """
-    When I run `ruby lint.rb`
-    Then it should pass with exactly:
-      """
-      """
+    When I run Chutney
+    Then 0 issues are raised  
