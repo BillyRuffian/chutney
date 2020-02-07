@@ -16,7 +16,7 @@ Gem::Specification.new do |spec|
   spec.description = 'A linter for your Cucumber features. '  \
                       'It supports any spoken language Cucumber v3 supports.'
 
-  spec.homepage    = 'https://github.com/BillyRuffian/chutney'
+  spec.homepage    = 'https://billyruffian.github.io/faker_maker/'
   spec.license     = 'MIT'
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
@@ -24,9 +24,9 @@ Gem::Specification.new do |spec|
   if spec.respond_to?(:metadata)
     # spec.metadata['allowed_push_host'] = 'TODO: Set to 'http://mygemserver.com''
 
-    # spec.metadata['homepage_uri'] = spec.homepage
+    spec.metadata['homepage_uri'] = spec.homepage
     spec.metadata['source_code_uri'] = 'https://github.com/BillyRuffian/chutney'
-    # spec.metadata['changelog_uri'] = 'TODO: Put your gem's CHANGELOG.md URL here.'
+    spec.metadata['changelog_uri'] = 'https://github.com/BillyRuffian/chutney/releases'
   else
     raise 'RubyGems 2.0 or newer is required to protect against ' \
       'public gem pushes.'

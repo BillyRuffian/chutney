@@ -6,9 +6,7 @@ module Chutney
     def initialize
       @results = {}
     end  
-    
-    def format(results); end
-    
+        
     def files
       results.map { |k, _v| k }
     end
