@@ -9,7 +9,7 @@ nav_order: 2
 
 Chutney enforces its rules with the linters. These are:
 
-AvoidFullStop
+[AvoidFullStop](https://github.com/BillyRuffian/chutney/blob/master/features/avoid_full_stop.feature)
 : Don't have a full stop (period) at the end of step because it makes step reuse really hard.
 
 AvoidOutlineForSingleExample
