@@ -21,7 +21,7 @@ module Chutney
     end
     
     def print_report(data)
-      return unless data.empty?
+      return if data.empty?
 
       print TTY::Pie.new(data: data, radius: 8, legend: { format: '%<label>s %<name>s %<value>i' })
       puts
