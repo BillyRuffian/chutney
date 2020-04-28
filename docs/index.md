@@ -5,7 +5,7 @@ nav_order: 1
 permalink: /
 ---
 
-# Best practice for your Cucumber feature files
+# Best practice for Cucumber
 {: .fs-9 }
 
 

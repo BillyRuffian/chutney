@@ -9,7 +9,7 @@ nav_order: 2
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'faker_maker', require: false
+gem 'chutney', require: false
 ```
 
 And then execute:
