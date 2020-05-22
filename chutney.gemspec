@@ -54,7 +54,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rake', '~> 13.0'
   spec.add_development_dependency 'rerun', '~> 0.13'
   spec.add_development_dependency 'rspec-expectations', '~> 3.0'
-  spec.add_development_dependency 'rubocop', '~> 0.82.0'
+  spec.add_development_dependency 'rubocop', '~> 0.84.0'
   spec.add_development_dependency 'rspec', '~> 3.8'
   
 end
