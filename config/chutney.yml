@@ -4,6 +4,8 @@ AvoidFullStop:
     Enabled: true
 AvoidScripting:
     Enabled: true
+AvoidTypographersQuotes:
+    Enabled: true
 BackgroundDoesMoreThanSetup:
     Enabled: true
 BackgroundRequiresMultipleScenarios:
