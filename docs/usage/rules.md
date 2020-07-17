@@ -18,6 +18,9 @@ Chutney enforces its rules with the linters. These are:
 [AvoidScripting](https://github.com/BillyRuffian/chutney/blob/master/features/avoid_scripting.feature)
 : You have a lot of steps, are you sure you're not scripting the scenario when you should be specifying the behaviour of the system?
 
+[AvoidTypographersQuotes](https://github.com/BillyRuffian/chutney/blob/master/features/avoid_typographers_quotes.feature)
+: Cutting and pasting from Word documents? Is that pasting in curly-quotes instead of neutral ones you would type on a keyboard? Are you sure that's what you want?
+
 [BackgroundDoesMoreThanSetup](https://github.com/BillyRuffian/chutney/blob/master/features/background_does_more_than_setup.feature)
 : Background in feature files should only do setup activity and so they should only contain `Given` steps.
 
