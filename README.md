@@ -12,6 +12,7 @@
 <div align="center">
 
   [![Gem Version](https://badge.fury.io/rb/chutney.svg)](https://badge.fury.io/rb/chutney)
+  [![Downloads](https://img.shields.io/gem/dt/chutney)](https://rubygems.org/gems/chutney)
   ![CircleCI branch](https://img.shields.io/circleci/project/github/BillyRuffian/chutney/master.svg?style=flat-square)
   [![CodeFactor](https://www.codefactor.io/repository/github/billyruffian/chutney/badge?style=flat-square)](https://www.codefactor.io/repository/github/billyruffian/chutney)
   ![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/BillyRuffian/chutney.svg?style=flat-square)
