@@ -2,7 +2,7 @@ module Chutney
   # service class to lint for file name differs feature name
   class FileNameDiffersFeatureName < Linter
     def lint
-      return unless feature && feature.include?(:name)
+      return unless feature&.include?(:name)
         
       expected_feature_name = title_case(filename)
       return if ignore_whitespaces(feature[:name]).casecmp(ignore_whitespaces(expected_feature_name)) == 0

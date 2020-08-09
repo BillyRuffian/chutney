@@ -4,8 +4,8 @@ module Chutney
   # service class to lint for using same tag on all scenarios
   class SameTagForAllScenarios < Linter
     def lint
-      lint_scenarios if feature && feature.include?(:children)
-      lint_examples  if feature && feature.include?(:children)
+      lint_scenarios if feature&.include?(:children)
+      lint_examples  if feature&.include?(:children)
     end
 
     def lint_scenarios

@@ -105,6 +105,7 @@ module Chutney
     
     def elements 
       return [] unless feature
+      
       if block_given? 
         feature[:children].each do |child|
           next if off_switch?(child)
