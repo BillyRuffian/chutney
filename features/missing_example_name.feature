@@ -7,7 +7,7 @@ Feature: Missing Example Name
   
   Background:
     Given chutney is configured with the linter "Chutney::MissingExampleName"
-  
+
   Scenario: Missing example name when more than one example table
     And a feature file contains:
       """
@@ -97,6 +97,13 @@ Feature: Missing Example Name
             | character |
             | ä         |
             | ß         |
+      """
+    When I run Chutney
+    Then 0 issues are raised
+
+  Scenario: Defect Test - Empty Feature
+    And a feature file contains:
+      """
       """
     When I run Chutney
     Then 0 issues are raised

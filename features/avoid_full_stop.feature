@@ -36,3 +36,10 @@ Feature: Avoid Full Stop
       | line | column |
       | 3    | 5      |
       | 4    | 5      |
+
+  Scenario: Defect Test - Empty Feature
+    And a feature file contains:
+      """
+      """
+    When I run Chutney
+    Then 0 issues are raised

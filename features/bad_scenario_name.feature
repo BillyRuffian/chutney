@@ -7,6 +7,13 @@ Feature: Bad Scenario Name
   Background:
     Given chutney is configured with the linter "Chutney::BadScenarioName"
   
+  Scenario: Defect Test - Empty Feature
+    And a feature file contains:
+      """
+      """
+    When I run Chutney
+    Then 0 issues are raised
+
   Scenario: A valid example
     And a feature file contains:
       """
@@ -44,4 +51,10 @@ Feature: Bad Scenario Name
       | Check        |
       | Tests        |
       | Test         |
-    
+
+  Scenario: Defect Test - Empty Feature
+    And a feature file contains:
+      """
+      """
+    When I run Chutney
+    Then 0 issues are raised
