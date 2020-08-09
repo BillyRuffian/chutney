@@ -16,7 +16,7 @@ module Chutney
     end
     
     def all_tags
-      return [] unless feature.include?(:children)
+      return [] unless feature && feature.include?(:children)
       
       tags_for(feature) + feature[:children].map { |scenario| tags_for(scenario) }.flatten
     end
