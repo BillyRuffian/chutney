@@ -1,4 +1,5 @@
 # gherkin utilities
+
 module Chutney
   # base class for all linters
   class Linter
@@ -102,7 +103,8 @@ module Chutney
       end
     end
     
-    def elements
+    def elements 
+      return [] unless feature
       if block_given? 
         feature[:children].each do |child|
           next if off_switch?(child)
@@ -113,7 +115,7 @@ module Chutney
         feature[:children]
       end
     end
-    
+
     def off_switch?(element = feature)
       off_switch = element[:tags]
                    .then { |tags| tags || [] }
