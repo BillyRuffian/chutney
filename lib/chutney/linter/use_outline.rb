@@ -36,7 +36,7 @@ module Chutney
 
     def gather_scenarios(feature)
       scenarios = []
-      return scenarios unless feature.include? :children
+      return scenarios if feature.nil? || !feature.include?(:children)
       
       feature[:children].each do |scenario|
         next unless scenario[:type] == :Scenario

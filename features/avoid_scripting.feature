@@ -60,3 +60,10 @@ Feature: Avoid Scripting
     And it is reported on:
       | line | column |
       | 6    | 5      |
+
+  Scenario: Defect Test - Empty Feature
+    And a feature file contains:
+      """
+      """
+    When I run Chutney
+    Then 0 issues are raised

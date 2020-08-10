@@ -60,3 +60,10 @@ Feature: Too Many Tags
     And it is reported on:
       | line | column |
       | 2    | 1      |
+
+  Scenario: Defect Test - Empty Feature
+    And a feature file contains:
+      """
+      """
+    When I run Chutney
+    Then 0 issues are raised

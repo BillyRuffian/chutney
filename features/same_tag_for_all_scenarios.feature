@@ -110,4 +110,11 @@ Feature: Same Tag For All Scenarios
           When test
       """
     When I run Chutney
-    Then 0 issues are raised  
+    Then 0 issues are raised
+
+  Scenario: Defect Test - Empty Feature
+    And a feature file contains:
+      """
+      """
+    When I run Chutney
+    Then 0 issues are raised
