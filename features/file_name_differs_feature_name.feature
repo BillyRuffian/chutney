@@ -51,3 +51,10 @@ Feature: File Name Differs Feature Name
       | lint test |
       | lint-test |
       | lint_test |
+    
+  Scenario: Defect Test - Empty Feature
+    And a feature file contains:
+      """
+      """
+    When I run Chutney
+    Then 0 issues are raised

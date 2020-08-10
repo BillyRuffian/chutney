@@ -7,6 +7,13 @@ Feature: Missing Feature Name
   Background: 
     Given chutney is configured with the linter "Chutney::MissingFeatureName"
 
+  Scenario: Defect Test - Empty Feature
+    And a feature file contains:
+      """
+      """
+    When I run Chutney
+    Then 0 issues are raised
+
   Scenario: Missing Feature Name
     And a feature file contains:
       """
@@ -28,4 +35,11 @@ Feature: Missing Feature Name
       Feature: Test
       """
     When I run Chutney
-    Then 0 issues are raised  
+    Then 0 issues are raised 
+
+  Scenario: Defect Test - Empty Feature
+    And a feature file contains:
+      """
+      """
+    When I run Chutney
+    Then 0 issues are raised 

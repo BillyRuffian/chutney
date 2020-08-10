@@ -7,7 +7,6 @@ Feature: Too Many Steps
   Background:
     Given chutney is configured with the linter "Chutney::TooManySteps"
 
-
   Scenario: Valid Example
     And a feature file contains:
       """
@@ -74,3 +73,10 @@ Feature: Too Many Steps
     And it is reported on:
       | line | column |
       | 1    | 1      |
+
+  Scenario: Defect Test - Empty Feature
+    And a feature file contains:
+      """
+      """
+    When I run Chutney
+    Then 0 issues are raised

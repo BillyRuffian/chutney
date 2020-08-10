@@ -35,3 +35,10 @@ Feature: Background Does More Than Setup
     And it is reported on:
       | line | column |
       | 2    | 3      |
+    
+  Scenario: Defect Test - Empty Feature
+    And a feature file contains:
+      """
+      """
+    When I run Chutney
+    Then 0 issues are raised 
