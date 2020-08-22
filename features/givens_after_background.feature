@@ -6,7 +6,7 @@ Feature: Givens After Background
   
   Background:
     Given chutney is configured with the linter "Chutney::GivensAfterBackground"
-  
+
   Scenario: Givens after Background
     And a feature file contains:
       """
@@ -70,6 +70,13 @@ Feature: Givens After Background
       
         Scenario: A
           But more setup
+      """
+    When I run Chutney
+    Then 0 issues are raised
+
+  Scenario: Defect Test - Empty Feature
+    And a feature file contains:
+      """
       """
     When I run Chutney
     Then 0 issues are raised

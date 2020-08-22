@@ -82,7 +82,7 @@ Chutney enforces its rules with the linters. These are:
 : This is a very long step. Consider writing it more concisely.
 
 [TooManyDifferentTags](https://github.com/BillyRuffian/chutney/blob/master/features/too_many_different_tags.feature)
-: This feature has a lot of differnt tags.
+: This feature has a lot of different tags.
 
 [TooManySteps](https://github.com/BillyRuffian/chutney/blob/master/features/too_many_steps.feature)
 : This feature has a lot of steps. Consider writing it more concisely.

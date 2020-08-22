@@ -76,3 +76,10 @@ Feature: Avoid Typographers Quotes
       """
     When I run Chutney
     Then 1 issues is raised
+
+  Scenario: Defect Test - Empty Feature
+    And a feature file contains:
+      """
+      """
+    When I run Chutney
+    Then 0 issues are raised

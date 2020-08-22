@@ -7,6 +7,13 @@ Feature: Invalid File Name
   Background:
     Given chutney is configured with the linter "Chutney::InvalidFileName"
   
+  Scenario: Defect Test - Empty Feature
+    And a feature file contains:
+      """
+      """
+    When I run Chutney
+    Then 0 issues are raised
+
   Scenario Outline: Using upper case in the file name
     And a feature file called "<name>.feature" contains:
       """
@@ -34,6 +41,13 @@ Feature: Invalid File Name
     And a feature file called "lint.feature" contains:
       """
       Feature: Test
+      """
+    When I run Chutney
+    Then 0 issues are raised
+
+  Scenario: Defect Test - Empty Feature
+    And a feature file contains:
+      """
       """
     When I run Chutney
     Then 0 issues are raised
