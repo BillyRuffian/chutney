@@ -8,6 +8,7 @@ require 'chutney/linter/avoid_typographers_quotes'
 require 'chutney/linter/background_does_more_than_setup'
 require 'chutney/linter/background_requires_multiple_scenarios'
 require 'chutney/linter/bad_scenario_name'
+require 'chutney/linter/empty_feature_file'
 require 'chutney/linter/file_name_differs_feature_name'
 require 'chutney/linter/givens_after_background'
 require 'chutney/linter/invalid_file_name'
@@ -46,7 +47,7 @@ module Chutney
     attr_accessor :verbose
     attr_reader :files
     attr_reader :results
-    
+
     def_delegators :@files, :<<, :clear, :delete, :include?
 
     def initialize(*files)
@@ -57,7 +58,7 @@ module Chutney
 
       I18n.load_path << i18n_paths
     end
-    
+
     def configuration
       unless @config
         default_file = [File.expand_path('..', __dir__), '**/config', 'chutney.yml']
@@ -66,11 +67,11 @@ module Chutney
       end
       @config
     end
-    
+
     def configuration=(config)
       @config = config
     end
-    
+
     def analyse
       files.each do |f|
         lint(f)
@@ -80,23 +81,23 @@ module Chutney
     # alias for non-british English
     # https://dictionary.cambridge.org/dictionary/english/analyse
     alias analyze analyse
-    
+
     def linters
       @linters ||= Linter.descendants.filter { |l| configuration.dig(l.linter_name, 'Enabled') }
     end
-    
+
     def linters=(*linters)
       @linters = linters
     end
-    
+
     private
-    
+
     def parse(text)
       @parser ||= Gherkin::Parser.new
       scanner = Gherkin::TokenScanner.new(text)
       @parser.parse(scanner)
     end
-    
+
     def lint(file)
       parsed = parse(File.read(file))
       linters.each do |linter_class|
