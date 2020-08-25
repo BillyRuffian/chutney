@@ -1,4 +1,5 @@
 require 'amatch'
+
 require 'chutney/configuration'
 require 'chutney/linter'
 require 'chutney/linter/avoid_full_stop'
@@ -33,9 +34,11 @@ require 'chutney/linter/unknown_variable'
 require 'chutney/linter/unused_variable'
 require 'chutney/linter/use_background'
 require 'chutney/linter/use_outline'
+
+require 'cuke_modeler'
 require 'forwardable'
-require 'gherkin/dialect'
-require 'gherkin/parser'
+# require 'gherkin/dialect'
+# require 'gherkin/parser'
 require 'i18n'
 require 'set'
 require 'yaml'
@@ -92,14 +95,8 @@ module Chutney
 
     private
 
-    def parse(text)
-      @parser ||= Gherkin::Parser.new
-      scanner = Gherkin::TokenScanner.new(text)
-      @parser.parse(scanner)
-    end
-
     def lint(file)
-      parsed = parse(File.read(file))
+      parsed = CukeModeler::FeatureFile.new(file)
       linters.each do |linter_class|
         linter = linter_class.new(file, parsed, configuration[linter_class.linter_name])
         linter.lint

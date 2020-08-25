@@ -43,14 +43,15 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
   
   spec.add_runtime_dependency 'amatch', '~> 0.4.0'
-  spec.add_runtime_dependency 'gherkin', '~> 5.1.0'
+  spec.add_runtime_dependency 'cuke_modeler', '~> 3.3'
+#   spec.add_runtime_dependency 'gherkin', '~> 5.1.0'
   spec.add_runtime_dependency 'i18n', '~> 1.8.2'
   spec.add_runtime_dependency 'pastel', '~> 0.7'
   spec.add_runtime_dependency 'tty-pie', '~> 0.3'
 
 
   spec.add_development_dependency 'coveralls', '~> 0.8'
-  spec.add_development_dependency 'cucumber', '~> 3.0'
+  spec.add_runtime_dependency 'cucumber', '~> 5.0'
   spec.add_development_dependency 'pry-byebug', '~> 3.0'
   spec.add_development_dependency 'rake', '~> 13.0'
   spec.add_development_dependency 'rerun', '~> 0.13'
