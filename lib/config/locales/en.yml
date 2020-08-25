@@ -21,6 +21,8 @@ en:
       Avoid using Background if you only have a single scenario.
     bad_scenario_name: >-
       You should avoid using words like '%{word}' in your scenario names.
+    empty_feature_file: >-
+      The feature file is empty
     file_name_differs_feature_name: >-
       The name of the feature should reflect the file name. Consider renaming this feature
       to '%{expected}'.
