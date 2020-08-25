@@ -82,8 +82,10 @@ module Chutney
     def location(feature, scenario, step)
       if step
         step[:location]
-      else
-        scenario ? scenario[:location] : feature[:location]
+      elsif scenario
+        scenario[:location]
+      else 
+        feature ? feature[:location] : 0
       end
     end
     
