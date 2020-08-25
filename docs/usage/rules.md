@@ -30,6 +30,9 @@ Chutney enforces its rules with the linters. These are:
 [BadScenarioName](https://github.com/BillyRuffian/chutney/blob/master/features/bad_scenario_name.feature)
 : You should avoid using words like 'test' or 'check' in your scenario names, instead you should define the behaviour of your system.
 
+[EmptyFeatureFile](https://github.com/BillyRuffian/chutney/blob/master/features/empty_feature_file.feature)
+: The feature should have content and should avoid committing empty features to repositories.
+
 [FileNameDiffersFeatureName](https://github.com/BillyRuffian/chutney/blob/master/features/file_name_differs_feature_name.feature)
 : The feature should have a name that follows the file name.
 

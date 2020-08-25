@@ -12,6 +12,8 @@ BackgroundRequiresMultipleScenarios:
     Enabled: true
 BadScenarioName:
     Enabled: true
+EmptyFeatureFile:
+    Enabled: true
 FileNameDiffersFeatureName:
     Enabled: true
 GivensAfterBackground:

@@ -68,12 +68,12 @@ module Chutney
       element[:tags].map { |tag| tag[:name][1..-1] }
     end
     
-    def add_issue(message, feature, scenario = nil, step = nil)
+    def add_issue(message, feature = nil, scenario = nil, step = nil)
       issues << Lint.new(
         message: message,
         gherkin_type: type(feature, scenario, step),
         location: location(feature, scenario, step),
-        feature: feature[:name],
+        feature: feature ? feature[:name] : nil,
         scenario: scenario ? scenario[:name] : nil,
         step: step ? step[:text] : nil
       ).to_h
