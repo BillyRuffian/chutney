@@ -9,6 +9,7 @@ module Chutney
   
     def lint
       background do |feature, background|
+        next unless background
         next unless feature&.tests
         next if feature.tests.length >= 2
 

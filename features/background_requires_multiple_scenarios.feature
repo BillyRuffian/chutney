@@ -25,6 +25,18 @@ Feature: Background Requires Multiple Scenarios
       """
     When I run Chutney
     Then 0 issues are raised
+    
+  Scenario: A valid example - no background
+    And a feature file contains:
+      """
+      Feature: Test
+
+        Scenario: A
+          When action
+          Then verification
+      """
+    When I run Chutney
+    Then 0 issues are raised
   
   
   Scenario: Background with only one scenario
