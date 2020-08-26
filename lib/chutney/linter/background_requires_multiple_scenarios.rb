@@ -7,8 +7,8 @@ module Chutney
   
     def lint
       background do |feature, background|
-        scenarios = feature[:children].reject { |element| element[:type] == :Background }
-        next if scenarios.length >= 2
+        next unless feature&.tests
+        next if feature.tests.length >= 2
 
         add_issue(I18n.t('linters.background_requires_multiple_scenarios'), feature, background)
       end

@@ -89,7 +89,7 @@ module Chutney
       if step
         step.parsing_data[:location]
       elsif scenario
-        scenario.parsing_data.dig(:scenario, :location)
+        scenario.parsing_data.dig(:scenario, :location) || scenario.parsing_data.dig(:background, :location)
       else 
         feature ? feature.parsing_data[:location] : 0
       end
@@ -137,7 +137,6 @@ module Chutney
     end
     
     def background
-#       require 'pry'; binding.pry
       if block_given?          
         yield(feature, feature&.background)
       else
