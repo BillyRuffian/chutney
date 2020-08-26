@@ -105,7 +105,7 @@ module Chutney
 
     def feature
       if block_given?
-        yield(@content.feature) if @content[:feature]
+        yield(@content.feature) if @content.feature
       else
         @content.feature
       end
