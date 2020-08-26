@@ -36,12 +36,11 @@ module Chutney
 
     def gather_scenarios(feature)
       scenarios = []
-      return scenarios if feature.nil? || !feature.include?(:children)
+      return scenarios if feature.nil? || !feature.tests
       
-      feature[:children].each do |scenario|
-        next unless scenario[:type] == :Scenario
-        next unless scenario.include? :steps
-        next if scenario[:steps].empty?
+      scenarios do |_feature, scenario|
+        next unless scenario.steps
+        next if scenario.steps.empty?
         
         scenarios.push generate_reference(feature, scenario)
       end
@@ -51,8 +50,8 @@ module Chutney
     def generate_reference(feature, scenario)
       reference = {}
       reference[:reference] = location(feature, scenario, nil)
-      reference[:name] = "#{scenario[:keyword]}: #{scenario[:name]}"
-      reference[:text] = scenario[:steps].map { |step| render_step(step) }.join ' '
+      reference[:name] = "#{scenario.keyword}: #{scenario.name}"
+      reference[:text] = scenario.steps.map { |step| render_step(step) }.join ' '
       reference
     end
   end
