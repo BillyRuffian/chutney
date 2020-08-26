@@ -5,8 +5,7 @@ module Chutney
     def lint
       return unless feature
       
-      name = feature.key?(:description) ? feature[:description].strip : ''
-      add_issue(I18n.t('linters.missing_feature_description'), feature) if name.empty?
+      add_issue(I18n.t('linters.missing_feature_description'), feature) if feature.description.empty?
     end
   end
 end

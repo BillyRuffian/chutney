@@ -79,9 +79,9 @@ module Chutney
         message: message,
         gherkin_type: type(feature, scenario, item),
         location: location(feature, scenario, item),
-        feature: feature ? feature.name : nil,
-        scenario: scenario ? scenario.name : nil,
-        step: item.parsing_data[:name]
+        feature: feature&.name,
+        scenario: scenario&.name,
+        step: item&.parsing_data&[:name]
       ).to_h
     end
     
