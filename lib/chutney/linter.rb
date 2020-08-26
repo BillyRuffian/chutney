@@ -27,39 +27,43 @@ module Chutney
     end
     
     def and_word?(word)
-      CukeModeler::Parsing.dialects[dialect]['and'].include?(word)
+      dialect_word(:and).include?(word)
     end
     
     def background_word?(word)
-      CukeModeler::Parsing.dialects[dialect]['background'].include?(word)
+      dialect_word(:background).include?(word)
     end
     
     def but_word?(word)
-      CukeModeler::Parsing.dialects[dialect]['but'].include?(word)
+      dialect_word(:but).include?(word)
     end
     
     def examples_word?(word)
-      CukeModeler::Parsing.dialects[dialect]['examples'].include?(word)
+      dialect_word(:examples).include?(word)
     end
     
     def feature_word?(word)
-      CukeModeler::Parsing.dialects[dialect]['feature'].include?(word)
+      dialect_word(:feature).include?(word)
     end
     
     def given_word?(word)
-      CukeModeler::Parsing.dialects[dialect]['given'].include?(word)
+      dialect_word(:given).include?(word)
     end
     
     def scenario_outline_word?(word)
-      CukeModeler::Parsing.dialects[dialect]['scenarioOutline'].include?(word)
+      dialect_word(:scenarioOutline).include?(word)
     end
     
     def then_word?(word)
-      CukeModeler::Parsing.dialects[dialect]['then'].include?(word)
+      dialect_word(:then).include?(word)
     end
     
     def when_word?(word)
-      CukeModeler::Parsing.dialects[dialect]['when'].include?(word)
+      dialect_word(:when).include?(word)
+    end
+    
+    def dialect_word(word)
+      CukeModeler::Parsing.dialects[dialect][word.to_s].map(&:strip)
     end
     
     def dialect
@@ -77,7 +81,7 @@ module Chutney
         location: location(feature, scenario, step),
         feature: feature ? feature.name : nil,
         scenario: scenario ? scenario.name : nil,
-        step: step ? step.text : nil
+        step: step ? (step.respond_to?(:text) ? step.text : step.value) : nil
       ).to_h
     end
     
