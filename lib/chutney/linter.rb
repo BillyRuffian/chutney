@@ -137,10 +137,11 @@ module Chutney
     end
     
     def background
+#       require 'pry'; binding.pry
       if block_given?          
-        yield(feature, feature.background)
+        yield(feature, feature&.background)
       else
-        feature.background
+        feature&.background
       end
     end
     
