@@ -4,14 +4,14 @@ module Chutney
   # service class to lint for using same tag on all scenarios
   class SameTagForAllScenarios < Linter
     def lint
-      lint_scenarios if feature&.include?(:children)
-      lint_examples  if feature&.include?(:children)
+      lint_scenarios if feature&.scenarios
+      lint_examples  if feature&.scenarios
     end
 
     def lint_scenarios
       tags = scenario_tags
       return if tags.nil? || tags.empty?
-      return unless feature[:children].length > 1
+      return unless feature.tests.length > 1
             
       tags.each do |tag|
         next if tag == 'skip'
@@ -25,10 +25,11 @@ module Chutney
     end
 
     def lint_examples
-      feature[:children].each do |scenario|
+      scenarios do |_feature, scenario|
         tags = example_tags(scenario)
         next if tags.nil? || tags.empty?
-        next unless scenario[:examples].length > 1
+        next unless scenario.is_a? CukeModeler::Outline
+        next unless scenario.examples.length > 1
         
         tags.each do |tag|
           next if tag == 'skip'
@@ -42,7 +43,6 @@ module Chutney
     def scenario_tags
       result = nil
       scenarios do |_feature, scenario|
-        next if scenario[:type] == :Background
 
         tags = tags_for(scenario)
         result ||= tags
@@ -53,10 +53,10 @@ module Chutney
 
     def example_tags(scenario)
       result = nil
-      return result unless scenario.include? :examples
+      return result unless scenario.is_a?(CukeModeler::Outline) && scenario.examples
       
-      scenario[:examples].each do |example|
-        return nil unless example.include? :tags
+      scenario.examples.each do |example|
+        return nil unless example.tags
         
         tags = tags_for(example)
         result = tags if result.nil?
