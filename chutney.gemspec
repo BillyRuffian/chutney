@@ -14,9 +14,9 @@ Gem::Specification.new do |spec|
   spec.authors     = ['Nigel Brookes-Thomas', 'Stefan Rohe', 'Nishtha Argawal', 'John Gluck']
   spec.email       = ['nigel@brookes-thomas.co.uk']
 
-  spec.summary     = 'A linter for English language Gherkin'
+  spec.summary     = 'A linter for multi-lingual Gherkin'
   spec.description = 'A linter for your Cucumber features. '  \
-                      'It supports any spoken language Cucumber v3 supports.'
+                      'It supports any spoken language Cucumber supports.'
 
   spec.homepage    = 'https://billyruffian.github.io/chutney/'
   spec.license     = 'MIT'
