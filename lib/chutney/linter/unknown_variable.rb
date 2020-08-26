@@ -18,7 +18,6 @@ module Chutney
 
     def step_vars(step)
       vars = gather_vars step.text
-#       require 'pry' ; binding.pry
       return vars unless step.block
       
       vars + gather_vars_from_argument(step.block)
@@ -37,7 +36,9 @@ module Chutney
     end
 
     def known_variables(scenario)
-       scenario.examples.map { |ex| ex.rows.first.cells.map(&:value) }.flatten
+      return [] unless scenario.is_a? CukeModeler::Outline
+    
+      scenario.examples.map { |ex| ex.rows.first.cells.map(&:value) }.flatten
     end
   end
 end

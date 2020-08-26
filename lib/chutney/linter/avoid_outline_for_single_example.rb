@@ -3,7 +3,7 @@ module Chutney
   class AvoidOutlineForSingleExample < Linter
     def lint
       scenarios do |feature, scenario|      
-        next unless scenario_outline_word? scenario.keyword
+        next unless scenario.is_a? CukeModeler::Outline
         next unless scenario.examples
         
         next if scenario.examples.length > 1

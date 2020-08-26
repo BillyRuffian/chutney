@@ -4,6 +4,7 @@ module Chutney
   
     def lint
       scenarios do |_feature, scenario|
+        next unless scenario.is_a? CukeModeler::Outline
 
         scenario.examples.each do |example|
           example_count = scenario.examples&.length || 0

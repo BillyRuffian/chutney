@@ -151,7 +151,7 @@ module Chutney
         end
         
       else
-        feature.tests
+        feature&.tests
       end
     end
     
@@ -163,7 +163,7 @@ module Chutney
           yield(feature, scenario)
         end
       else
-        scenarios.filter { |s| !s.steps.empty? }
+        scenarios ? scenarios.filter { |s| !s.steps.empty? } : []
       end
     end
     
@@ -182,16 +182,16 @@ module Chutney
     end
 
     def render_step(step)
-      value = "#{step[:keyword]}#{step[:text]}"
-      value += render_step_argument step[:argument] if step.include? :argument
+      value = "#{step.keyword} #{step.text}"
+      value += render_step_argument(step.block) if step.block
       value
     end
     
     def render_step_argument(argument)
-      return "\n#{argument[:content]}" if argument[:type] == :DocString
+      return "\n#{argument.content}" if argument.is_a?(CukeModeler::DocString)
       
-      result = argument[:rows].map do |row|
-        "|#{row[:cells].map { |cell| cell[:value] }.join '|'}|"
+      result = argument.rows.map do |row|
+        "|#{row.cells.map { |cell| cell.value }.join '|'}|"
       end.join "\n"
       "\n#{result}"
     end

@@ -2,7 +2,9 @@ module Chutney
   # service class to lint for unused variables
   class UnusedVariable < Linter
     def lint
-      scenarios do |feature, scenario|        
+      scenarios do |feature, scenario|
+        next unless scenario.is_a? CukeModeler::Outline
+      
         scenario.examples.each do |example|
           
           example.rows.first.cells.map { |cell| cell.value }.each do |variable|

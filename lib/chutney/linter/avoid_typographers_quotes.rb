@@ -7,7 +7,7 @@ module Chutney
       scenarios do |feature, scenario|
         lint_steps(feature, scenario)
 
-        example_count = scenario.examples.length
+        example_count = scenario.is_a? CukeModeler::Outline ? scenario.examples.length : 0
         next unless example_count.positive?
 
         lint_examples(feature, scenario)
