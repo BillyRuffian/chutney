@@ -5,7 +5,7 @@ module Chutney
   class TooClumsy < Linter
     def lint
       filled_scenarios do |feature, scenario|
-        characters = scenario[:steps].map { |step| step[:text].length }.inject(0, :+)
+        characters = scenario.steps.map { |step| step.text.length }.inject(0, :+)
         next if characters < 400
         
         add_issue(
