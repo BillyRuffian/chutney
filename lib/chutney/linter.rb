@@ -81,7 +81,7 @@ module Chutney
         location: location(feature, scenario, item),
         feature: feature&.name,
         scenario: scenario&.name,
-        step: item&.parsing_data&[:name]
+        step: item&.parsing_data&.dig(:name)
       ).to_h
     end
     
