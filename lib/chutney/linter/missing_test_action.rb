@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Chutney
   # service class to lint for missing test actions
   class MissingTestAction < Linter

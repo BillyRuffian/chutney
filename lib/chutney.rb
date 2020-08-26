@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'amatch'
 
 require 'chutney/configuration'
@@ -48,8 +50,7 @@ module Chutney
   class ChutneyLint
     extend Forwardable
     attr_accessor :verbose
-    attr_reader :files
-    attr_reader :results
+    attr_reader :files, :results
 
     def_delegators :@files, :<<, :clear, :delete, :include?
 

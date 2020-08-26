@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 module Chutney
   # service class to lint for missing feature descriptions
   class MissingFeatureDescription < Linter
-    MESSAGE = 'Features should have a description so that its purpose is clear'.freeze
+    MESSAGE = 'Features should have a description so that its purpose is clear'
     def lint
       return unless feature
       

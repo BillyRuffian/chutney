@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'chutney/linter'
 
 module Chutney
@@ -43,7 +45,6 @@ module Chutney
     def scenario_tags
       result = nil
       scenarios do |_feature, scenario|
-
         tags = tags_for(scenario)
         result ||= tags
         result &= tags

@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 require 'chutney/linter'
 
 module Chutney
   # service class to lint for tags used multiple times
   class ScenarioNamesMatch < Linter
-    MESSAGE = 'Scenario Name does not match pattern'.freeze
+    MESSAGE = 'Scenario Name does not match pattern'
   
 
     def lint

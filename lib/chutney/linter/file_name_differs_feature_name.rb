@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Chutney
   # service class to lint for file name differs feature name
   class FileNameDiffersFeatureName < Linter

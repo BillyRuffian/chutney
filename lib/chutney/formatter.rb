@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Chutney
   # base class for all formatters
   class Formatter

@@ -1,11 +1,12 @@
+# frozen_string_literal: true
+
 # gherkin utilities
 
 module Chutney
   # base class for all linters
   class Linter
     attr_accessor :issues
-    attr_reader :filename
-    attr_reader :configuration
+    attr_reader :filename, :configuration
   
     Lint = Struct.new(:message, :gherkin_type, :location, :feature, :scenario, :step, keyword_init: true)
 
@@ -191,7 +192,7 @@ module Chutney
       return "\n#{argument.content}" if argument.is_a?(CukeModeler::DocString)
       
       result = argument.rows.map do |row|
-        "|#{row.cells.map { |cell| cell.value }.join '|'}|"
+        "|#{row.cells.map(&:value).join '|'}|"
       end.join "\n"
       "\n#{result}"
     end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Chutney
   # service class to lint for using background
   class UseBackground < Linter
@@ -28,13 +30,13 @@ module Chutney
       result
     end
 
-    def expanded_steps
+    def expanded_steps(&block)
       scenarios do |_feature, scenario|
         next unless scenario.steps
         
         prototypes = [render_step(scenario.steps.first)]
         prototypes = expand_examples(scenario.examples, prototypes) if scenario.is_a? CukeModeler::Outline
-        prototypes.each { |prototype| yield prototype }
+        prototypes.each(&block)
       end
     end
 
@@ -47,12 +49,12 @@ module Chutney
 
     def expand_outlines(sentence, example)
       result = []
-      headers = example.rows.first.cells.map { |cell| cell.value }
+      headers = example.rows.first.cells.map(&:value)
       example.rows.each_with_index do |row, idx|
         next if idx.zero? # skip the header
         
         modified_sentence = sentence.dup
-        headers.zip(row.cells.map { |cell| cell.value }).map do |key, value|
+        headers.zip(row.cells.map(&:value)).map do |key, value|
           modified_sentence.gsub!("<#{key}>", value)
         end
         result.push modified_sentence

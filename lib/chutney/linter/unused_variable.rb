@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Chutney
   # service class to lint for unused variables
   class UnusedVariable < Linter
@@ -7,7 +9,7 @@ module Chutney
       
         scenario.examples.each do |example|
           
-          example.rows.first.cells.map { |cell| cell.value }.each do |variable|
+          example.rows.first.cells.map(&:value).each do |variable|
             next if used?(variable, scenario)
 
             add_issue(I18n.t('linters.unused_variable', variable: variable), feature, scenario, example)

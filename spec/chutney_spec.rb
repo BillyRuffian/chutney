@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'chutney'
 
 describe Chutney::ChutneyLint do

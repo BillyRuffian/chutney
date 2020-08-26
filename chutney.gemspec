@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Disable rubocop checks for the .gemspec
 # I'll take the output from 'bundle gem new' to be authoritative
 # rubocop:disable all
@@ -59,5 +61,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rubocop', '~> 0.89.0'
   spec.add_development_dependency 'rspec', '~> 3.8'
   
-  spec.required_ruby_version = '~> 2.3'
+  spec.required_ruby_version = '~> 2.6'
 end

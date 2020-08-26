@@ -8,7 +8,7 @@
 
 # Offense count: 1
 Metrics/AbcSize:
-  Max: 16
+  Enabled: false
 
 # Offense count: 1
 # Configuration parameters: CountComments.
@@ -55,4 +55,10 @@ Layout/TrailingWhitespace:
   Enabled: false
 
 Style/FrozenStringLiteralComment:
+  Enabled: true
+  
+Style/StringConcatenation:
   Enabled: false
+
+AllCops:
+  NewCops: enable

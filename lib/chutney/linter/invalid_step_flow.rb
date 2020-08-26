@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Chutney
   # service class to lint for invalid step flow
   class InvalidStepFlow < Linter
@@ -32,9 +34,7 @@ module Chutney
       steps.each do |step|
         break if when_word?(step.keyword)
         
-        if then_word?(step.keyword)
-          add_issue(I18n.t('linters.invalid_step_flow.missing_action'), feature, scenario)
-        end
+        add_issue(I18n.t('linters.invalid_step_flow.missing_action'), feature, scenario) if then_word?(step.keyword)
       end
     end
   end

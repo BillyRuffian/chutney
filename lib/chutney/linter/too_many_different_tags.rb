@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Chutney
   # service class to lint for too many different tags
   class TooManyDifferentTags < Linter
@@ -16,9 +18,9 @@ module Chutney
     end
     
     def all_tags
-      return [] unless feature&.include?(:children)
+      return [] unless feature&.scenarios
       
-      tags_for(feature) + feature[:children].map { |scenario| tags_for(scenario) }.flatten
+      tags_for(feature) + feature.scenarios.map { |scenario| tags_for(scenario) }.flatten
     end
   end
 end

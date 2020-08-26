@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Chutney
   # service class to lint for background that does more than setup
   class BackgroundDoesMoreThanSetup < Linter   
@@ -9,6 +11,7 @@ module Chutney
         end
         
         next if invalid_steps.nil? || invalid_steps.empty?
+
         add_issue(I18n.t('linters.background_does_more_than_setup'), feature, background, invalid_steps.first)
       end
     end
