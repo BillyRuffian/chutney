@@ -4,9 +4,7 @@ module Chutney
     def lint
       references_by_name = {}
       scenarios do |feature, scenario|
-        next unless scenario.key? :name
-
-        name = scenario[:name]
+        name = scenario.name
         if references_by_name[name]
           issue(name, references_by_name[name], scenario)
         else
