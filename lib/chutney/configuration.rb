@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'delegate'
 
 module Chutney 
   # gherkin_lint configuration object
