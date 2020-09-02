@@ -15,8 +15,12 @@ Gem::Specification.new do |spec|
   spec.email       = ['nigel@brookes-thomas.co.uk']
 
   spec.summary     = 'A linter for multi-lingual Gherkin'
-  spec.description = 'A linter for your Cucumber features. '  \
-                      'It supports any spoken language Cucumber supports.'
+  spec.description = 'A linter for your Cucumber features. '                    \
+                     'Making sure you have nice, expressible Gherkin is '       \
+                     'essential is making sure you have a readable test-base. ' \
+                     'Chutney is designed to sniff out smells in your feature ' \
+                     'files. '                                                  \
+                     'It supports any spoken language Cucumber supports.'
 
   spec.homepage    = 'https://billyruffian.github.io/chutney/'
   spec.license     = 'MIT'
