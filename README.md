@@ -20,3 +20,7 @@
 </div>
 
 Read the documentation [here](https://billyruffian.github.io/chutney/).
+
+## Notes
+
+Chutney 3+ (in beta) has replaced its direct dependency on Cucumber and instead uses the excellent [cuke_modeller](https://github.com/enkessler/cuke_modeler) to parse your feature files. 
