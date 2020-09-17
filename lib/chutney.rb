@@ -60,7 +60,7 @@ module Chutney
       i18n_paths = Dir[File.expand_path(File.join(__dir__, 'config/locales')) + '/*.yml']
       return if I18n.load_path.include?(i18n_paths)
 
-      I18n.load_path << i18n_paths
+      I18n.load_path += i18n_paths
     end
 
     def configuration
