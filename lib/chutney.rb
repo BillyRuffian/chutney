@@ -58,9 +58,8 @@ module Chutney
       @files = files
       @results = Hash.new { |h, k| h[k] = [] }
       i18n_paths = Dir[File.expand_path(File.join(__dir__, 'config/locales')) + '/*.yml']
-      return if I18n.load_path.include?(i18n_paths)
 
-      I18n.load_path += i18n_paths
+      i18n_paths.each { |p| I18n.load_path << p unless I18n.load_path.include?(p) }
     end
 
     def configuration
