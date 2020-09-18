@@ -60,9 +60,9 @@ module Chutney
       i18n_paths = Dir[File.expand_path(File.join(__dir__, 'config/locales')) + '/*.yml']
 
       i18n_paths.each do |path| 
-        next if I18n.load_path.include?(p)
+        next if I18n.load_path.include?(path)
         
-        I18n.load_path << p
+        I18n.load_path << path
         I18n.backend.reload!
       end
     end
