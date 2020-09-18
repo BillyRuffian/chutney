@@ -92,7 +92,7 @@ module Chutney
       elsif scenario
         scenario.parsing_data.dig(:scenario, :location) || scenario.parsing_data.dig(:background, :location)
       else 
-        feature ? feature.parsing_data[:location] : 0
+        feature ? feature.parsing_data[:location] : { line: 0, column: 0 }
       end
     end
     
