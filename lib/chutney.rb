@@ -61,6 +61,7 @@ module Chutney
 
       i18n_paths.each do |path| 
         next if I18n.load_path.include?(p)
+        
         I18n.load_path << p
         I18n.backend.reload!
       end
