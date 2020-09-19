@@ -69,7 +69,7 @@ module Chutney
 
     def configuration
       unless @config
-        default_file = [File.expand_path('..', __dir__), '**/config', 'chutney.yml']
+        default_file = [File.expand_path('..', __dir__), '**/config', 'chutney_defaults.yml']
         config_file = Dir.glob(File.join(default_file)).first.freeze
         @config = Configuration.new(config_file)
       end
