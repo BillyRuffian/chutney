@@ -36,6 +36,7 @@ require 'chutney/linter/unknown_variable'
 require 'chutney/linter/unused_variable'
 require 'chutney/linter/use_background'
 require 'chutney/linter/use_outline'
+require 'chutney/version'
 
 require 'cuke_modeler'
 require 'forwardable'
