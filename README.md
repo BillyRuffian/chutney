@@ -19,7 +19,7 @@
 
 </div>
 
-Read the documentation [here](https://billyruffian.github.io/chutney/).
+Read the documentation [here](https://billyruffian.github.io/chutney/) or try [Chutney Online](https://chutney.billy-ruffian.co.uk).
 
 ## Notes
 
