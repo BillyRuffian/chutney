@@ -16,11 +16,11 @@ module Chutney
 
     def gather_givens
       return unless feature.children
-      
+
       has_non_given_step = false
       scenarios do |_feature, scenario|
         next unless scenario.steps
-        
+
         has_non_given_step = true unless given_word?(scenario.steps.first.keyword)
       end
       return if has_non_given_step
@@ -33,7 +33,7 @@ module Chutney
     def expanded_steps(&block)
       scenarios do |_feature, scenario|
         next unless scenario.steps
-        
+
         prototypes = [render_step(scenario.steps.first)]
         prototypes = expand_examples(scenario.examples, prototypes) if scenario.is_a? CukeModeler::Outline
         prototypes.each(&block)
@@ -52,7 +52,7 @@ module Chutney
       headers = example.rows.first.cells.map(&:value)
       example.rows.each_with_index do |row, idx|
         next if idx.zero? # skip the header
-        
+
         modified_sentence = sentence.dup
         headers.zip(row.cells.map(&:value)).map do |key, value|
           modified_sentence.gsub!("<#{key}>", value)

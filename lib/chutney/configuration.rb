@@ -2,7 +2,7 @@
 
 require 'delegate'
 
-module Chutney 
+module Chutney
   # gherkin_lint configuration object
   class Configuration < SimpleDelegator
     def initialize(path)
@@ -24,7 +24,7 @@ module Chutney
       config_files = ['chutney.yml', '.chutney.yml'].map do |fname|
         Dir.glob(File.join(Dir.pwd, '**', fname))
       end.flatten
-      
+
       config_file = config_files.first
       merge_config(config_file) if !config_file.nil? && File.exist?(config_file)
     end

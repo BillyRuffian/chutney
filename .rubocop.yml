@@ -52,7 +52,7 @@ Layout/HeredocIndentation:
     - "**/*_spec.rb"
 
 Layout/TrailingWhitespace:
-  Enabled: false
+  Enabled: true
 
 Style/FrozenStringLiteralComment:
   Enabled: true

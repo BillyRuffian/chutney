@@ -13,7 +13,7 @@ module Chutney
         end
       end
     end
-    
+
     def recommend(filename)
       File.basename(filename, '.*').gsub(/::/, '/')
           .gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')

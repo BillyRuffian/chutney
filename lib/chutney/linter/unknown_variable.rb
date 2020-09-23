@@ -9,7 +9,7 @@ module Chutney
         scenario.steps.each do |step|
           step_vars(step).each do |used_var|
             next if known_vars.include? used_var
-            
+
             add_issue(
               I18n.t('linters.unknown_variable', variable: used_var), feature, scenario
             )
@@ -21,7 +21,7 @@ module Chutney
     def step_vars(step)
       vars = gather_vars step.text
       return vars unless step.block
-      
+
       vars + gather_vars_from_argument(step.block)
     end
 
@@ -39,7 +39,7 @@ module Chutney
 
     def known_variables(scenario)
       return [] unless scenario.is_a? CukeModeler::Outline
-    
+
       scenario.examples.map { |ex| ex.rows.first.cells.map(&:value) }.flatten
     end
   end

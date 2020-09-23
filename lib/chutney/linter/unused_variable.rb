@@ -6,9 +6,8 @@ module Chutney
     def lint
       scenarios do |feature, scenario|
         next unless scenario.is_a? CukeModeler::Outline
-      
+
         scenario.examples.each do |example|
-          
           example.rows.first.cells.map(&:value).each do |variable|
             next if used?(variable, scenario)
 
@@ -20,7 +19,7 @@ module Chutney
 
     def used?(variable, scenario)
       variable = "<#{variable}>"
-      
+
       scenario.steps.each do |step|
         return true if step.text.include? variable
         next unless step.block
@@ -36,7 +35,7 @@ module Chutney
 
     def used_in_table?(variable, step)
       return false unless step.block.is_a?(CukeModeler::Table)
-      
+
       step.block.rows.each do |row|
         row.cells.each { |cell| return true if cell.value.include?(variable) }
       end

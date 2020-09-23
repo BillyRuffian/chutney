@@ -7,7 +7,7 @@ module Chutney
       filled_scenarios do |feature, scenario|
         steps = scenario.steps.select { |step| !and_word?(step.keyword) && !but_word?(step.keyword) }
         next if steps.empty?
-        
+
         last_step_is_an_action(feature, scenario, steps)
         given_after_non_given(feature, scenario, steps)
         verification_before_action(feature, scenario, steps)
@@ -33,7 +33,7 @@ module Chutney
     def verification_before_action(feature, scenario, steps)
       steps.each do |step|
         break if when_word?(step.keyword)
-        
+
         add_issue(I18n.t('linters.invalid_step_flow.missing_action'), feature, scenario) if then_word?(step.keyword)
       end
     end

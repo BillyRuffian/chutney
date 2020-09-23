@@ -11,18 +11,18 @@ module Chutney
       scenarios.product(scenarios) do |lhs, rhs|
         next if lhs == rhs
         next if lhs[:reference][:line] > rhs[:reference][:line]
-        
+
         similarity = determine_similarity(lhs[:text], rhs[:text])
         next unless similarity >= 0.95
-        
+
         similarity_pct = similarity.round(3) * 100
-        
+
         add_issue(lhs, rhs, similarity_pct)
       end
     end
-    
+
     def add_issue(lhs, rhs, pct)
-      super(I18n.t('linters.use_outline', 
+      super(I18n.t('linters.use_outline',
                    pct: pct,
                    lhs_name: lhs[:name],
                    lhs_line: lhs[:reference][:line],
@@ -39,11 +39,11 @@ module Chutney
     def gather_scenarios(feature)
       scenarios = []
       return scenarios if feature.nil? || !feature.tests
-      
+
       scenarios do |_feature, scenario|
         next unless scenario.steps
         next if scenario.steps.empty?
-        
+
         scenarios.push generate_reference(feature, scenario)
       end
       scenarios

@@ -2,7 +2,7 @@
 
 module Chutney
   # service class to lint for avoid scripting
-  class AvoidScripting < Linter  
+  class AvoidScripting < Linter
     def lint
       scenarios do |feature, scenario|
         when_steps = filter_when_steps(scenario.steps)
@@ -10,7 +10,7 @@ module Chutney
         add_issue(I18n.t('linters.avoid_scripting', count: whens), feature, scenario, when_steps.last) if whens > 1
       end
     end
-    
+
     def filter_when_steps(steps)
       steps
         .drop_while { |step| !when_word?(step.keyword) }
