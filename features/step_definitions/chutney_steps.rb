@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Given('chutney is configured with the linter {string}') do |linter_name|
   @chutney = Chutney::ChutneyLint.new
   @linter_name = linter_name

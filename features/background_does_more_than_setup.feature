@@ -34,7 +34,7 @@ Feature: Background Does More Than Setup
       """
     And it is reported on:
       | line | column |
-      | 2    | 3      |
+      | 4    | 5      |
     
   Scenario: Defect Test - Empty Feature
     And a feature file contains:

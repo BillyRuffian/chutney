@@ -1,12 +1,13 @@
+# frozen_string_literal: true
+
 # gherkin utilities
 
 module Chutney
   # base class for all linters
   class Linter
     attr_accessor :issues
-    attr_reader :filename
-    attr_reader :configuration
-  
+    attr_reader :filename, :configuration
+
     Lint = Struct.new(:message, :gherkin_type, :location, :feature, :scenario, :step, keyword_init: true)
 
     def self.descendants
@@ -18,77 +19,83 @@ module Chutney
       @filename = filename
       @issues = []
       @configuration = configuration
-      language = @content.dig(:feature, :language) || 'en'
-      @dialect = Gherkin::Dialect.for(language)
+      #       language = @content.dig(:feature, :language) || 'en'
+      #       @dialect = Gherkin::Dialect.for(language)
     end
 
     def lint
       raise 'not implemented'
     end
-    
-    def and_word?(word)
-      @dialect.and_keywords.include?(word)
-    end
-    
-    def background_word?(word)
-      @dialect.background_keywords.include?(word)
-    end
-    
-    def but_word?(word)
-      @dialect.but_keywords.include?(word)
-    end
-    
-    def examples_word?(word)
-      @dialect.example_keywords.include?(word)
-    end
-    
-    def feature_word?(word)
-      @dialect.feature_keywords.include?(word)
-    end
-    
-    def given_word?(word)
-      @dialect.given_keywords.include?(word)
-    end
-    
-    def scenario_outline_word?(word)
-      @dialect.scenario_outline_keywords.include?(word)
-    end
-    
-    def then_word?(word)
-      @dialect.then_keywords.include?(word)
-    end
-    
-    def when_word?(word)
-      @dialect.when_keywords.include?(word)
-    end
-  
-    def tags_for(element)
-      return [] unless element.include? :tags
 
-      element[:tags].map { |tag| tag[:name][1..-1] }
+    def and_word?(word)
+      dialect_word(:and).include?(word)
     end
-    
-    def add_issue(message, feature = nil, scenario = nil, step = nil)
+
+    def background_word?(word)
+      dialect_word(:background).include?(word)
+    end
+
+    def but_word?(word)
+      dialect_word(:but).include?(word)
+    end
+
+    def examples_word?(word)
+      dialect_word(:examples).include?(word)
+    end
+
+    def feature_word?(word)
+      dialect_word(:feature).include?(word)
+    end
+
+    def given_word?(word)
+      dialect_word(:given).include?(word)
+    end
+
+    def scenario_outline_word?(word)
+      dialect_word(:scenarioOutline).include?(word)
+    end
+
+    def then_word?(word)
+      dialect_word(:then).include?(word)
+    end
+
+    def when_word?(word)
+      dialect_word(:when).include?(word)
+    end
+
+    def dialect_word(word)
+      CukeModeler::Parsing.dialects[dialect][word.to_s].map(&:strip)
+    end
+
+    def dialect
+      @content.feature&.parsing_data&.dig(:language) || 'en'
+    end
+
+    def tags_for(element)
+      element.tags.map { |tag| tag.name[1..-1] }
+    end
+
+    def add_issue(message, feature = nil, scenario = nil, item = nil)
       issues << Lint.new(
         message: message,
-        gherkin_type: type(feature, scenario, step),
-        location: location(feature, scenario, step),
-        feature: feature ? feature[:name] : nil,
-        scenario: scenario ? scenario[:name] : nil,
-        step: step ? step[:text] : nil
+        gherkin_type: type(feature, scenario, item),
+        location: location(feature, scenario, item),
+        feature: feature&.name,
+        scenario: scenario&.name,
+        step: item&.parsing_data&.dig(:name)
       ).to_h
     end
-    
+
     def location(feature, scenario, step)
       if step
-        step[:location]
+        step.parsing_data[:location]
       elsif scenario
-        scenario[:location]
-      else 
-        feature ? feature[:location] : 0
+        scenario.parsing_data.dig(:scenario, :location) || scenario.parsing_data.dig(:background, :location)
+      else
+        feature ? feature.parsing_data[:location] : { line: 0, column: 0 }
       end
     end
-    
+
     def type(_feature, scenario, step)
       if step
         :step
@@ -99,101 +106,93 @@ module Chutney
 
     def feature
       if block_given?
-        yield(@content[:feature]) if @content[:feature]
+        yield(@content.feature) if @content.feature
       else
-        @content[:feature]
+        @content.feature
       end
     end
-    
-    def elements 
+
+    def elements
       return [] unless feature
-      
-      if block_given? 
-        feature[:children].each do |child|
+
+      if block_given?
+        feature.children.each do |child|
           next if off_switch?(child)
-        
+
           yield(feature, child)
         end
       else
-        feature[:children]
+        feature.children
       end
     end
 
     def off_switch?(element = feature)
-      off_switch = element[:tags]
-                   .then { |tags| tags || [] }
-                   .filter { |tag| tag[:type] == :Tag }
-                   .filter { |tag| tag[:name] == "@disable#{linter_name}" }
-                   .count
-                   .positive?
+      off_switch = element.tags
+                          .then { |tags| tags || [] }
+                          .filter { |tag| tag[:type] == :Tag }
+                          .filter { |tag| tag[:name] == "@disable#{linter_name}" }
+                          .count
+                          .positive?
       off_switch ||= off_switch?(feature) unless element == feature
       off_switch
     end
-    
+
     def background
       if block_given?
-        elements do |feature, child|
-          next unless child[:type] == :Background
-          
-          yield(feature, child)
-        end
+        yield(feature, feature&.background)
       else
-        elements.filter { |child| child[:type] == :Background }
+        feature&.background
       end
     end
-    
+
     def scenarios
       if block_given?
-        elements do |feature, child|
-          next unless %i[ScenarioOutline Scenario].include? child[:type]
-        
-          yield(feature, child)
+        feature&.tests&.each do |test|
+          yield(feature, test)
         end
+
       else
-        elements.filter { |child| %i[ScenarioOutline Scenario].include? child[:type] }
+        feature&.tests
       end
     end
-    
+
     def filled_scenarios
       if block_given?
         scenarios do |feature, scenario|
-          next unless scenario.include? :steps
-          next if scenario[:steps].empty?
-        
+          next if scenario.steps.empty?
+
           yield(feature, scenario)
         end
       else
-        scenarios.filter { |s| !s[:steps].empty? }
+        scenarios ? scenarios.filter { |s| !s.steps.empty? } : []
       end
     end
-    
+
     def steps
-      elements do |feature, child|
-        next unless child.include? :steps
-        
-        child[:steps].each { |step| yield(feature, child, step) }
+      feature&.tests&.each do |t|
+        t.steps.each { |s| yield(feature, t, s) }
       end
     end
 
     def self.linter_name
       name.split('::').last
     end
-    
+
     def linter_name
       self.class.linter_name
     end
 
     def render_step(step)
-      value = "#{step[:keyword]}#{step[:text]}"
-      value += render_step_argument step[:argument] if step.include? :argument
+      value = "#{step.keyword} #{step.text}"
+      value += render_step_argument(step.block) if step.block
       value
     end
-    
+
     def render_step_argument(argument)
-      return "\n#{argument[:content]}" if argument[:type] == :DocString
-      
-      result = argument[:rows].map do |row|
-        "|#{row[:cells].map { |cell| cell[:value] }.join '|'}|"
+      return "\n#{argument.content}" if argument.is_a?(CukeModeler::DocString)
+
+      result = argument.rows.map do |row|
+        "|#{row.cells.map(&:value).join '|'}|"
       end.join "\n"
       "\n#{result}"
     end

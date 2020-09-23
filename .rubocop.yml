@@ -8,7 +8,7 @@
 
 # Offense count: 1
 Metrics/AbcSize:
-  Max: 16
+  Enabled: false
 
 # Offense count: 1
 # Configuration parameters: CountComments.
@@ -52,7 +52,13 @@ Layout/HeredocIndentation:
     - "**/*_spec.rb"
 
 Layout/TrailingWhitespace:
-  Enabled: false
+  Enabled: true
 
 Style/FrozenStringLiteralComment:
+  Enabled: true
+
+Style/StringConcatenation:
   Enabled: false
+
+AllCops:
+  NewCops: enable

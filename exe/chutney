@@ -1,4 +1,6 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
+
 require 'chutney'
 require 'chutney/formatter'
 require 'chutney/formatter/json_formatter'
@@ -10,19 +12,37 @@ formatters = Set.new
 
 OptionParser.new do |opts|
   opts.banner = 'Usage: chutney [files]'
-  opts.on('-f', 
-          '--format [formatter]', 
+  opts.on('-f',
+          '--format [formatter]',
           'One of JSONFormatter, PieFormatter or RainbowFormatter (default).') do |formatter|
     raise 'No Such Formatter' unless %w[JSONFormatter PieFormatter RainbowFormatter].include? formatter
 
     formatters << formatter
+  end
+
+  opts.on('-l',
+          '--linters',
+          'List the linter status by this configuration and exit') do
+    pastel = Pastel.new
+    chutney_config = Chutney::ChutneyLint.new.configuration
+    max_name_length = chutney_config.keys.map(&:length).max + 1
+    chutney_config.each do |linter, value|
+      print pastel.cyan(linter.ljust(max_name_length))
+
+      if value['Enabled']
+        puts pastel.green('enabled')
+      else
+        puts pastel.red('disabled')
+      end
+    end
+    exit
   end
 end.parse!
 
 formatters << 'RainbowFormatter' if formatters.empty?
 
 files = ARGV.map { |pattern| Dir.glob(pattern) }.flatten
-files = Dir.glob('features/**/*.feature') if ARGV.empty? 
+files = Dir.glob('features/**/*.feature') if ARGV.empty?
 
 linter = Chutney::ChutneyLint.new(*files)
 report = linter.analyse

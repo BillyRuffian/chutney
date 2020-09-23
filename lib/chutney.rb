@@ -1,4 +1,7 @@
+# frozen_string_literal: true
+
 require 'amatch'
+
 require 'chutney/configuration'
 require 'chutney/linter'
 require 'chutney/linter/avoid_full_stop'
@@ -33,9 +36,12 @@ require 'chutney/linter/unknown_variable'
 require 'chutney/linter/unused_variable'
 require 'chutney/linter/use_background'
 require 'chutney/linter/use_outline'
+require 'chutney/version'
+
+require 'cuke_modeler'
 require 'forwardable'
-require 'gherkin/dialect'
-require 'gherkin/parser'
+# require 'gherkin/dialect'
+# require 'gherkin/parser'
 require 'i18n'
 require 'set'
 require 'yaml'
@@ -45,8 +51,7 @@ module Chutney
   class ChutneyLint
     extend Forwardable
     attr_accessor :verbose
-    attr_reader :files
-    attr_reader :results
+    attr_reader :files, :results
 
     def_delegators :@files, :<<, :clear, :delete, :include?
 
@@ -54,14 +59,18 @@ module Chutney
       @files = files
       @results = Hash.new { |h, k| h[k] = [] }
       i18n_paths = Dir[File.expand_path(File.join(__dir__, 'config/locales')) + '/*.yml']
-      return if I18n.load_path.include?(i18n_paths)
 
-      I18n.load_path << i18n_paths
+      i18n_paths.each do |path|
+        next if I18n.load_path.include?(path)
+
+        I18n.load_path << path
+        I18n.backend.reload!
+      end
     end
 
     def configuration
       unless @config
-        default_file = [File.expand_path('..', __dir__), '**/config', 'chutney.yml']
+        default_file = [File.expand_path('..', __dir__), '**/config', 'chutney_defaults.yml']
         config_file = Dir.glob(File.join(default_file)).first.freeze
         @config = Configuration.new(config_file)
       end
@@ -92,14 +101,8 @@ module Chutney
 
     private
 
-    def parse(text)
-      @parser ||= Gherkin::Parser.new
-      scanner = Gherkin::TokenScanner.new(text)
-      @parser.parse(scanner)
-    end
-
     def lint(file)
-      parsed = parse(File.read(file))
+      parsed = CukeModeler::FeatureFile.new(file)
       linters.each do |linter_class|
         linter = linter_class.new(file, parsed, configuration[linter_class.linter_name])
         linter.lint

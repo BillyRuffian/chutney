@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Disable rubocop checks for the .gemspec
 # I'll take the output from 'bundle gem new' to be authoritative
 # rubocop:disable all
@@ -12,9 +14,13 @@ Gem::Specification.new do |spec|
   spec.authors     = ['Nigel Brookes-Thomas', 'Stefan Rohe', 'Nishtha Argawal', 'John Gluck']
   spec.email       = ['nigel@brookes-thomas.co.uk']
 
-  spec.summary     = 'A linter for English language Gherkin'
-  spec.description = 'A linter for your Cucumber features. '  \
-                      'It supports any spoken language Cucumber v3 supports.'
+  spec.summary     = 'A linter for multi-lingual Gherkin'
+  spec.description = 'A linter for your Cucumber features. '                    \
+                     'Making sure you have nice, expressible Gherkin is '       \
+                     'essential is making sure you have a readable test-base. ' \
+                     'Chutney is designed to sniff out smells in your feature ' \
+                     'files. '                                                  \
+                     'It supports any spoken language Cucumber supports.'
 
   spec.homepage    = 'https://billyruffian.github.io/chutney/'
   spec.license     = 'MIT'
@@ -43,14 +49,14 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
   
   spec.add_runtime_dependency 'amatch', '~> 0.4.0'
-  spec.add_runtime_dependency 'gherkin', '~> 5.1.0'
+  spec.add_runtime_dependency 'cuke_modeler', '~> 3.3'
   spec.add_runtime_dependency 'i18n', '~> 1.8.2'
   spec.add_runtime_dependency 'pastel', '~> 0.7'
   spec.add_runtime_dependency 'tty-pie', '~> 0.3'
 
 
   spec.add_development_dependency 'coveralls', '~> 0.8'
-  spec.add_development_dependency 'cucumber', '~> 3.0'
+  spec.add_development_dependency 'cucumber', '~> 5.1'
   spec.add_development_dependency 'pry-byebug', '~> 3.0'
   spec.add_development_dependency 'rake', '~> 13.0'
   spec.add_development_dependency 'rerun', '~> 0.13'
@@ -58,4 +64,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rubocop', '~> 0.90.0'
   spec.add_development_dependency 'rspec', '~> 3.8'
   
+  spec.required_ruby_version = '~> 2.6'
 end
