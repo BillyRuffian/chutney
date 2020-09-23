@@ -56,7 +56,7 @@ Layout/TrailingWhitespace:
 
 Style/FrozenStringLiteralComment:
   Enabled: true
-  
+
 Style/StringConcatenation:
   Enabled: false
 
