@@ -19,8 +19,6 @@ module Chutney
       @filename = filename
       @issues = []
       @configuration = configuration
-      #       language = @content.dig(:feature, :language) || 'en'
-      #       @dialect = Gherkin::Dialect.for(language)
     end
 
     def lint
@@ -127,7 +125,6 @@ module Chutney
     end
 
     def off_switch?(element = feature)
-      # require 'pry'; binding.pry
       off_switch = element.tags
                           .map(&:name)
                           .then { |tags| tags || [] }
