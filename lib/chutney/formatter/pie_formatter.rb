@@ -6,10 +6,6 @@ require 'tty/pie'
 module Chutney
   # format results as pie charts
   class PieFormatter < Formatter
-    def initialize
-      super
-    end
-
     def format
       data = top_offences.map do |offence|
         {

@@ -127,10 +127,11 @@ module Chutney
     end
 
     def off_switch?(element = feature)
+      # require 'pry'; binding.pry
       off_switch = element.tags
+                          .map(&:name)
                           .then { |tags| tags || [] }
-                          .filter { |tag| tag[:type] == :Tag }
-                          .filter { |tag| tag[:name] == "@disable#{linter_name}" }
+                          .filter { |tag_name| tag_name == "@disable#{linter_name}" }
                           .count
                           .positive?
       off_switch ||= off_switch?(feature) unless element == feature
@@ -138,16 +139,21 @@ module Chutney
     end
 
     def background
+      return unless feature&.background
+      return if off_switch?(feature)
+
       if block_given?
-        yield(feature, feature&.background)
+        yield(feature, feature.background)
       else
-        feature&.background
+        feature.background
       end
     end
 
     def scenarios
       if block_given?
         feature&.tests&.each do |test|
+          next if off_switch?(test)
+
           yield(feature, test)
         end
 
@@ -169,8 +175,12 @@ module Chutney
     end
 
     def steps
-      feature&.tests&.each do |t|
-        t.steps.each { |s| yield(feature, t, s) }
+      feature&.tests&.each do |test|
+        next if off_switch?(test)
+
+        test.steps.each do |step|
+          yield(feature, test, step)
+        end
       end
     end
 
