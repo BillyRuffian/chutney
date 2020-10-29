@@ -18,4 +18,4 @@ You're trying to follow TDD or ATDD principles, you're writing executable specif
 
 Cucumber itself is an awesome tool which bridges with gap between business language, software development language and the language of testers. With all these folks interested, it's easy to write problematic and hard to maintain features. Chutney tries to help with that by having a common set of quality rules for your feature files.
 
-Chutney is able to lint feature files in any spoken language supported by Cucumber 3.
+Chutney is able to lint feature files in any spoken language supported by Cucumber.
