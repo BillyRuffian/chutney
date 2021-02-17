@@ -23,4 +23,4 @@ Read the documentation [here](https://billyruffian.github.io/chutney/) or try [C
 
 ## Notes
 
-Chutney 3+ (in beta) has replaced its direct dependency on Cucumber and instead uses the excellent [cuke_modeller](https://github.com/enkessler/cuke_modeler) to parse your feature files. 
+Chutney 3+ has replaced its direct dependency on Cucumber and instead uses the excellent [cuke_modeller](https://github.com/enkessler/cuke_modeler) to parse your feature files. 
