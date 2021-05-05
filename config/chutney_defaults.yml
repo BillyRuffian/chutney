@@ -36,6 +36,8 @@ InvalidStepFlow:
     Enabled: true
 RequiredTagsStartsWith:
     Enabled: false
+SameTagDifferentCase:
+    Enabled: true
 SameTagForAllScenarios:
     Enabled: true
 ScenarioNamesMatch:
