@@ -70,7 +70,7 @@ module Chutney
     end
 
     def tags_for(element)
-      element.tags.map { |tag| tag.name[1..-1] }
+      element.tags.map { |tag| tag.name[1..] }
     end
 
     def add_issue(message, feature = nil, scenario = nil, item = nil)

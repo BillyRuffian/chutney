@@ -5,7 +5,11 @@ require 'chutney/linter'
 module Chutney
   # service class to lint for missing verifications
   class SameTagDifferentCase < Linter
-    @@all_known_tags = []
+    def all_known_tags
+      # rubocop:disable Style/ClassVars
+      @@all_known_tags ||= []
+      # rubocop:enable Style/ClassVars
+    end
 
     def lint
       scenarios do |feature, scenario|
@@ -14,11 +18,9 @@ module Chutney
         total_tags.each do |tag|
           collision_with = case_collision(tag)
           if collision_with
-            add_issue(
-              I18n.t('linters.same_tag_different_case',
-                    existing_tag: collision_with, tag: tag),
-              feature, scenario
-            )
+            add_issue(I18n.t('linters.same_tag_different_case',
+                             existing_tag: collision_with, tag: tag),
+                      feature, scenario)
           else
             @@all_known_tags << tag
           end
@@ -27,9 +29,9 @@ module Chutney
     end
 
     def case_collision(tag)
-      return nil if @@all_known_tags.include?(tag)
+      return nil if all_known_tags.include?(tag)
 
-      @@all_known_tags.select { |t| t.casecmp(tag).zero? }.first
+      all_known_tags.select { |t| t.casecmp(tag).zero? }.first
     end
   end
 end

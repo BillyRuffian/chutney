@@ -18,14 +18,12 @@ end
 
 desc 'Checks ruby style'
 task :rubocop do
-  begin
-    sh 'rubocop -a'
-  rescue RuntimeError => e
-    # Rubocop failing due to style violations is fine. Other errors should bubble up to our attention.
-    raise e unless e.message =~ /status \(1\).*rubocop/
+  sh 'rubocop -a'
+rescue RuntimeError => e
+  # Rubocop failing due to style violations is fine. Other errors should bubble up to our attention.
+  raise e unless e.message =~ /status \(1\).*rubocop/
 
-    puts 'Rubocop failed'
-  end
+  puts 'Rubocop failed'
 end
 
 task :spec do
