@@ -25,4 +25,4 @@ See [this page](https://billyruffian.github.io/chutney/usage/rules.html) for a f
 
 ## Notes
 
-Chutney 3+ has replaced its direct dependency on Cucumber and instead uses the excellent [cuke_modeller](https://github.com/enkessler/cuke_modeler) to parse your feature files. 
+Chutney 3+ has replaced its direct dependency on Cucumber and instead uses the excellent [cuke_modeller](https://github.com/enkessler/cuke_modeler) to parse your feature files for Cucumber 3, 4, 5 and 6+. 
