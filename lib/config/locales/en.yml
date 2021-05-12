@@ -63,6 +63,9 @@ en:
     scenario_names_match: >-
       You have a scenario name which does not match the required format.
       Allowed patterns are '%{pattern}'.
+    same_tag_different_case: >-
+      You have a tag which has already appeared as '@%{existing_tag}' which is a different case
+      to '@%{tag}'. Cucumber tags are case-sensitive: use a consistent case for your tag names.
     same_tag_for_all_scenarios:
       feature_level: >-
         You are using the same tag (%{tag}) for all scenarios.
