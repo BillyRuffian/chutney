@@ -66,7 +66,14 @@ module Chutney
     end
 
     def dialect
-      @content.feature&.parsing_data&.dig(:language) || 'en'
+      parsing_data = @content.feature&.parsing_data
+      if !parsing_data.nil? && parsing_data.respond_to?(:language)
+        parsing_data.language
+      elsif parsing_data
+        parsing_data.dig(:language)
+      else
+        raise UnsupportedCucumberError, 'This version of cucumber is unsupported (langauge detection)'
+      end
     end
 
     def tags_for(element)
@@ -79,18 +86,33 @@ module Chutney
         gherkin_type: type(feature, scenario, item),
         location: location(feature, scenario, item),
         feature: feature&.name,
-        scenario: scenario&.name,
-        step: item&.parsing_data&.dig(:name)
+        scenario: scenario&.name
       ).to_h
     end
 
     def location(feature, scenario, step)
+                    # require 'pry'; binding.pry
+
       if step
-        step.parsing_data[:location]
+        return step.parsing_data.location.to_h if step.parsing_data.respond_to?(:location)
+        return step.parsing_data[:location] if step.parsing_data.is_a?(Hash)
+
+        raise UnsupportedCucumberError, 'This version of cucumber is unsupported (step location)'
       elsif scenario
-        scenario.parsing_data.dig(:scenario, :location) || scenario.parsing_data.dig(:background, :location)
+        parsing_data = scenario.parsing_data
+        return parsing_data.scenario.location.to_h if parsing_data.respond_to?(:scenario) && parsing_data.scenario
+        return parsing_data.background.location.to_h if parsing_data.respond_to?(:background) && parsing_data.background
+        return parsing_data.dig(:scenario, :location) if parsing_data.is_a?(Hash) && parsing_data[:scenario]
+        return parsing_data.dig(:background, :location) if parsing_data.is_a?(Hash) && parsing_data[:background]
+
+        raise UnsupportedCucumberError, 'This version of cucumber is unsupported (scenario location)'
+      elsif feature
+        return feature.parsing_data.location.to_h if feature.parsing_data.respond_to?(:location)
+        return feature.parsing_data[:location] if feature.parsing_data.is_a?(Hash)
+
+        raise UnsupportedCucumberError, 'This version of cucumber is unsupported (feature location)'
       else
-        feature ? feature.parsing_data[:location] : { line: 0, column: 0 }
+        nil
       end
     end
 

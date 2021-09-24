@@ -48,6 +48,8 @@ require 'set'
 require 'yaml'
 
 module Chutney
+  class UnsupportedCucumberError < StandardError; end
+
   # gherkin linter
   class ChutneyLint
     extend Forwardable
