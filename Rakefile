@@ -27,7 +27,7 @@ rescue RuntimeError => e
 end
 
 task :spec do
-  sh 'rspec'
+  sh 'bundle exec rspec'
 end
 
 task :cucumber do

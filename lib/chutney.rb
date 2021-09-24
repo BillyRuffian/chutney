@@ -37,6 +37,7 @@ require 'chutney/linter/unknown_variable'
 require 'chutney/linter/unused_variable'
 require 'chutney/linter/use_background'
 require 'chutney/linter/use_outline'
+require 'chutney/locator'
 require 'chutney/version'
 
 require 'cuke_modeler'
@@ -48,6 +49,8 @@ require 'set'
 require 'yaml'
 
 module Chutney
+  class UnsupportedCucumberError < StandardError; end
+
   # gherkin linter
   class ChutneyLint
     extend Forwardable

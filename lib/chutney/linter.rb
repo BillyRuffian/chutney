@@ -66,7 +66,14 @@ module Chutney
     end
 
     def dialect
-      @content.feature&.parsing_data&.dig(:language) || 'en'
+      parsing_data = @content.feature&.parsing_data
+      if !parsing_data.nil? && parsing_data.respond_to?(:language)
+        parsing_data.language
+      elsif parsing_data
+        parsing_data[:language]
+      else
+        raise UnsupportedCucumberError, 'This version of cucumber is unsupported (langauge detection)'
+      end
     end
 
     def tags_for(element)
@@ -79,19 +86,12 @@ module Chutney
         gherkin_type: type(feature, scenario, item),
         location: location(feature, scenario, item),
         feature: feature&.name,
-        scenario: scenario&.name,
-        step: item&.parsing_data&.dig(:name)
+        scenario: scenario&.name
       ).to_h
     end
 
     def location(feature, scenario, step)
-      if step
-        step.parsing_data[:location]
-      elsif scenario
-        scenario.parsing_data.dig(:scenario, :location) || scenario.parsing_data.dig(:background, :location)
-      else
-        feature ? feature.parsing_data[:location] : { line: 0, column: 0 }
-      end
+      Locator.locate(feature, scenario, step)
     end
 
     def type(_feature, scenario, step)

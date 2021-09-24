@@ -33,7 +33,6 @@ Feature: Invalid File Name
       | name    | file            |
       | Lint    | lint.feature    |
       | lintMe  | lint_me.feature |
-      | lint me | lint_me.feature |
       | lint-me | lint_me.feature |
     
   
