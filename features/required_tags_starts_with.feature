@@ -77,30 +77,6 @@ Feature: Required Tags Starts With
     When I run Chutney
     Then 0 issues are raised
 
-  Scenario: Scenario with regex matching tags
-    And a feature file contains:
-      """
-      Feature: Test
-        @JIRA-123
-        Scenario: A
-          When action
-          Then verification
-      """
-    When I run Chutney
-    Then 0 issues are raised
-
-  Scenario: Scenario with mixed tags
-    And a feature file contains:
-      """
-      Feature: Test
-        @MCC-1234 @foobar
-        Scenario: A
-          When action
-          Then verification
-      """
-    When I run Chutney
-    Then 0 issues are raised
-
   Scenario: Defect Test - Empty Feature
     And a feature file contains:
       """
