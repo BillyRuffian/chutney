@@ -63,3 +63,4 @@ Style/StringConcatenation:
 
 AllCops:
   NewCops: enable
+  SuggestExtensions: false
