@@ -20,6 +20,11 @@ OptionParser.new do |opts|
     formatters << formatter
   end
 
+  opts.on('-v', '--version', 'Display the version.') do
+    puts Chutney::VERSION
+    exit
+  end
+
   opts.on('-l',
           '--linters',
           'List the linter status by this configuration and exit') do
