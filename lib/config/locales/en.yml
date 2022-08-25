@@ -11,6 +11,8 @@ en:
     avoid_scripting: >-
       You have %{count} When steps when you should only have one.
       Be careful not to add And steps following a When.
+    avoid_splat_steps_in_background: >-
+      The Background contains a splat step. It should only contain named steps.
     avoid_typographers_quotes: >-
       You are using typographers quotation marks (curly quotes).
       Make sure you intend to use this character and not a neutral quote
