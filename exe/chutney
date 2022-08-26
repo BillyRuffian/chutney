@@ -10,6 +10,7 @@ require 'optparse'
 
 formatters = Set.new
 
+# rubocop:disable Metrics/BlockLength
 OptionParser.new do |opts|
   opts.banner = 'Usage: chutney [files]'
   opts.on('-f',
@@ -43,6 +44,7 @@ OptionParser.new do |opts|
     exit
   end
 end.parse!
+# rubocop:enable Metrics/BlockLength
 
 formatters << 'RainbowFormatter' if formatters.empty?
 
