@@ -4,6 +4,10 @@ AvoidFullStop:
     Enabled: true
 AvoidScripting:
     Enabled: true
+AvoidSplatStepsInBackground:
+    Enabled: true
+AvoidSplatStepsInScenarios:
+    Enabled: true
 AvoidTypographersQuotes:
     Enabled: true
 BackgroundDoesMoreThanSetup:

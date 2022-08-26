@@ -2,7 +2,7 @@
 
 require 'rake/testtask'
 
-task default: :build
+task default: :test
 
 desc 'Builds the Gem.'
 task build: :format
