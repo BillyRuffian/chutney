@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 module Chutney
-  # service class to lint for avoiding periods
+  # service class to lint for avoiding splats
   class AvoidSplatStepsInBackground < Linter
     def lint
       background do |feature, background|
