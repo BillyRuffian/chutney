@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'coveralls'
-Coveralls.wear!
+# require 'coveralls'
+# Coveralls.wear!
 
 require 'chutney'
 require 'rspec/expectations'
