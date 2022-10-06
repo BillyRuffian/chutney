@@ -9,6 +9,7 @@ module Chutney
         next unless scenario.examples
 
         next if scenario.examples.length > 1
+        next if scenario.examples.first.nil? # dont run lint if the example does not exist
         next if scenario.examples.first.rows.length > 2 # first row is the header
 
         add_issue(I18n.t('linters.avoid_outline_for_single_example'), feature, scenario)
