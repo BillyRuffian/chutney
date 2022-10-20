@@ -78,3 +78,5 @@ Chutney enforces its rules with the linters. These are:
 [UseBackground](https://github.com/BillyRuffian/chutney/blob/master/features/use_background.feature): You have a setup setup used in all of your scenarios. Move it to a Background section.
 
 [UseOutline](https://github.com/BillyRuffian/chutney/blob/master/features/use_outline.feature): You have very similar scenarios. You should consider if they should be combined into a Scenario Outline.
+
+[MissingExampleTable](https://github.com/BillyRuffian/chutney/blob/master/features/missing_example_table.feature): You are missing an example table. You should have at least one example table when using Scenario outlines.

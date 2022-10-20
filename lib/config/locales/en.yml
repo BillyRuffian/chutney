@@ -104,3 +104,5 @@ en:
     use_outline: >-
       Scenarios are similar by %{pct}%, you should use scenario outlines to simplify.
       %{lhs_name} (%{lhs_line}) vs %{rhs_name} (%{rhs_line})
+    missing_example_table: >-
+      Scenarios outlines must have at least one example table.

@@ -52,3 +52,15 @@ Feature: Avoid Outline for single example
       """
     When I run Chutney
     Then 0 issues are raised
+
+
+  Scenario: A void running lint if the example table does not exist
+    And a feature file contains:
+      """
+      Feature: Test
+        Scenario Outline: A
+          When <A>
+          Then <B>
+      """
+    When I run Chutney
+    Then 0 issues are raised
