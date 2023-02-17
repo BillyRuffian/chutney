@@ -54,7 +54,7 @@ Feature: Avoid Outline for single example
     Then 0 issues are raised
 
 
-  Scenario: A void running lint if the example table does not exist
+  Scenario: Avoid running lint if the example table does not exist
     And a feature file contains:
       """
       Feature: Test

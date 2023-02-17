@@ -24,17 +24,19 @@ GivensAfterBackground:
     Enabled: true
 MissingExampleName:
     Enabled: true
+MissingExampleTable:
+    Enabled: true
 MissingFeatureDescription:
     Enabled: true
 MissingFeatureName:
     Enabled: true
 MissingScenarioName:
     Enabled: true
+MissingScenarioOutline:
+    Enabled: true
 MissingTestAction:
     Enabled: true
 MissingVerification:
-    Enabled: true
-MissingExampleTable:
     Enabled: true
 InvalidFileName:
     Enabled: true
