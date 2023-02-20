@@ -29,10 +29,6 @@ Then('{int} issue(s) is/are raised') do |expected_number_of_issues|
   expect(@result[:issues]&.count).to eq 0 if expected_number_of_issues.zero?
 end
 
-Then('I see the issues') do
-  pp @result
-end
-
 Then('the message is:') do |message|
   @result[:issues].each { |i| expect(i[:message]).to eq message }
 end
