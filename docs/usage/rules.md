@@ -39,11 +39,15 @@ Chutney enforces its rules with the linters. These are:
 
 [MissingExampleName](https://github.com/BillyRuffian/chutney/blob/master/features/missing_example_name.feature): If you have more than one example table in your scenario, they should each be given unique names.
 
+[MissingExampleTable](https://github.com/BillyRuffian/chutney/blob/master/features/missing_example_table.feature): You are missing an example table. You should have at least one example table when using Scenario outlines.
+
 [MissingFeatureDescription](https://github.com/BillyRuffian/chutney/blob/master/features/missing_feature_description.feature): Your feature should have a value statement. These are usually in the form 'As a... I want.. So that...'.
 
 [MissingFeatureName](https://github.com/BillyRuffian/chutney/blob/master/features/missing_feature_name.feature): You should give your features a descriptive name.
 
 [MissingScenarioName](https://github.com/BillyRuffian/chutney/blob/master/features/missing_scenario_name.feature): You should name your scenarios and scenario outlines.
+
+[MissingScenarioOutline](https://github.com/BillyRuffian/chutney/blob/master/features/missing_scenario_outline.feature): You should use Scenario Outline instead of Scenario when there is an Examples table to indicate that this scenario will be run multiple times with different data.
 
 [MissingTestAction](https://github.com/BillyRuffian/chutney/blob/master/features/missing_test_action.feature): You don't have an action (a `When` step) in your scenario.
 
@@ -78,5 +82,3 @@ Chutney enforces its rules with the linters. These are:
 [UseBackground](https://github.com/BillyRuffian/chutney/blob/master/features/use_background.feature): You have a setup setup used in all of your scenarios. Move it to a Background section.
 
 [UseOutline](https://github.com/BillyRuffian/chutney/blob/master/features/use_outline.feature): You have very similar scenarios. You should consider if they should be combined into a Scenario Outline.
-
-[MissingExampleTable](https://github.com/BillyRuffian/chutney/blob/master/features/missing_example_table.feature): You are missing an example table. You should have at least one example table when using Scenario outlines.

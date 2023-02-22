@@ -3,7 +3,7 @@
 require 'chutney/linter'
 
 module Chutney
-  # service class to lint for missing example tables in scnario outlines
+  # service class to lint for missing example tables in scenario outlines
   class MissingExampleTable < Linter
     def lint
       scenarios do |_feature, scenario|

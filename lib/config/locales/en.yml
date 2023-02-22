@@ -49,6 +49,8 @@ en:
       You have a scenerio with more than one example table, at least one of which is
       unnamed or has a duplicate name.
       You should give your example tables clear and meaningful names when you have more than one.
+    missing_example_table: >-
+      Scenario Outline must have at least one Examples table.
     missing_feature_description: >-
       Features should have a description / value statement so that the importance of the feature
       is well understood.
@@ -56,6 +58,8 @@ en:
       This feature is unnamed. You should name all features.
     missing_scenario_name: >-
       This scenario is unnamed. You should name all scenarios.
+    missing_scenario_outline: >-
+      Scenario Outline should be used instead of Scenario when there is an Examples table.
     missing_test_action: >-
       Your test has no action step. All scenarios should have a 'When' step indicating the
       action being taken.
@@ -104,5 +108,3 @@ en:
     use_outline: >-
       Scenarios are similar by %{pct}%, you should use scenario outlines to simplify.
       %{lhs_name} (%{lhs_line}) vs %{rhs_name} (%{rhs_line})
-    missing_example_table: >-
-      Scenarios outlines must have at least one example table.
