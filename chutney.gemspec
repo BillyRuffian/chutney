@@ -50,7 +50,7 @@ Gem::Specification.new do |spec|
   
   spec.add_runtime_dependency 'amatch', '~> 0.4.0'
   spec.add_runtime_dependency 'cuke_modeler', '~> 3.3'
-  spec.add_runtime_dependency 'i18n', '>= 1.8.2', '< 1.13.0'
+  spec.add_runtime_dependency 'i18n', '>= 1.8.2', '< 1.14.0'
   spec.add_runtime_dependency 'pastel', '~> 0.7'
   spec.add_runtime_dependency 'tty-pie', '~> 0.3'
 
