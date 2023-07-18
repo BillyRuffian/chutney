@@ -33,6 +33,8 @@ Chutney enforces its rules with the linters. These are:
 
 [GivensAfterBackground](https://github.com/BillyRuffian/chutney/blob/master/features/givens_after_background.feature): If you have a Background section and your scenario needs more preconditions then it should start immediately with an `And` step and not another `Given`.
 
+[InconsistentQuoting](https://github.com/BillyRuffian/chutney/blob/master/features/inconsistent_quoting.feature): Use either single quotation marks *or* double quotation marks around parameters but don't use a mix of the two styles.
+
 [InvalidFileName](https://github.com/BillyRuffian/chutney/blob/master/features/invalid_file_name.feature): Make sure your file name is in snake case, not mixed case or with spaces.
 
 [InvalidStepFlow](https://github.com/BillyRuffian/chutney/blob/master/features/invalid_step_flow.feature): Your scenarios should follow Given → When → Then, in that order.

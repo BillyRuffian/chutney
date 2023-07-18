@@ -38,6 +38,8 @@ MissingTestAction:
     Enabled: true
 MissingVerification:
     Enabled: true
+InconsistentQuoting:
+    Enabled: true
 InvalidFileName:
     Enabled: true
 InvalidStepFlow:
