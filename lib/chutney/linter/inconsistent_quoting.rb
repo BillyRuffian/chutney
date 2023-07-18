@@ -14,7 +14,7 @@ module Chutney
       quoted_params = parameters.group_by(&:quotation_mark)
       single_quoted = quoted_params[%(')] || []
       double_quoted = quoted_params[%(")] || []
-      return unless single_quoted.count > 0 && double_quoted.count > 0
+      return unless single_quoted.count.positive? && double_quoted.count.positive?
 
       add_issue(
         I18n.t('linters.inconsistent_quoting',
