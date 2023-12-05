@@ -47,8 +47,6 @@ require 'chutney/version'
 
 require 'cuke_modeler'
 require 'forwardable'
-# require 'gherkin/dialect'
-# require 'gherkin/parser'
 require 'i18n'
 require 'set'
 require 'yaml'
