@@ -89,6 +89,11 @@ module Chutney
     end
 
     def analyse
+      unless configuration.using_user_configuration?
+        warn('Chutney: no local configuration found, using gem defaults. Run `chutney -l` to list enabled ' \
+             'enabled linters, `chutney --init` to install a local configuration file.')
+      end
+
       files.each do |f|
         lint(f)
       end

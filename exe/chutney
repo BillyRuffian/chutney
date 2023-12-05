@@ -43,6 +43,25 @@ OptionParser.new do |opts|
     end
     exit
   end
+
+  opts.on('--init',
+          'Install a `chutney.yml` configuration file') do
+    config_dest = if File.exist?('config') && File.directory?('config')
+                    'config'
+                  else
+                    '.'
+                  end
+    config_path = File.join(config_dest, 'chutney.yml')
+    default_path = Chutney::ChutneyLint.new.configuration.default_configuration_path
+    if File.exist?(config_path)
+      puts "#{config_path} already exists - remove it first if you want to overwrite"
+    else
+      FileUtils.cp(default_path, config_path)
+      puts "#{config_path} created"
+    end
+    exit
+  end
+
 end.parse!
 # rubocop:enable Metrics/BlockLength
 
