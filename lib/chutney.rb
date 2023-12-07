@@ -47,8 +47,6 @@ require 'chutney/version'
 
 require 'cuke_modeler'
 require 'forwardable'
-# require 'gherkin/dialect'
-# require 'gherkin/parser'
 require 'i18n'
 require 'set'
 require 'yaml'
@@ -91,6 +89,14 @@ module Chutney
     end
 
     def analyse
+      if configuration.respond_to?(:using_user_configuration?) &&
+         !configuration.quiet? &&
+         !configuration.using_user_configuration?
+        warn('Chutney: no local configuration found, using gem defaults. Run `chutney -l` to list enabled ' \
+             'enabled linters, `chutney --init` to install a local configuration file or `chutney --quiet` ' \
+             'to disable this message.')
+      end
+
       files.each do |f|
         lint(f)
       end

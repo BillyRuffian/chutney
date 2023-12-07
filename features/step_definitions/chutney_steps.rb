@@ -4,6 +4,7 @@ Given('chutney is configured with the linter {string}') do |linter_name|
   @chutney = Chutney::ChutneyLint.new
   @linter_name = linter_name
   @chutney.linters = Object.const_get(@linter_name)
+  @chutney.configuration.quiet!
 end
 
 And('has the settings:') do |settings|

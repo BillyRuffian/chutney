@@ -5,19 +5,17 @@ require 'delegate'
 module Chutney
   # gherkin_lint configuration object
   class Configuration < SimpleDelegator
+    attr_accessor :default_configuration_path, :user_configuration_path
+
     def initialize(path)
-      @path = path
+      @default_configuration_path = path
       @config = load_configuration || {}
       load_user_configuration
       super(@config)
     end
 
-    def configuration_path
-      @path
-    end
-
     def load_configuration
-      YAML.load_file configuration_path || '' if configuration_path
+      YAML.load_file default_configuration_path || '' if default_configuration_path
     end
 
     def load_user_configuration
@@ -25,8 +23,29 @@ module Chutney
         Dir.glob(File.join(Dir.pwd, '**', fname))
       end.flatten
 
-      config_file = config_files.first
-      merge_config(config_file) if !config_file.nil? && File.exist?(config_file)
+      self.user_configuration_path = config_files.first
+      return unless !user_configuration_path.nil? && File.exist?(user_configuration_path)
+
+      begin
+        merge_config(user_configuration_path)
+      rescue TypeError
+        unless quiet?
+          warn("Chutney: configuration file `#{user_configuration_path}` is not correctly formatted YAML, " \
+               'falling back to gem defaults.')
+        end
+      end
+    end
+
+    def using_user_configuration?
+      !user_configuration_path.nil?
+    end
+
+    def quiet?
+      @config.fetch('quiet', false)
+    end
+
+    def quiet!
+      @config['quiet'] = true
     end
 
     private
