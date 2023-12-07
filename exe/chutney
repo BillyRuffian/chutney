@@ -61,7 +61,6 @@ OptionParser.new do |opts|
     end
     exit
   end
-
 end.parse!
 # rubocop:enable Metrics/BlockLength
 

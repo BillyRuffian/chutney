@@ -89,7 +89,7 @@ module Chutney
     end
 
     def analyse
-      unless configuration.using_user_configuration?
+      if configuration.respond_to?(:using_user_configuration?) && !configuration.using_user_configuration?
         warn('Chutney: no local configuration found, using gem defaults. Run `chutney -l` to list enabled ' \
              'enabled linters, `chutney --init` to install a local configuration file.')
       end
