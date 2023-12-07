@@ -93,7 +93,8 @@ module Chutney
          !configuration.quiet? &&
          !configuration.using_user_configuration?
         warn('Chutney: no local configuration found, using gem defaults. Run `chutney -l` to list enabled ' \
-             'enabled linters, `chutney --init` to install a local configuration file.')
+             'enabled linters, `chutney --init` to install a local configuration file or `chutney --quiet` ' \
+             'to disable this message.')
       end
 
       files.each do |f|
