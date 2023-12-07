@@ -9,6 +9,7 @@ require 'chutney/formatter/rainbow_formatter'
 require 'optparse'
 
 formatters = Set.new
+quiet = false
 
 # rubocop:disable Metrics/BlockLength
 OptionParser.new do |opts|
@@ -21,6 +22,12 @@ OptionParser.new do |opts|
     formatters << formatter
   end
 
+  opts.on('-q',
+          '--quiet',
+          'Disable chutney usage warnings. Does not affect the output of the formatters.') do 
+    quiet = true
+  end
+
   opts.on('-v', '--version', 'Display the version.') do
     puts Chutney::VERSION
     exit
@@ -28,7 +35,7 @@ OptionParser.new do |opts|
 
   opts.on('-l',
           '--linters',
-          'List the linter status by this configuration and exit') do
+          'List the linter status by this configuration and exit.') do
     pastel = Pastel.new
     chutney_config = Chutney::ChutneyLint.new.configuration
     max_name_length = chutney_config.keys.map(&:length).max + 1
@@ -45,7 +52,7 @@ OptionParser.new do |opts|
   end
 
   opts.on('--init',
-          'Install a `chutney.yml` configuration file') do
+          'Install a `chutney.yml` configuration file.') do
     config_dest = if File.exist?('config') && File.directory?('config')
                     'config'
                   else
@@ -54,10 +61,10 @@ OptionParser.new do |opts|
     config_path = File.join(config_dest, 'chutney.yml')
     default_path = Chutney::ChutneyLint.new.configuration.default_configuration_path
     if File.exist?(config_path)
-      puts "#{config_path} already exists - remove it first if you want to overwrite"
+      puts "#{config_path} already exists - remove it first if you want to overwrite."
     else
       FileUtils.cp(default_path, config_path)
-      puts "#{config_path} created"
+      puts "#{config_path} created."
     end
     exit
   end
@@ -70,6 +77,7 @@ files = ARGV.map { |pattern| Dir.glob(pattern) }.flatten
 files = Dir.glob('features/**/*.feature') if ARGV.empty?
 
 linter = Chutney::ChutneyLint.new(*files)
+linter.configuration.quiet! if quiet
 report = linter.analyse
 
 formatters.each do |formatter|

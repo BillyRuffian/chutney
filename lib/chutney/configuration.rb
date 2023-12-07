@@ -29,13 +29,23 @@ module Chutney
       begin
         merge_config(user_configuration_path)
       rescue TypeError
-        warn("Chutney: configuration file `#{user_configuration_path}` is not correctly formatted YAML, " \
-             'falling back to gem defaults.')
+        unless quiet?
+          warn("Chutney: configuration file `#{user_configuration_path}` is not correctly formatted YAML, " \
+               'falling back to gem defaults.')
+        end
       end
     end
 
     def using_user_configuration?
       !user_configuration_path.nil?
+    end
+
+    def quiet?
+      @config.fetch('quiet', false)
+    end
+
+    def quiet!
+      @config['quiet'] = true
     end
 
     private
