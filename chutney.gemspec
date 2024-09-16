@@ -43,26 +43,17 @@ Gem::Specification.new do |spec|
   spec.files         = Dir.chdir(File.expand_path('..', __FILE__)) do
     `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|s|features)/}) }
   end
-  
+
   spec.bindir        = 'exe'
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
-  
-  spec.add_runtime_dependency 'amatch', '~> 0.4.0'
-  spec.add_runtime_dependency 'cuke_modeler', '~> 3.3'
-  spec.add_runtime_dependency 'i18n', '>= 1.8.2', '< 1.15.0'
-  spec.add_runtime_dependency 'pastel', '~> 0.7'
-  spec.add_runtime_dependency 'tty-pie', '~> 0.3'
 
+  spec.add_dependency 'amatch', '~> 0.4.0'
+  spec.add_dependency 'cuke_modeler', '~> 3.21'
+  spec.add_dependency 'i18n', '>= 1.8.2', '< 1.15.0'
+  spec.add_dependency 'language_server-protocol', '~> 3.17'
+  spec.add_dependency 'pastel', '~> 0.7'
+  spec.add_dependency 'tty-pie', '~> 0.3'
 
-  spec.add_development_dependency 'coveralls', '~> 0.8'
-  spec.add_development_dependency 'cucumber', '>= 7.0'
-  spec.add_development_dependency 'pry-byebug', '~> 3.0'
-  spec.add_development_dependency 'rake', '~> 13.0'
-  spec.add_development_dependency 'rerun', '~> 0.13'
-  spec.add_development_dependency 'rspec-expectations', '~> 3.0'
-  spec.add_development_dependency 'rubocop', '~> 1.50.2'
-  spec.add_development_dependency 'rspec', '~> 3.8'
-  
-  spec.required_ruby_version = '>= 2.6'
+  spec.required_ruby_version = '>= 3.2'
 end
