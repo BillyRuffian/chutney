@@ -20,8 +20,10 @@ module Chutney
 
     def load_user_configuration
       config_files = ['chutney.yml', '.chutney.yml'].map do |fname|
-        Dir.glob(File.join(Dir.pwd, '**', fname))
-      end.flatten
+        ['.', 'config'].map do |dir|
+          Dir["#{dir}#{File::SEPARATOR}#{fname}"]
+        end
+      end.flatten.compact
 
       self.user_configuration_path = config_files.first
       return unless !user_configuration_path.nil? && File.exist?(user_configuration_path)
