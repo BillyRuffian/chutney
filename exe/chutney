@@ -24,7 +24,7 @@ OptionParser.new do |opts|
 
   opts.on('-q',
           '--quiet',
-          'Disable chutney usage warnings. Does not affect the output of the formatters.') do 
+          'Disable chutney usage warnings. Does not affect the output of the formatters.') do
     quiet = true
   end
 
@@ -90,7 +90,7 @@ basic_formatter = Chutney::Formatter.new
 basic_formatter.results = report
 
 if basic_formatter.files_with_issues.empty?
-  exit(true)
+  exit
 else
   exit(false)
 end

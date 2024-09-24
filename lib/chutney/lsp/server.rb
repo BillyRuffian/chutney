@@ -1,10 +1,11 @@
+# frozen_string_literal: true
+
 module Chutney
   module LSP
     class Server
       LSP_CONST = LanguageServer::Protocol::Constant
       LSP_IO = LanguageServer::Protocol::Transport::Stdio
       LSP_IF = LanguageServer::Protocol::Interface
-      LOG = Logger.new('/tmp/chutney-lsp.log')
 
       def initialize
         @writer = LSP_IO::Writer.new
@@ -15,27 +16,17 @@ module Chutney
 
         @dispatcher = Thread.new do
           while (message = @outgoing_queue.pop)
-            LOG.debug { "Response: #{message.to_json}" }
             if message.is_a? Result
-              LOG.debug { 'Dispatching (Result) ------>' }
               @mutex.synchronize { @writer.write(id: message.id, result: message.response) }
-              LOG.debug { 'Dispatching (Result) <------' }
             else
-              @mutex.synchronize do
-                LOG.debug { 'Dispatching ------>' }
-                @writer.write(message.to_hash)
-                LOG.debug { 'Dispatching <------' }
-              rescue StandardError => e
-                LOG.warn { "Exception: #{e.message} #{e.backtrace}" }
-              end
+              @mutex.synchronize { @writer.write(message.to_hash) }
             end
           end
         end
+
         @worker = Thread.new do
           while (message = @incoming_queue.pop)
-            LOG.debug { 'Dequeuing ------>' }
             process_message(message)
-            LOG.debug { 'Dequeuing <------' }
           end
         end
 
@@ -51,7 +42,7 @@ module Chutney
         when 'textDocument/didOpen', 'textDocument/didSave'
           run_did_change(message)
         when 'textDocument/didClose'
-          run_did_close
+          # no-op
         end
       end
 
@@ -61,19 +52,21 @@ module Chutney
         outgoing_queue << message
       end
 
-      def send_log(text)
-      end
-
-      def send_notification(message)
+      def send_log(message, method: 'window/logMessage', error: false)
+        type = error ? LSP_CONST::MessageType::ERROR : LSP_CONST::MessageType::INFO
         notification = LSP_IF::NotificationMessage.new(
-          method: 'window/showMessage',
+          method:,
           jsonrpc: '2.0',
           params: LSP_IF::ShowMessageParams.new(
-            type: LSP_CONST::MessageType::INFO,
-            message:
+            type:,
+            message: "Chutney LSP [#{VERSION}]: #{message}"
           )
         )
         send_message(notification)
+      end
+
+      def send_notification(message)
+        send_log(message, method: 'window/showMessage')
       end
 
       def run_initialize(message)
@@ -88,19 +81,23 @@ module Chutney
           }
         )
         send_message(Result.new(id: message[:id], response: initialize_result))
+        send_log('Initializing')
       end
 
       def run_initialized
         RubyVM::YJIT.enable if defined?(RubyVM::YJIT.enable)
         send_notification('Chutney LSP Server up and running')
+        send_log('Initialized')
       end
 
       def run_did_change(message)
         document = message.dig(:params, :textDocument)
         filename = document[:uri].delete_prefix('file://')
+        send_log("Evaluating #{filename}")
         linter = Chutney::ChutneyLint.new(*filename)
+        linter.configuration.quiet!
         offenses = linter.analyse.values.first.filter { |r| r[:issues].any? }
-        LOG.debug { "Found #{offenses.count} offenses: #{offenses.to_json}" }
+        send_log("Found #{offenses.count} offenses")
         diagnostics = offenses
                       .flat_map { |group| group[:issues].each { |issue| issue[:linter] = group[:linter] } }
                       .map { |offense| to_diagnostic(offense) }
@@ -108,9 +105,6 @@ module Chutney
       end
 
       def diagnostic_message(file_uri, diagnostics)
-        # JSON.parse(<<~XXX)
-        #   {"jsonrpc":"2.0","method":"textDocument/publishDiagnostics","params":{"diagnostics":[{"code":"Style/DoubleNegation","message":"Avoid the use of double negation (`!!`).","range":{"end":{"character":1,"line":0},"start":{"character":0,"line":0}},"severity":3,"source":"rubocop"},{"code":"Style/FrozenStringLiteralComment","message":"Missing frozen string literal comment.","range":{"end":{"character":1,"line":0},"start":{"character":0,"line":0}},"severity":3,"source":"rubocop"},{"code":"Layout/SpaceAfterNot","message":"Do not leave space between `!` and its argument.","range":{"end":{"character":7,"line":0},"start":{"character":1,"line":0}},"severity":3,"source":"rubocop"},{"code":"Lint/LiteralAsCondition","message":"Literal `true` appeared as a condition.","range":{"end":{"character":7,"line":0},"start":{"character":3,"line":0}},"severity":2,"source":"rubocop"},{"code":"Layout/TrailingEmptyLines","message":"Final newline missing.","range":{"end":{"character":7,"line":0},"start":{"character":7,"line":0}},"severity":3,"source":"rubocop"}],"uri":"file:///Users/brooken/Projects/NBT/chutney/examples/emoji.feature"}}
-        # XXX
         {
           method: 'textDocument/publishDiagnostics',
           params: {
@@ -134,9 +128,6 @@ module Chutney
         }
       end
 
-      def did_close
-      end
-
       def shutdown
         incoming_queue.clear
         outgoing_queue.clear
@@ -147,10 +138,9 @@ module Chutney
       end
 
       def start
-        LOG.debug { 'started' }
         reader.read do |message|
-          LOG.debug { "request received -------> : #{message.to_json}" }
           method = message[:method]
+          send_log("Received #{method}")
 
           case method
           when 'initialize', 'initialized', 'textDocument/didOpen', 'textDocument/didClose', 'textDocument/didSave'
@@ -163,11 +153,7 @@ module Chutney
               exit(status)
             end
           end
-
-          LOG.debug { 'request received <-------' }
         end
-
-        LOG.debug { 'FINISHED started' }
       end
 
       private

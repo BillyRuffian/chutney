@@ -19,7 +19,7 @@ module Chutney
           collision_with = case_collision(tag)
           if collision_with
             add_issue(I18n.t('linters.same_tag_different_case',
-                             existing_tag: collision_with, tag: tag),
+                             existing_tag: collision_with, tag:),
                       feature, scenario)
           else
             @@all_known_tags << tag

@@ -48,7 +48,6 @@ require 'chutney/version'
 require 'cuke_modeler'
 require 'forwardable'
 require 'i18n'
-require 'set'
 require 'yaml'
 
 module Chutney

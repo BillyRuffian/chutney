@@ -11,7 +11,7 @@ module Chutney
           example.rows.first.cells.map(&:value).each do |variable|
             next if used?(variable, scenario)
 
-            add_issue(I18n.t('linters.unused_variable', variable: variable), feature, scenario, example)
+            add_issue(I18n.t('linters.unused_variable', variable:), feature, scenario, example)
           end
         end
       end

@@ -21,13 +21,13 @@ module Chutney
     def print_report(data)
       return if data.empty?
 
-      print TTY::Pie.new(data: data, radius: 8, legend: { format: '%<label>s %<name>s %<value>i' })
+      print TTY::Pie.new(data:, radius: 8, legend: { format: '%<label>s %<name>s %<value>i' })
       puts
     end
 
     def top_offences
       offence = Hash.new(0)
-      files_with_issues.each do |_file, linter|
+      files_with_issues.each_value do |linter|
         linter.each do |lint|
           offence[lint[:linter]] += lint[:issues].count
         end
