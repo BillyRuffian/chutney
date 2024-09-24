@@ -27,14 +27,13 @@ Layout/LineLength:
 Metrics/MethodLength:
   Max: 20
 
-
 # Offense count: 1
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: predicate, comparison
 Style/NumericPredicate:
   Exclude:
-    - 'lib/chutney/linter/file_name_differs_feature_name.rb'
+    - "lib/chutney/linter/file_name_differs_feature_name.rb"
 
 Metrics/ModuleLength:
   Exclude:
@@ -64,3 +63,5 @@ Style/StringConcatenation:
 AllCops:
   NewCops: enable
   SuggestExtensions: false
+  Exclude:
+    - "usechutney.com/**"

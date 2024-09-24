@@ -2,6 +2,8 @@
 
 module Chutney
   module LSP
+    # A minimalistic language server which will lint gherkin
+    # files on open and save
     class Server
       LSP_CONST = LanguageServer::Protocol::Constant
       LSP_IO = LanguageServer::Protocol::Transport::Stdio
@@ -71,10 +73,14 @@ module Chutney
 
       def run_initialize(message)
         initialize_result = LSP_IF::InitializeResult.new(
-          capabilities: LSP_IF::ServerCapabilities.new(document_formatting_provider: true,
-                                                       text_document_sync: LSP_IF::TextDocumentSyncOptions.new(change: LSP_CONST::TextDocumentSyncKind::FULL,
-                                                                                                               open_close: true,
-                                                                                                               save: true)),
+          capabilities: LSP_IF::ServerCapabilities.new(
+            document_formatting_provider: true,
+            text_document_sync: LSP_IF::TextDocumentSyncOptions.new(
+              change: LSP_CONST::TextDocumentSyncKind::FULL,
+              open_close: true,
+              save: true
+            )
+          ),
           server_info: {
             name: 'chutney-lsp',
             version: VERSION
