@@ -134,7 +134,7 @@ baidu_site_verification:
 # Site Author
 author:
   name: "Nigel Brookes-Thomas (Billy Ruffian)"
-  avatar: # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
+  avatar: "/assets/images/pug.png"
   bio: "I test things and write ruby things."
   location: "UK"
   email:
