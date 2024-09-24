@@ -18,7 +18,7 @@ module Chutney
     def issue(name, first_location, scenario)
       add_issue(
         I18n.t('linters.unique_scenario_names',
-               name: name,
+               name:,
                line: first_location[:line],
                column: first_location[:column]),
         feature, scenario

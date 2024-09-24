@@ -82,7 +82,7 @@ module Chutney
 
     def add_issue(message, feature = nil, scenario = nil, item = nil)
       issues << Lint.new(
-        message: message,
+        message:,
         gherkin_type: type(feature, scenario, item),
         location: location(feature, scenario, item),
         feature: feature&.name,

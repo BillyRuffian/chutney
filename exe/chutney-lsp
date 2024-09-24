@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'language_server-protocol'
+require 'logger'
+require 'uri'
+
+require 'chutney'
+require 'chutney/lsp'
+require 'chutney/lsp/result'
+require 'chutney/lsp/server'
+
+Chutney::LSP::Server.new.start

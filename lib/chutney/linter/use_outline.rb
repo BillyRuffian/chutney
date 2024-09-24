@@ -23,7 +23,7 @@ module Chutney
 
     def add_issue(lhs, rhs, pct)
       super(I18n.t('linters.use_outline',
-                   pct: pct,
+                   pct:,
                    lhs_name: lhs[:name],
                    lhs_line: lhs[:reference][:line],
                    rhs_name: rhs[:name],

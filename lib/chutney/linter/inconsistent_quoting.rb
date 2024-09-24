@@ -7,7 +7,7 @@ module Chutney
     # matching group 1: opening quote; 2: quoted text; 3: closing quote
     # opening and closing quote must match (via backrefs)
     # apostrophes, both singular and plural posessives, are accounted for
-    QUOTED_STRING = /(?!\b\b)(['"])(.*(?:\b'\b[^\1]*)*(?!\b[\1]\b))(\1)/.freeze
+    QUOTED_STRING = /(?!\b\b)(['"])(.*(?:\b'\b[^\1]*)*(?!\b[\1]\b))(\1)/
     Parameter = Struct.new('Parameter', :quotation_mark, :name)
 
     def lint

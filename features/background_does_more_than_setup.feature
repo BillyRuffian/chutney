@@ -41,4 +41,4 @@ Feature: Background Does More Than Setup
       """
       """
     When I run Chutney
-    Then 0 issues are raised 
+    Then 0 issues are raised

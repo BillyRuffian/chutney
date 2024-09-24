@@ -20,7 +20,7 @@ module Chutney
 
         add_issue(
           I18n.t('linters.same_tag_for_all_scenarios.feature_level',
-                 tag: tag),
+                 tag:),
           feature
         )
       end
@@ -37,7 +37,7 @@ module Chutney
           next if tag == 'skip'
 
           add_issue(I18n.t('linters.same_tag_for_all_scenarios.example_level',
-                           tag: tag), feature, scenario)
+                           tag:), feature, scenario)
         end
       end
     end
