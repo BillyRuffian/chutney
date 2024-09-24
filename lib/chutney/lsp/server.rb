@@ -135,6 +135,7 @@ module Chutney
         outgoing_queue.close
         worker.join
         dispatcher.join
+        send_log('Shutdown complete')
       end
 
       def start

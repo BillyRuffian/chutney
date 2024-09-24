@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="https://raw.githubusercontent.com/BillyRuffian/chutney/master/img/chutney.svg?sanitize=true" alt="Chutney" height="200">
+  <img src="https://raw.githubusercontent.com/BillyRuffian/chutney/master/img/happy_chutney.png?sanitize=true" alt="Chutney" height="200">
   <br>
   Chutney
   <br>
@@ -19,10 +19,10 @@
 
 </div>
 
-Read the documentation [here](https://billyruffian.github.io/chutney/).
+Read the documentation [here](https://www.usechutney.com/).
 
 See [this page](https://billyruffian.github.io/chutney/usage/rules.html) for a full list of the rules chutney encourages.
 
 ## Notes
 
-Chutney 3+ has replaced its direct dependency on Cucumber and instead uses the excellent [cuke_modeller](https://github.com/enkessler/cuke_modeler) to parse your feature files. 
+Chutney 3+ has replaced its direct dependency on Cucumber and instead uses the excellent [cuke_modeller](https://github.com/enkessler/cuke_modeler) to parse your feature files.
