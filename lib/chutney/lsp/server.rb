@@ -67,8 +67,8 @@ module Chutney
         send_message(notification)
       end
 
-      def send_notification(message)
-        send_log(message, method: 'window/showMessage')
+      def send_notification(message, error: false)
+        send_log(message, method: 'window/showMessage', error:)
       end
 
       def run_initialize(message)
@@ -102,7 +102,13 @@ module Chutney
         send_log("Evaluating #{filename}")
         linter = Chutney::ChutneyLint.new(*filename)
         linter.configuration.quiet!
-        offenses = linter.analyse.values.first.filter { |r| r[:issues].any? }
+        begin
+          offenses = linter.analyse.values.first.filter { |r| r[:issues].any? }
+        rescue StandardError => e
+          send_log("Could not parse #{filename} as Gherkin. Received: #{e.full_message}", error: true)
+          send_notification("Could not parse #{filename} as Gherkin.", error: true)
+          return
+        end
         send_log("Found #{offenses.count} offenses")
         diagnostics = offenses
                       .flat_map { |group| group[:issues].each { |issue| issue[:linter] = group[:linter] } }
