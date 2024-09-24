@@ -20,6 +20,8 @@ sidebar:
         url: /docs/configuration/
       - title: "Running Chutney"
         url: /docs/running/
+      - title: "Disabling rules"
+        url: /docs/disabling-rules/
 
   - title: "Rules"
     children:
@@ -69,6 +71,36 @@ sidebar:
         url: /docs/rules/missing-test-action/
       - title: "Missing Test Verification"
         url: /docs/rules/missing-test-verification/
+      - title: "Required tags start with"
+        url: /docs/rules/required-tags-start-with/
+      - title: "Same tag different case"
+        url: /docs/rules/same-tag-different-case/
+      - title: "Same tag for all scenarios"
+        url: /docs/rules/same-tag-for-all-scenarios/
+      - title: "Scenario names match"
+        url: /docs/rules/scenario-names-match/
+      - title: "Tag used multiple times"
+        url: /docs/rules/tag-used-multiple-times/
+      - title: "Too clumsy"
+        url: /docs/rules/too-clumsy/
+      - title: "Too long step"
+        url: /docs/rules/too-long-step/
+      - title: "Too many different tags"
+        url: /docs/rules/too-many-different-tags/
+      - title: "Too many steps"
+        url: /docs/rules/too-many-steps/
+      - title: "Too many tags"
+        url: /docs/rules/too-many-tags/
+      - title: "Unique scenario names"
+        url: /docs/rules/unique-scenario-names/
+      - title: "Unknown variable"
+        url: /docs/rules/unknown-variable/
+      - title: "Unused variable"
+        url: /docs/rules/unused-variable/
+      - title: "Use background"
+        url: /docs/rules/use-background/
+      - title: "Use outline"
+        url: /docs/rules/use-outline/
 
   - title: "Advanced"
     children:
