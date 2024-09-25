@@ -130,7 +130,9 @@ module Chutney
         code = offense[:linter]
         message = offense[:message]
         source = 'chutney'
-        { code:, message:, source:, severity: 1, range: to_range(offense[:location]) }
+        code_description = { href: "https://usechutney.com/docs/rules/#{to_slug(code)}" }
+        { code:, message:, source:, severity: 1, range: to_range(offense[:location]),
+          codeDescription: code_description }
       end
 
       def to_range(location)
@@ -138,6 +140,12 @@ module Chutney
           start: { character: location.fetch(:column, 1) - 1, line: location.fetch(:line, 1) - 1 },
           end: { character: 0, line: location.fetch(:line, 1) }
         }
+      end
+
+      # Turn the camel-cased linter name into the name of the slug
+      # used on the documentation site
+      def to_slug(camel_word)
+        camel_word.split(/(?=[A-Z])/).join('-').downcase
       end
 
       def shutdown
