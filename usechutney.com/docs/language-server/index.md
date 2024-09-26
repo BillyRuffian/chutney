@@ -21,4 +21,8 @@ It will listen for open / close and save events to evaluate the current feature 
 
 ## Editor integrations
 
-TBD.
+### VS Code
+
+[vscode-chutney](https://github.com/BillyRuffian/vscode-chutney) adds Chutney LSP integration into VS Code, 
+
+You can install this extension from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=NigelBrookes-Thomas.vscode-chutney).
