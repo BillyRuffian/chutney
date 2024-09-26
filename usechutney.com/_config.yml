@@ -159,17 +159,18 @@ author:
     # url: "https://instagram.com/"
 
 # Site Footer
-# footer:
-#   links:
-#     - label: "Twitter"
-#       icon: "fab fa-fw fa-twitter-square"
-#       # url:
-#     - label: "Facebook"
-#       icon: "fab fa-fw fa-facebook-square"
-#       # url:
-#     - label: "GitHub"
-#       icon: "fab fa-fw fa-github"
-#       # url:
+footer:
+  links:
+    #     - label: "Twitter"
+    #       icon: "fab fa-fw fa-twitter-square"
+    #       # url:
+    #     - label: "Facebook"
+    #       icon: "fab fa-fw fa-facebook-square"
+    #       # url:
+
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: https://github.com/BillyRuffian/chutney
 #     - label: "GitLab"
 #       icon: "fab fa-fw fa-gitlab"
 #       # url:
@@ -216,7 +217,7 @@ paginate_path: /page:num/
 #   for configuration details
 pagination:
   # Set enabled to true to use paginate v2
-  enabled: true
+  enabled: false
   debug: false
   collection: "posts"
   per_page: 10

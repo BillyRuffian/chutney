@@ -22,7 +22,7 @@ Gem::Specification.new do |spec|
                      'files. '                                                  \
                      'It supports any spoken language Cucumber supports.'
 
-  spec.homepage    = 'https://billyruffian.github.io/chutney/'
+  spec.homepage    = 'https://www.usechutney.com/'
   spec.license     = 'MIT'
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'

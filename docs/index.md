@@ -5,6 +5,9 @@ nav_order: 1
 permalink: /
 ---
 
+# These docs are deprecated
+## Please visit [usechutney.com](https://www.usechutney.com/) for the latest documentation
+
 # Best practice for Cucumber
 {: .fs-9 }
 
