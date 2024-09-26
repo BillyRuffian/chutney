@@ -3,11 +3,21 @@
 
 require 'language_server-protocol'
 require 'logger'
+require 'optparse'
 require 'uri'
 
 require 'chutney'
 require 'chutney/lsp'
 require 'chutney/lsp/result'
 require 'chutney/lsp/server'
+
+OptionParser.new do |opts|
+  opts.banner = 'Usage: chutney-lsp'
+
+  opts.on('-v', '--version', 'Display the version.') do
+    puts Chutney::VERSION
+    exit
+  end
+end.parse!
 
 Chutney::LSP::Server.new.start
