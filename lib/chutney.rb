@@ -4,6 +4,7 @@ require 'amatch'
 
 require 'chutney/configuration'
 require 'chutney/linter'
+require 'chutney/linter/avoid_comma_in_tags'
 require 'chutney/linter/avoid_full_stop'
 require 'chutney/linter/avoid_outline_for_single_example'
 require 'chutney/linter/avoid_scripting'

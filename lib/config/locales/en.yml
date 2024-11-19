@@ -3,6 +3,8 @@
 # God save the Queen, etc. etc.
 en:
   linters:
+    avoid_comma_in_tags: >-
+      Avoid using commas in tags. Tags should be separated by spaces.
     avoid_full_stop: >- # https://en.wikipedia.org/wiki/Full_stop
       Avoid using a full-stop in steps so that it is easier to re-use them.
     avoid_outline_for_single_example: >-

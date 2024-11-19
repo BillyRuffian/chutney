@@ -134,6 +134,8 @@ module Chutney
       end
 
       def to_range(location)
+        return { start: { character: 0, line: 0 }, end: { character: 0, line: 0 } } unless location
+
         {
           start: { character: location.fetch(:column, 1) - 1, line: location.fetch(:line, 1) - 1 },
           end: { character: 0, line: location.fetch(:line, 1) }
