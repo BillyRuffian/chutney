@@ -29,6 +29,8 @@ sidebar:
 
   - title: "Rules"
     children:
+      - title: "Avoid comma in tags"
+        url: /docs/rules/avoid-comma-in-tags/
       - title: "Avoid full stops"
         url: /docs/rules/avoid-full-stops/
       - title: "Avoid outline for single example"
