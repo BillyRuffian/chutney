@@ -29,6 +29,8 @@ sidebar:
 
   - title: "Rules"
     children:
+      - title: "Avoid colons at start of names"
+        url: /docs/rules/avoid-colons-at-start-of-names/
       - title: "Avoid comma in tags"
         url: /docs/rules/avoid-comma-in-tags/
       - title: "Avoid full stops"

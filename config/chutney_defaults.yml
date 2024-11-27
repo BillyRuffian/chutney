@@ -1,3 +1,5 @@
+AvoidColonsAtStartOfNames:
+  Enabled: true
 AvoidCommaInTags:
   Enabled: true
 AvoidOutlineForSingleExample:
