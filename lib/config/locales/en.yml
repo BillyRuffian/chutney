@@ -3,6 +3,8 @@
 # God save the Queen, etc. etc.
 en:
   linters:
+    avoid_colons_at_start_of_names: >-
+      Avoid using colons at the start of names, it can make them hard to read or find.
     avoid_comma_in_tags: >-
       Avoid using commas in tags. Tags should be separated by spaces.
     avoid_full_stop: >- # https://en.wikipedia.org/wiki/Full_stop

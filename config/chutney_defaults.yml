@@ -1,80 +1,84 @@
+AvoidColonsAtStartOfNames:
+  Enabled: true
+AvoidCommaInTags:
+  Enabled: true
 AvoidOutlineForSingleExample:
-    Enabled: true
+  Enabled: true
 AvoidFullStop:
-    Enabled: true
+  Enabled: true
 AvoidScripting:
-    Enabled: true
+  Enabled: true
 AvoidSplatStepsInBackground:
-    Enabled: true
+  Enabled: true
 AvoidSplatStepsInScenarios:
-    Enabled: true
+  Enabled: true
 AvoidTypographersQuotes:
-    Enabled: true
+  Enabled: true
 BackgroundDoesMoreThanSetup:
-    Enabled: true
+  Enabled: true
 BackgroundRequiresMultipleScenarios:
-    Enabled: true
+  Enabled: true
 BadScenarioName:
-    Enabled: true
+  Enabled: true
 EmptyFeatureFile:
-    Enabled: true
+  Enabled: true
 FileNameDiffersFeatureName:
-    Enabled: true
+  Enabled: true
 GivensAfterBackground:
-    Enabled: true
+  Enabled: true
 MissingExampleName:
-    Enabled: true
+  Enabled: true
 MissingExampleTable:
-    Enabled: true
+  Enabled: true
 MissingFeatureDescription:
-    Enabled: true
+  Enabled: true
 MissingFeatureName:
-    Enabled: true
+  Enabled: true
 MissingScenarioName:
-    Enabled: true
+  Enabled: true
 MissingScenarioOutline:
-    Enabled: true
+  Enabled: true
 MissingTestAction:
-    Enabled: true
+  Enabled: true
 MissingVerification:
-    Enabled: true
+  Enabled: true
 InconsistentQuoting:
-    Enabled: true
+  Enabled: true
 InvalidFileName:
-    Enabled: true
+  Enabled: true
 InvalidStepFlow:
-    Enabled: true
+  Enabled: true
 RequiredTagsStartsWith:
-    Enabled: false
+  Enabled: false
 SameTagDifferentCase:
-    Enabled: true
+  Enabled: true
 SameTagForAllScenarios:
-    Enabled: true
+  Enabled: true
 ScenarioNamesMatch:
-    Enabled: false
+  Enabled: false
 TagUsedMultipleTimes:
-    Enabled: true
+  Enabled: true
 TooClumsy:
-    Enabled: true
+  Enabled: true
 TooManyDifferentTags:
-    Enabled: true
-    MaxCount: 3
+  Enabled: true
+  MaxCount: 3
 TooManySteps:
-    Enabled: true
-    MaxCount: 10
+  Enabled: true
+  MaxCount: 10
 TooManyTags:
-    Enabled: true
-    MaxCount: 3
+  Enabled: true
+  MaxCount: 3
 TooLongStep:
-    Enabled: true
-    MaxLength: 80
+  Enabled: true
+  MaxLength: 80
 UniqueScenarioNames:
-    Enabled: true
+  Enabled: true
 UnknownVariable:
-    Enabled: true
+  Enabled: true
 UnusedVariable:
-    Enabled: true
+  Enabled: true
 UseBackground:
-    Enabled: true
+  Enabled: true
 UseOutline:
-    Enabled: true
+  Enabled: true
