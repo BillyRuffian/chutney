@@ -78,6 +78,8 @@ en:
       the assertion being tested.
     required_tags_starts_with: >-
       You have tags which do not match the required format. Allowed prefixes are '%{allowed}'.
+    same_scenario: >-
+      Duplicate scenario detected: %{feature} / %{scenario} is a duplicate of %{original_feature} / %{original_scenario}
     scenario_names_match: >-
       You have a scenario name which does not match the required format.
       Allowed patterns are '%{pattern}'.
