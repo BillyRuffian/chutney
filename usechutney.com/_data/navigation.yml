@@ -81,6 +81,8 @@ sidebar:
         url: /docs/rules/missing-test-verification/
       - title: "Required tags start with"
         url: /docs/rules/required-tags-start-with/
+      - title: "Same Scenario"
+        url:  /docs/rules/same-scenario/
       - title: "Same tag different case"
         url: /docs/rules/same-tag-different-case/
       - title: "Same tag for all scenarios"
