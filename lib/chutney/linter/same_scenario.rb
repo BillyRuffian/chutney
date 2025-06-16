@@ -3,6 +3,10 @@
 module Chutney
   # Rule to find all the duplicated scenarios
   class SameScenario < Linter
+    def self.reset
+      @dictionary = nil
+    end
+
     def self.dictionary
       @dictionary ||= Hash.new { |hash, key| hash[key] = [] }
     end

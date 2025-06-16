@@ -3,7 +3,9 @@
 Given('chutney is configured with the linter {string}') do |linter_name|
   @chutney = Chutney::ChutneyLint.new
   @linter_name = linter_name
-  @chutney.linters = Object.const_get(@linter_name)
+  linter = Object.const_get(@linter_name)
+  linter.reset if linter.respond_to? :reset
+  @chutney.linters = linter
   @chutney.configuration.quiet!
 end
 
