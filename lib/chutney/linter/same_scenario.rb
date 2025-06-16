@@ -1,28 +1,31 @@
-module Chutney
+# frozen_string_literal: true
 
+module Chutney
+  # Rule to find all the duplicated scenarios
   class SameScenario < Linter
     def lint
       dictionary = Hash.new { |hash, key| hash[key] = [] }
 
       scenarios do |feature, scenario|
         text = scenario
-                 .steps
-                 .map { |step| "#{step.text} #{child_text(step)}" }
-                 .join("\n") + example_text(scenario)
+               .steps
+               .map { |step| "#{step.text} #{child_text(step)}" }
+               .join("\n") + example_text(scenario)
 
         digest = Digest::SHA2.hexdigest(text)
         dictionary[digest] << { scenario:, feature: }
       end
 
-      dictionary.filter { |k, v| v.size > 1 }
+      dictionary.filter { |_k, v| v.size > 1 }
                 .each_value do |v|
-        v[1...].each { |problem|
+        v[1...].each do |problem|
           add_issue(I18n.t('linters.same_scenario',
                            feature: problem[:feature].name,
                            scenario: problem[:scenario].name,
                            original_feature: v.first[:feature].name,
                            original_scenario: v.first[:scenario].name),
-                    problem[:feature], problem[:scenario], nil) }
+                    problem[:feature], problem[:scenario], nil)
+        end
       end
     end
 
