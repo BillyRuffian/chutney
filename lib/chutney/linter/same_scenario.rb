@@ -3,9 +3,11 @@
 module Chutney
   # Rule to find all the duplicated scenarios
   class SameScenario < Linter
-    def lint
-      dictionary = Hash.new { |hash, key| hash[key] = [] }
+    def self.dictionary
+      @dictionary ||= Hash.new { |hash, key| hash[key] = [] }
+    end
 
+    def lint
       scenarios do |feature, scenario|
         text = scenario
                .steps
@@ -13,11 +15,11 @@ module Chutney
                .join("\n") + example_text(scenario)
 
         digest = Digest::SHA2.hexdigest(text)
-        dictionary[digest] << { scenario:, feature: }
+        SameScenario.dictionary[digest] << { scenario:, feature: }
       end
 
-      dictionary.filter { |_k, v| v.size > 1 }
-                .each_value do |v|
+      SameScenario.dictionary.filter { |_k, v| v.size > 1 }
+                  .each_value do |v|
         v[1...].each do |problem|
           add_issue(I18n.t('linters.same_scenario',
                            feature: problem[:feature].name,
