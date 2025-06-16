@@ -50,6 +50,8 @@ InvalidStepFlow:
   Enabled: true
 RequiredTagsStartsWith:
   Enabled: false
+SameScenario:
+  Enabled: true
 SameTagDifferentCase:
   Enabled: true
 SameTagForAllScenarios:

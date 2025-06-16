@@ -49,6 +49,7 @@ require 'chutney/locator'
 require 'chutney/version'
 
 require 'cuke_modeler'
+require 'digest'
 require 'forwardable'
 require 'i18n'
 require 'yaml'
