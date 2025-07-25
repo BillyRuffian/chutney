@@ -11,6 +11,7 @@ Gemfile.lock
 # rspec failure tracking
 .rspec_status
 .idea/
+.vscode/
 
 .DS_Store
 
