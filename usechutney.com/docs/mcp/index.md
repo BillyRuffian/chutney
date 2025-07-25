@@ -1,7 +1,7 @@
 ---
 title: "Chutney MCP Server"
 layout: single
-permalink: /docs/language-server/
+permalink: /docs/mcp/
 ---
 
 {: .notice}
