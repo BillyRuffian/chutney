@@ -64,7 +64,7 @@ module Chutney
     def put_summary
       pastel = Pastel.new
       print "#{files.count} features inspected, "
-      if files_with_issues.count.zero?
+      if files_with_issues.none?
         puts pastel.green('all taste delicious')
       else
         puts pastel.red("#{files_with_issues.count} taste nasty")

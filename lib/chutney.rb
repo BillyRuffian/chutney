@@ -60,6 +60,7 @@ module Chutney
   # gherkin linter
   class ChutneyLint
     extend Forwardable
+
     attr_accessor :verbose
     attr_reader :files, :results
 
