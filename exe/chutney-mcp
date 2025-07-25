@@ -1,0 +1,50 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# MCP (Model Context Protocol) server for Chutney
+# This executable provides a FastMCP server that exposes Chutney's Gherkin linting
+# capabilities as a tool that can be used by MCP clients
+
+require 'chutney'
+require 'fast_mcp'
+
+# ChutneyTool provides Gherkin file linting functionality via MCP
+# It wraps Chutney's linting capabilities in a FastMCP tool format
+class ChutneyTool < FastMcp::Tool
+  tool_name 'Chutney'
+  description 'Lint your Cuxumber Gherkin BDD files and make sure they follow standards and best practice'
+
+  # Define the required arguments for the tool
+  # file_path: Absolute path to the Gherkin feature file to be linted
+  arguments do
+    required(:file_path).filled(:string).description('An ABSULTE file path to the gherking file to lint')
+  end
+
+  # Main execution method that performs the Gherkin file linting
+  # @param file_path [String] Absolute path to the Gherkin file
+  # @return [Hash] Analysis report containing linting results
+  def call(file_path:)
+    # Validate that an absolute path was provided
+    raise 'Relative path given, absolute path require' unless File.absolute_path?(file_path)
+
+    # Verify the file exists before attempting to lint it
+    raise 'File not found' unless File.exist?(file_path)
+
+    # Create a new Chutney linter instance and analyze the file
+    linter = Chutney::ChutneyLint.new(file_path)
+    report = linter.analyse
+
+    # Return the analysis report as a hash for MCP consumption
+    report.to_h
+  end
+end
+
+# Initialize and configure the MCP server
+# The server exposes Chutney functionality to MCP clients
+server = FastMcp::Server.new(name: 'chutney', version: Chutney::VERSION)
+
+# Register the ChutneyTool with the server
+server.register_tool(ChutneyTool)
+
+# Start the MCP server to begin accepting client connections
+server.start

@@ -116,3 +116,5 @@ sidebar:
     children:
       - title: "Language server"
         url: /docs/language-server/
+      - title: "LLM integration"
+        url: /docs/mcp/

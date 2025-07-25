@@ -56,7 +56,7 @@ en:
       missing_action: >-
         This scenario is missing an action step -- it does not have a 'When'.
     missing_example_name: >-
-      You have a scenerio with more than one example table, at least one of which is
+      You have a scenario with more than one example table, at least one of which is
       unnamed or has a duplicate name.
       You should give your example tables clear and meaningful names when you have more than one.
     missing_example_table: >-

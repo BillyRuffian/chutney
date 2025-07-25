@@ -51,6 +51,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'amatch', '~> 0.4.0'
   spec.add_dependency 'cuke_modeler', '~> 3.21'
   spec.add_dependency 'i18n', '>= 1.8.2', '< 1.15.0'
+  spec.add_dependency 'fast-mcp', '~> 1.5'
   spec.add_dependency 'language_server-protocol', '~> 3.17'
   spec.add_dependency 'pastel', '~> 0.7'
   spec.add_dependency 'tty-pie', '~> 0.3'
