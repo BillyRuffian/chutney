@@ -23,14 +23,14 @@ To set it up for a particular repository, create a file called `.vscode/mcp.json
 
 ```json
 {
-	"servers": {
-		"chutney": {
-			"type": "stdio",
-			"command": "chutney-mcp",
-			"args": []
-		}
-	},
-	"inputs": []
+  "servers": {
+    "chutney": {
+    "type": "stdio",
+      "command": "chutney-mcp",
+      "args": []
+    }
+  },
+  "inputs": []
 }
 ```
 
