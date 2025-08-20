@@ -128,9 +128,7 @@ module Chutney
       off_switch = element.tags
                           .map(&:name)
                           .then { |tags| tags || [] }
-                          .filter { |tag_name| tag_name == "@disable#{linter_name}" }
-                          .count
-                          .positive?
+                          .any? { |tag_name| tag_name == "@disable#{linter_name}" }
       off_switch ||= off_switch?(feature) unless element == feature
       off_switch
     end

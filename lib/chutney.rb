@@ -30,6 +30,7 @@ require 'chutney/linter/missing_scenario_outline'
 require 'chutney/linter/missing_test_action'
 require 'chutney/linter/missing_verification'
 require 'chutney/linter/required_tags_starts_with'
+require 'chutney/linter/same_scenario'
 require 'chutney/linter/same_tag_different_case'
 require 'chutney/linter/same_tag_for_all_scenarios'
 require 'chutney/linter/scenario_names_match'
@@ -48,6 +49,7 @@ require 'chutney/locator'
 require 'chutney/version'
 
 require 'cuke_modeler'
+require 'digest'
 require 'forwardable'
 require 'i18n'
 require 'yaml'
@@ -58,6 +60,7 @@ module Chutney
   # gherkin linter
   class ChutneyLint
     extend Forwardable
+
     attr_accessor :verbose
     attr_reader :files, :results
 

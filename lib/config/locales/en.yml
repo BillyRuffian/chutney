@@ -56,7 +56,7 @@ en:
       missing_action: >-
         This scenario is missing an action step -- it does not have a 'When'.
     missing_example_name: >-
-      You have a scenerio with more than one example table, at least one of which is
+      You have a scenario with more than one example table, at least one of which is
       unnamed or has a duplicate name.
       You should give your example tables clear and meaningful names when you have more than one.
     missing_example_table: >-
@@ -78,6 +78,8 @@ en:
       the assertion being tested.
     required_tags_starts_with: >-
       You have tags which do not match the required format. Allowed prefixes are '%{allowed}'.
+    same_scenario: >-
+      Duplicate scenario detected: %{feature} / %{scenario} is a duplicate of %{original_feature} / %{original_scenario}
     scenario_names_match: >-
       You have a scenario name which does not match the required format.
       Allowed patterns are '%{pattern}'.

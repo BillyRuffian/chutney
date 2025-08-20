@@ -6,6 +6,7 @@ module Chutney
   # entity value class for issues
   class Issue
     include Term::ANSIColor
+
     attr_reader :name, :references, :description
 
     def initialize(name, references, description = nil)

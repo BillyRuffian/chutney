@@ -57,6 +57,8 @@ Chutney enforces its rules with the linters. These are:
 
 [RequiredTagsStartWith](https://github.com/BillyRuffian/chutney/blob/master/features/required_tags_starts_with.feature): Chutney can enforce a configurable naming prefix for your tags.
 
+[SameSecenario](https://github.com/BillyRuffian/chutney/blob/master/features/same_scenario.feature): Makes sure you don't acidentally duplicate the actions of your scenario. *Since v3.11.0*
+
 [SameTagForDifferentCase](https://github.com/BillyRuffian/chutney/blob/master/features/same_tag_different_case.feature): Don't mix the case of tags which have already appeared. Cucumber tags are case sensitive. *Since 3.1.0*
 
 [SameTagForAllScenarios](https://github.com/BillyRuffian/chutney/blob/master/features/same_tag_for_all_scenarios.feature): You have the same tag for all you scenarios; move the tag to the feature level instead.

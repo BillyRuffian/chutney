@@ -28,7 +28,7 @@ Feature: Missing Example Name
     Then 2 issues are raised     
     And the message is: 
       """
-      You have a scenerio with more than one example table, at least one of which is unnamed or has a duplicate name. You should give your example tables clear and meaningful names when you have more than one.
+      You have a scenario with more than one example table, at least one of which is unnamed or has a duplicate name. You should give your example tables clear and meaningful names when you have more than one.
       """
     And it is reported on:
       | line | column |
@@ -56,7 +56,7 @@ Feature: Missing Example Name
     Then 2 issues are raised    
     And the message is: 
       """
-      You have a scenerio with more than one example table, at least one of which is unnamed or has a duplicate name. You should give your example tables clear and meaningful names when you have more than one.
+      You have a scenario with more than one example table, at least one of which is unnamed or has a duplicate name. You should give your example tables clear and meaningful names when you have more than one.
       """
     And it is reported on:
       | line | column |

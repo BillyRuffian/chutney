@@ -14,7 +14,7 @@ module Chutney
     end
 
     def files_with_issues
-      results.filter { |_k, v| v.any? { |r| r[:issues].count.positive? } }
+      results.filter { |_k, v| v.any? { |r| r[:issues].any? } }
     end
   end
 end
