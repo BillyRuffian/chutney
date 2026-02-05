@@ -11,28 +11,28 @@ module Chutney
       @dictionary ||= Hash.new { |hash, key| hash[key] = [] }
     end
 
-    def lint
+    def lint # rubocop:disable Metrics/MethodLength
       scenarios do |feature, scenario|
         text = background ? background.steps.map(&:to_s).join("\n").concat("\n") : ''
         text += scenario
-               .steps
-               .map { |step| "#{step.text} #{child_text(step)}" }
-               .join("\n") + example_text(scenario)
+                .steps
+                .map { |step| "#{step.text} #{child_text(step)}" }
+                .join("\n") + example_text(scenario)
         digest = Digest::SHA2.hexdigest(text)
         SameScenario.dictionary[digest] << { scenario:, feature: }
       end
 
       SameScenario.dictionary.filter { |_k, v| v.size > 1 }
                   .each_value do |v|
-        v[1...].each_with_index do |problem, index|
-          add_issue(I18n.t('linters.same_scenario',
-                           feature: problem[:feature].name,
-                           scenario: problem[:scenario].name,
-                           original_feature: v.first[:feature].name,
-                           original_scenario: v.first[:scenario].name),
-                    problem[:feature], problem[:scenario], nil)
-          v.delete_at(index + 1)
-        end
+                    v[1...].each_with_index do |problem, index|
+                      add_issue(I18n.t('linters.same_scenario',
+                                       feature: problem[:feature].name,
+                                       scenario: problem[:scenario].name,
+                                       original_feature: v.first[:feature].name,
+                                       original_scenario: v.first[:scenario].name),
+                                problem[:feature], problem[:scenario], nil)
+                      v.delete_at(index + 1)
+                    end
       end
     end
 

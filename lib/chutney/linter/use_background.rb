@@ -30,13 +30,19 @@ module Chutney
       result
     end
 
-    def expanded_steps(&block)
+    def expanded_steps(&)
       scenarios do |_feature, scenario|
         next unless scenario.steps
 
         prototypes = [render_step(scenario.steps.first)]
-        prototypes = expand_examples(scenario.examples, prototypes) if scenario.is_a? CukeModeler::Outline
-        prototypes.each(&block)
+
+        # only expand further if this is a Scenario Outline and we are dealing
+        # with a Given step with subsitutions
+        if scenario.is_a?(CukeModeler::Outline) && prototypes.any? { |prototype| prototype =~ /<.*>/ }
+          prototypes = expand_examples(scenario.examples, prototypes)
+        end
+
+        prototypes.each(&)
       end
     end
 
