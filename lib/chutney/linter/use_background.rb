@@ -37,7 +37,7 @@ module Chutney
         prototypes = [render_step(scenario.steps.first)]
 
         # only expand further if this is a Scenario Outline and we are dealing
-        # with a Given step with subsitutions
+        # with a Given step with substitutions
         if scenario.is_a?(CukeModeler::Outline) && prototypes.any? { |prototype| prototype =~ /<.*>/ }
           prototypes = expand_examples(scenario.examples, prototypes)
         end
