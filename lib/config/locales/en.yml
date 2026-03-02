@@ -15,8 +15,6 @@ en:
     avoid_scripting: >-
       You have %{count} When steps when you should only have one.
       Be careful not to add And steps following a When.
-    avoid_single_character_tags: >-
-      Avoid using single character tags. Tags should have meaning.
     avoid_splat_steps_in_background: >-
       The Background contains a splat step. It should only contain named steps.
     avoid_splat_steps_in_scenarios: >-
@@ -110,6 +108,8 @@ en:
       There are too many steps in this feature. There are %{count} and the maximum is %{max}.
     too_many_tags: >-
       There are too many tags in this feature. There are %{count} and the maximum is %{max}.
+    too_short_tag: >-
+      Your tag is too short, avoid using single character tags. Tags should have meaning.
     unique_scenario_names: >-
       The scenario name '%{name}' is duplicated, first used at line %{line}, column %{column}.
     unknown_variable: >-

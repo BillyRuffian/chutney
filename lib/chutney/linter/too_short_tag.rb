@@ -2,17 +2,21 @@
 
 module Chutney
   # service class to lint for single character tags, such as @t
-  class AvoidSingleCharacterTags < Linter
+  class TooShortTag < Linter
     def lint
       scenarios do |feature, scenario|
         tags = tags_for(feature) + tags_for(scenario)
-        next unless tags.any? { |tag| tag.length == 1 }
+        next unless tags.any? { |tag| tag.length < min_length }
 
         add_issue(
-          I18n.t('linters.avoid_single_character_tags'),
+          I18n.t('linters.too_short_tag'),
           feature
         )
       end
+    end
+
+    def min_length
+      configuration['MinLength']&.to_i || 2
     end
   end
 end

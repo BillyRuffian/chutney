@@ -1,4 +1,4 @@
-# Avoid Single Character Tags
+# Too Short Tag
 
 If you have used a single character tag, you have probably done it while locally testing. This is a bad practice because it makes your tests harder to read and maintain.
 
