@@ -19,7 +19,7 @@ Feature: Too short tags
     Then 1 issue is raised
     And the message is:
       """
-      Your tag is too short, avoid using single character tags. Tags should have meaning.
+      Your tag is too short: ["t"]. The minimum length of a tag is 2. Tags should have meaning.
       """
     And it is reported on:
       | line | column |
@@ -36,7 +36,7 @@ Feature: Too short tags
     Then 1 issue is raised
     And the message is:
       """
-      Your tag is too short, avoid using single character tags. Tags should have meaning.
+      Your tag is too short: ["a", "b"]. The minimum length of a tag is 2. Tags should have meaning.
       """
     And it is reported on:
       | line | column |
@@ -70,7 +70,7 @@ Feature: Too short tags
     Then 1 issue is raised
     And the message is:
       """
-      Your tag is too short, avoid using single character tags. Tags should have meaning.
+      Your tag is too short: ["B"]. The minimum length of a tag is 2. Tags should have meaning.
       """
     And it is reported on:
       | line | column |
