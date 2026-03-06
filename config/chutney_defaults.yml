@@ -74,6 +74,9 @@ TooManyTags:
 TooLongStep:
   Enabled: true
   MaxLength: 80
+TooShortTag:
+  Enabled: true
+  MinLength: 2
 UniqueScenarioNames:
   Enabled: true
 UnknownVariable:

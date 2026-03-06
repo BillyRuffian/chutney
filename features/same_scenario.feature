@@ -179,7 +179,6 @@ Feature: Same Scenario
     When I run Chutney
     Then 0 issues are raised
 
-    @t
   Scenario: Duplicated scenarios with doc strings
     And a feature file contains:
       """
@@ -208,7 +207,6 @@ Feature: Same Scenario
       | line | column |
       | 9    | 3      |
 
-    @t
   Scenario: Different doc strings don't raise issues
     And a feature file contains:
       """

@@ -108,6 +108,8 @@ en:
       There are too many steps in this feature. There are %{count} and the maximum is %{max}.
     too_many_tags: >-
       There are too many tags in this feature. There are %{count} and the maximum is %{max}.
+    too_short_tag: >-
+      Your tag is too short: %{tags}. The minimum length of a tag is %{min_length}. Tags should have meaning.
     unique_scenario_names: >-
       The scenario name '%{name}' is duplicated, first used at line %{line}, column %{column}.
     unknown_variable: >-

@@ -36,6 +36,7 @@
 * [Too Many Different Tags](/docs/rules/too-many-different-tags)
 * [Too Many Steps](/docs/rules/too-many-steps)
 * [Too Many Tags](/docs/rules/too-many-tags)
+* [Too Short Tag](/docs/rules/too_short_tag)
 * [Unique Scenario Names](/docs/rules/unique-scenario-names)
 * [Unknown Variable](/docs/rules/unknown-variable)
 * [Unused Variable](/docs/rules/unused-variable)
