@@ -48,7 +48,7 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'amatch', '>= 0.4', '< 0.7'
+  spec.add_dependency 'amatch', '>= 0.4', '< 0.8'
   spec.add_dependency 'cuke_modeler', '~> 3.26'
   spec.add_dependency 'i18n', '>= 1.8.2', '< 1.15.0'
   spec.add_dependency 'fast-mcp', '~> 1.5'
