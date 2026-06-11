@@ -13,7 +13,7 @@ module Chutney
 
     def lint # rubocop:disable Metrics/MethodLength
       scenarios do |feature, scenario|
-        text = background ? background.steps.map(&:to_s).join("\n").concat("\n") : ''
+        text = background ? background.steps.join("\n").concat("\n") : ''
         text += scenario
                 .steps
                 .map { |step| "#{step.text} #{child_text(step)}" }
@@ -23,16 +23,16 @@ module Chutney
       end
 
       SameScenario.dictionary.filter { |_k, v| v.size > 1 }
-                  .each_value do |v|
-                    v[1...].each_with_index do |problem, index|
-                      add_issue(I18n.t('linters.same_scenario',
-                                       feature: problem[:feature].name,
-                                       scenario: problem[:scenario].name,
-                                       original_feature: v.first[:feature].name,
-                                       original_scenario: v.first[:scenario].name),
-                                problem[:feature], problem[:scenario], nil)
-                      v.delete_at(index + 1)
-                    end
+                             .each_value do |v|
+        v[1...].each_with_index do |problem, index|
+          add_issue(I18n.t('linters.same_scenario',
+                           feature: problem[:feature].name,
+                           scenario: problem[:scenario].name,
+                           original_feature: v.first[:feature].name,
+                           original_scenario: v.first[:scenario].name),
+                    problem[:feature], problem[:scenario], nil)
+          v.delete_at(index + 1)
+        end
       end
     end
 
