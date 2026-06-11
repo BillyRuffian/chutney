@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Chutney
+  # service class to lint for avoiding tags
   class AvoidTags < Linter
     def lint
       return if feature.nil?
