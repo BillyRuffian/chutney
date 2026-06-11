@@ -7,6 +7,7 @@
 * [Avoid Scripting](/docs/rules/avoid-scripting)
 * [Avoid Splat Steps in Background](/docs/rules/avoid-splat-steps-in-background)
 * [Avoid Splat Steps in Scenarios](/docs/rules/avoid-splat-steps-in-scenarios)
+* [Avoid Tags](/docs/rules/avoid-tags)
 * [Avoid Typographers' Quotes](/docs/rules/avoid-typographers-quotes)
 * [Background Does More Than Setup](/docs/rules/background-does-more-than-setup)
 * [Background Requires Multiple Scenarios](/docs/rules/background-requires-multiple-scenarios)
