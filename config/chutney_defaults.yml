@@ -12,6 +12,8 @@ AvoidSplatStepsInBackground:
   Enabled: true
 AvoidSplatStepsInScenarios:
   Enabled: true
+AvoidTags:
+  Enabled: false
 AvoidTypographersQuotes:
   Enabled: true
 BackgroundDoesMoreThanSetup:

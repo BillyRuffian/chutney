@@ -19,6 +19,8 @@ Chutney enforces its rules with the linters. These are:
 
 [AvoidSplatStepsInScenarios](https://github.com/BillyRuffian/chutney/blob/master/features/avoid_splat_steps_in_scenarios.feature): The Scenario contains a splat step. It should only contain named steps.
 
+[AvoidTags](https://github.com/BillyRuffian/chutney/blob/master/features/avoid_tags.feature): The Feature file contains tags to avoid.
+
 [AvoidTypographersQuotes](https://github.com/BillyRuffian/chutney/blob/master/features/avoid_typographers_quotes.feature): Cutting and pasting from Word documents? Is that pasting in curly-quotes instead of neutral ones you would type on a keyboard? Are you sure that's what you want?
 
 [BackgroundDoesMoreThanSetup](https://github.com/BillyRuffian/chutney/blob/master/features/background_does_more_than_setup.feature): Background in feature files should only do setup activity and so they should only contain `Given` steps.

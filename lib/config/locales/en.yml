@@ -19,6 +19,8 @@ en:
       The Background contains a splat step. It should only contain named steps.
     avoid_splat_steps_in_scenarios: >-
       The Scenario contains a splat step. It should only contain named steps.
+    avoid_tags: >-
+      The following tags are not allowed: %{tags}.
     avoid_typographers_quotes: >-
       You are using typographers quotation marks (curly quotes).
       Make sure you intend to use this character and not a neutral quote
