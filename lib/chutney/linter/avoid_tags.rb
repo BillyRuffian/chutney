@@ -10,7 +10,7 @@ module Chutney
 
       unless feature_tags_to_avoid_found.empty?
         feature_tags_to_avoid_found = feature_tags_to_avoid_found.map { |tag| tag.prepend('@') }
-        add_issue(I18n.t('linters.avoid_tags', tags: feature_tags_to_avoid_found.join(',')), feature)
+        add_issue(I18n.t('linters.avoid_tags', tags: feature_tags_to_avoid_found.join(', ')), feature)
       end
 
       scenarios do |_feature, scenario|
@@ -19,7 +19,7 @@ module Chutney
 
         unless scenario_tags_to_avoid_found.empty?
           scenario_tags_to_avoid_found = scenario_tags_to_avoid_found.map { |tag| tag.prepend('@') }
-          add_issue(I18n.t('linters.avoid_tags', tags: scenario_tags_to_avoid_found.join(',')), feature, scenario)
+          add_issue(I18n.t('linters.avoid_tags', tags: scenario_tags_to_avoid_found.join(', ')), feature, scenario)
         end
       end
     end
