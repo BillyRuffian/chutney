@@ -1,6 +1,7 @@
 # Avoid Tags
 
 Sometimes you just need a tag for you... maybe to filter your scenarios for focused testing?... or maybe you've got some fancy after hook to help with debugging? 
+
 Whatever the reason, you probably didn't mean to commit that to source. 
 
 AvoidTags helps prevent the accidental commit of tags by warning you if you have any tags in your feature file which match a configurable list of tags to avoid.
