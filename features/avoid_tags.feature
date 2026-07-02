@@ -30,7 +30,7 @@ Feature: Avoid tags
     Then 1 issue is raised
     And the message is:
       """
-      The following tags are not allowed: @FeatureTagToAvoid.
+      The following tags are not allowed: @FeatureTagToAvoid
       """
     And it is reported on:
       | line | column |
@@ -50,7 +50,7 @@ Feature: Avoid tags
     Then 1 issue is raised
     And the message is:
       """
-      The following tags are not allowed: @ScenarioTagToAvoid.
+      The following tags are not allowed: @ScenarioTagToAvoid
       """
     And it is reported on:
       | line | column |
