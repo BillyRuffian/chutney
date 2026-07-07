@@ -41,7 +41,10 @@ module Chutney
       # report at the deepest location: examples > scenario > feature
       formatted = seen_tags.map { |t| "@#{t}" }.join(', ')
       add_issue(
-        I18n.t('linters.avoid_mutually_exclusive_tags', tags: formatted), feature, reported_scenario, reported_examples
+        I18n.t('linters.avoid_mutually_exclusive_tags', tags: formatted),
+        feature,
+        reported_scenario,
+        reported_examples
       )
     end
 
