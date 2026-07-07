@@ -2,9 +2,9 @@ AvoidColonsAtStartOfNames:
   Enabled: true
 AvoidCommaInTags:
   Enabled: true
-AvoidOutlineForSingleExample:
-  Enabled: true
 AvoidFullStop:
+  Enabled: true
+AvoidOutlineForSingleExample:
   Enabled: true
 AvoidScripting:
   Enabled: true
