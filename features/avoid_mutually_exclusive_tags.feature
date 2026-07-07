@@ -1,7 +1,7 @@
-Feature: Avoid mutually exclusive tag groups
+Feature: Avoid mutually exclusive tags
 
   As an author of a feature file
-  I want to avoid using certain groups of tags that are mutually exclusive
+  I want to avoid using tags in a certain group that are mutually exclusive
   So that I do not accidentally use tags that clash in specific combinations
 
   Background:
