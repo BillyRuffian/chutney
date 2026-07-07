@@ -22,6 +22,15 @@ module Chutney
           scenario_tags_to_avoid_found = scenario_tags_to_avoid_found.map { |tag| tag.prepend('@') }
           add_issue(I18n.t('linters.avoid_tags', tags: scenario_tags_to_avoid_found.join(', ')), feature, scenario)
         end
+
+        next unless scenario.respond_to?(:examples)
+
+        scenario.examples.each do |examples|
+          examples_tags = tags_for(examples) & tags_to_avoid
+          next if examples_tags.empty?
+
+          add_issue(I18n.t('linters.avoid_tags', tags: examples_tags.map { |t| "@#{t}" }.join(', ')), feature, scenario, examples)
+        end
       end
     end
 
