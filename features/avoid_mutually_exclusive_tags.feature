@@ -1,8 +1,8 @@
-Feature: Avoid mutually exclusive tags
+Feature: Avoid mutually exclusive tag groups
 
   As an author of a feature file
-  I want to avoid using certain tags that are mutually exclusive
-  So that I do not accidentally use tags that can clash in functionalities in the Cucumber hooks during test execution
+  I want to avoid using certain groups of tags that are mutually exclusive
+  So that I do not accidentally use tags that clash in specific combinations
 
   Background:
     Given chutney is configured with the linter "Chutney::AvoidMutuallyExclusiveTags"
@@ -11,19 +11,19 @@ Feature: Avoid mutually exclusive tags
       ---
       AvoidMutuallyExclusiveTags:
           Enabled: true
-          Tags:
-            - MutuallyExclusiveTag1
-            - MutuallyExclusiveTag2
-            - MutuallyExclusiveTag3
-            - MutuallyExclusiveTag4
-            - MutuallyExclusiveTag5
+          TagGroups:
+            - - MutuallyExclusiveTag1
+              - MutuallyExclusiveTag4
+            - - MutuallyExclusiveTag2
+              - MutuallyExclusiveTag3
+              - MutuallyExclusiveTag5
       """
 
 
-  Scenario: Multiple feature tags that are mutually exclusive
+  Scenario: A clashing group of tags on the feature
     And a feature file contains:
       """
-      @MutuallyExclusiveTag1 @MutuallyExclusiveTag2
+      @MutuallyExclusiveTag1 @MutuallyExclusiveTag4
       Feature:
         Scenario:
           When I think
@@ -33,18 +33,18 @@ Feature: Avoid mutually exclusive tags
     Then 1 issue is raised
     And the message is:
       """
-      The following mutually exclusive tags are not allowed to be used together in a feature/scenario/example: @MutuallyExclusiveTag1, @MutuallyExclusiveTag2
+      The following mutually exclusive tags are not allowed to be used together: @MutuallyExclusiveTag1, @MutuallyExclusiveTag4
       """
     And it is reported on:
       | line | column |
       | 2    | 1      |
 
 
-  Scenario: Multiple scenario tags that are mutually exclusive
+  Scenario: A clashing group of tags on the scenario
     And a feature file contains:
       """
       Feature:
-        @MutuallyExclusiveTag1 @MutuallyExclusiveTag2
+        @MutuallyExclusiveTag2 @MutuallyExclusiveTag3
         Scenario:
           When I think
           Then I exist
@@ -53,77 +53,42 @@ Feature: Avoid mutually exclusive tags
     Then 1 issue is raised
     And the message is:
       """
-      The following mutually exclusive tags are not allowed to be used together in a feature/scenario/example: @MutuallyExclusiveTag1, @MutuallyExclusiveTag2
+      The following mutually exclusive tags are not allowed to be used together: @MutuallyExclusiveTag2, @MutuallyExclusiveTag3
       """
     And it is reported on:
       | line | column |
       | 3    | 3      |
 
 
-  Scenario: Multiple example tags that are mutually exclusive
+  Scenario: A clashing group of tags on the examples
     And a feature file contains:
       """
       Feature:
         Scenario Outline:
           When I think of <topic>
-          Then I am engaged in it
-          @MutuallyExclusiveTag1
-          Examples: First set of examples
+          Then I exist
+          @MutuallyExclusiveTag4 @MutuallyExclusiveTag1
+          Examples:
             | topic |
             | blah  |
-            | bleh  |
-          @MutuallyExclusiveTag2 @MutuallyExclusiveTag3
-          Examples: Second set of examples
-            | topic |
-            | blih  |
       """
     When I run Chutney
     Then 1 issue is raised
     And the message is:
       """
-      The following mutually exclusive tags are not allowed to be used together in a feature/scenario/example: @MutuallyExclusiveTag1, @MutuallyExclusiveTag2, @MutuallyExclusiveTag3
+      The following mutually exclusive tags are not allowed to be used together: @MutuallyExclusiveTag4, @MutuallyExclusiveTag1
       """
     And it is reported on:
       | line | column |
-      | 11    | 5      |
+      | 6    | 5      |
 
 
-  Scenario: Multiple tags that are mutually exclusive
-    And a feature file contains:
-      """
-      @MutuallyExclusiveTag4
-      Feature:
-        @MutuallyExclusiveTag5
-        Scenario Outline:
-          When I think of <topic>
-          Then I am engaged in it
-          @MutuallyExclusiveTag1
-          Examples: First set of examples
-            | topic |
-            | blah  |
-            | bleh  |
-          @MutuallyExclusiveTag2 @MutuallyExclusiveTag3
-          Examples: Second set of examples
-            | topic |
-            | blih  |
-      """
-    When I run Chutney
-    Then 1 issue is raised
-    And the message is:
-      """
-      The following mutually exclusive tags are not allowed to be used together in a feature/scenario/example: @MutuallyExclusiveTag4, @MutuallyExclusiveTag5, @MutuallyExclusiveTag1, @MutuallyExclusiveTag2, @MutuallyExclusiveTag3
-      """
-    And it is reported on:
-      | line | column |
-      | 4    | 3      |
-
-
-  Scenario: A feature tag and scenario tag that are mutually exclusive
+  Scenario: A clashing group of tags across feature and scenario
     And a feature file contains:
       """
       @MutuallyExclusiveTag1
       Feature:
-        @MutuallyExclusiveTag2
+        @MutuallyExclusiveTag4
         Scenario:
           When I think
           Then I exist
@@ -132,22 +97,22 @@ Feature: Avoid mutually exclusive tags
     Then 1 issue is raised
     And the message is:
       """
-      The following mutually exclusive tags are not allowed to be used together in a feature/scenario/example: @MutuallyExclusiveTag1, @MutuallyExclusiveTag2
+      The following mutually exclusive tags are not allowed to be used together: @MutuallyExclusiveTag1, @MutuallyExclusiveTag4
       """
     And it is reported on:
       | line | column |
       | 4    | 3      |
 
 
-  Scenario: A feature tag and example tag that are mutually exclusive
+  Scenario: A clashing group of tags across feature and examples
     And a feature file contains:
       """
       @MutuallyExclusiveTag1
       Feature:
         Scenario Outline:
           When I think of <topic>
-          Then I am engaged in it
-          @MutuallyExclusiveTag2
+          Then I exist
+          @MutuallyExclusiveTag4
           Examples:
             | topic |
             | blah  |
@@ -156,22 +121,22 @@ Feature: Avoid mutually exclusive tags
     Then 1 issue is raised
     And the message is:
       """
-      The following mutually exclusive tags are not allowed to be used together in a feature/scenario/example: @MutuallyExclusiveTag1, @MutuallyExclusiveTag2
+      The following mutually exclusive tags are not allowed to be used together: @MutuallyExclusiveTag1, @MutuallyExclusiveTag4
       """
     And it is reported on:
       | line | column |
       | 7    | 5      |
 
 
-  Scenario: A scenario tag and example tag that are mutually exclusive
+  Scenario: A clashing group of tags across scenario and examples
     And a feature file contains:
       """
       Feature:
         @MutuallyExclusiveTag1
         Scenario Outline:
           When I think of <topic>
-          Then I am engaged in it
-          @MutuallyExclusiveTag2
+          Then I exist
+          @MutuallyExclusiveTag4
           Examples:
             | topic |
             | blah  |
@@ -180,17 +145,84 @@ Feature: Avoid mutually exclusive tags
     Then 1 issue is raised
     And the message is:
       """
-      The following mutually exclusive tags are not allowed to be used together in a feature/scenario/example: @MutuallyExclusiveTag1, @MutuallyExclusiveTag2
+      The following mutually exclusive tags are not allowed to be used together: @MutuallyExclusiveTag1, @MutuallyExclusiveTag4
       """
     And it is reported on:
       | line | column |
       | 7    | 5      |
 
 
-  Scenario: No more than one mutually exclusive tag
+  Scenario: A clashing group of tags across feature, scenario and examples
     And a feature file contains:
       """
-      @MutuallyExclusiveTag1 @SomeOtherTag
+      @MutuallyExclusiveTag2
+      Feature:
+        @MutuallyExclusiveTag3
+        Scenario Outline:
+          When I think of <topic>
+          Then I exist
+          @MutuallyExclusiveTag5
+          Examples:
+            | topic |
+            | blah  |
+      """
+    When I run Chutney
+    Then 1 issue is raised
+    And the message is:
+      """
+      The following mutually exclusive tags are not allowed to be used together: @MutuallyExclusiveTag2, @MutuallyExclusiveTag3, @MutuallyExclusiveTag5
+      """
+    And it is reported on:
+      | line | column |
+      | 8    | 5      |
+
+
+  Scenario: Tags from different groups each raise a separate issue
+    And a feature file contains:
+      """
+      @MutuallyExclusiveTag1 @MutuallyExclusiveTag2
+      Feature:
+        @MutuallyExclusiveTag3
+        Scenario Outline:
+          When I think of <topic>
+          Then I exist
+          @MutuallyExclusiveTag4
+          Examples:
+            | topic |
+            | blah  |
+      """
+    When I run Chutney
+    Then 2 issues are raised
+    And it is reported on:
+      | line | column |
+      | 4    | 3      |
+      | 8    | 5      |
+
+
+  Scenario: Bidirectional - tag appears in group but not as first entry in chutney config
+    And a feature file contains:
+      """
+      @MutuallyExclusiveTag4 @MutuallyExclusiveTag1
+      Feature:
+        Scenario:
+          When I think
+          Then I exist
+      """
+    When I run Chutney
+    Then 1 issue is raised
+    And the message is:
+      """
+      The following mutually exclusive tags are not allowed to be used together: @MutuallyExclusiveTag4, @MutuallyExclusiveTag1
+      """
+    And it is reported on:
+      | line | column |
+      | 2    | 1      |
+
+
+  Scenario: Non-clashing tags from different groups are allowed
+    And a feature file contains:
+      """
+      @MutuallyExclusiveTag1 @MutuallyExclusiveTag2
       Feature:
         Scenario:
           When I think
