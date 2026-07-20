@@ -9,6 +9,8 @@ en:
       Avoid using commas in tags. Tags should be separated by spaces.
     avoid_full_stop: >- # https://en.wikipedia.org/wiki/Full_stop
       Avoid using a full-stop in steps so that it is easier to re-use them.
+    avoid_mutually_exclusive_tags: >-
+      The following mutually exclusive tags are not allowed to be used together: %{tags}
     avoid_outline_for_single_example: >-
       Avoid using Scenario Outlines when you only have a single example.
       Use a Scenario instead.
@@ -20,7 +22,7 @@ en:
     avoid_splat_steps_in_scenarios: >-
       The Scenario contains a splat step. It should only contain named steps.
     avoid_tags: >-
-      The following tags are not allowed: %{tags}.
+      The following tags are not allowed: %{tags}
     avoid_typographers_quotes: >-
       You are using typographers quotation marks (curly quotes).
       Make sure you intend to use this character and not a neutral quote
