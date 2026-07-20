@@ -14,6 +14,7 @@ Feature: Avoid tags
           Tags:
             - FeatureTagToAvoid
             - ScenarioTagToAvoid
+            - ExamplesTagToAvoid
       """
 
 
@@ -30,7 +31,7 @@ Feature: Avoid tags
     Then 1 issue is raised
     And the message is:
       """
-      The following tags are not allowed: @FeatureTagToAvoid.
+      The following tags are not allowed: @FeatureTagToAvoid
       """
     And it is reported on:
       | line | column |
@@ -50,10 +51,31 @@ Feature: Avoid tags
     Then 1 issue is raised
     And the message is:
       """
-      The following tags are not allowed: @ScenarioTagToAvoid.
+      The following tags are not allowed: @ScenarioTagToAvoid
       """
     And it is reported on:
       | line | column |
       | 3    | 3      |
 
 
+  Scenario: Example tag to avoid
+    And a feature file contains:
+      """
+      Feature:
+        Scenario:
+          Given I have a splat
+          * this step offends the <target>
+          @ExamplesTagToAvoid
+          Examples:
+            | target |
+            | linter |
+      """
+    When I run Chutney
+    Then 1 issue is raised
+    And the message is:
+      """
+      The following tags are not allowed: @ExamplesTagToAvoid
+      """
+    And it is reported on:
+      | line | column |
+      | 6    | 5      |
