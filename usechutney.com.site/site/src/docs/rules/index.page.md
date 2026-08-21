@@ -3,7 +3,7 @@
 * [Avoid Colons at Start of Names](/docs/rules/avoid-colons-at-start-of-names)
 * [Avoid Comma in Tags](/docs/rules/avoid-comma-in-tags)
 * [Avoid Full Stops](/docs/rules/avoid-full-stops)
-* [Avoid Mutually Exclusive Tags](/docs/avoid-mutually-exclusive-tags)
+* [Avoid Mutually Exclusive Tags](/docs/rules/avoid-mutually-exclusive-tags)
 * [Avoid Outline for Single Example](/docs/rules/avoid-outline-for-single-example)
 * [Avoid Scripting](/docs/rules/avoid-scripting)
 * [Avoid Splat Steps in Background](/docs/rules/avoid-splat-steps-in-background)
