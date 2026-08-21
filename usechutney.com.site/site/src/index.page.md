@@ -5,6 +5,7 @@
     <p style="font-size: 1.5rem; color: var(--text-muted); max-width: 600px; margin: 0 auto;">Beautiful and tasteful best practice for Cucumber</p>
     <div style="margin-top: 2rem;">
       <a href="/docs/installing" class="btn btn-primary">Get Started</a>
+      <a href="https://labs.usechutney.com" class="btn btn-secondary">Try It Online</a>
       <a href="/docs/rules" class="btn" style="background: white; border: 1px solid var(--border); margin-left: 10px; color: var(--text-main);">View Rules</a>
     </div>
 </div>
